@@ -6,7 +6,7 @@ using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Rendering;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField] private Mesh mesh;
     [SerializeField] private Material material;
