@@ -18,6 +18,7 @@ namespace Components {
         South,
         West
     }
+
     public struct MovementComponent : IComponentData
     {
         public Dir currMovementDirection;

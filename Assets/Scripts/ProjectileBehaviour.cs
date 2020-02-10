@@ -12,9 +12,15 @@ public class ProjectileBehaviour : MonoBehaviour
 {
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
+    public Vector3 position = new Vector3(0, 0, 0);
+    public Dir direction = Dir.East;
+
+    [SerializeField] private float damageModifier;
+    [SerializeField] private float speedModifier;
 
     private void Start()
     {
+        print("Projectile instantiated");
         EntityManager entityManager = World.Active.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
@@ -29,11 +35,11 @@ public class ProjectileBehaviour : MonoBehaviour
 
         entityManager.SetComponentData(e, new MovementComponent
         {
-            currMovementDirection = Dir.East
+            currMovementDirection = this.direction
         });
         entityManager.SetComponentData(e, new Translation
         {
-            Value = new float3(0, 0, 0)
+            Value = this.position
         });
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
@@ -43,15 +49,4 @@ public class ProjectileBehaviour : MonoBehaviour
         });
     }
 
-    [SerializeField] private float damageModifier;
-    [SerializeField] private float speedModifier;
-
-    public MovementComponent movementComponent;
-    public TeamComponent teamComponent;
-    public StatsComponent statsComponent;
-    public CollisionComponent collisionComponent;
-    public ProjectileBehaviour(float damageModifier, Team team, StatsComponent s)
-    {
-        this.damageModifier = damageModifier;
-    }
 }

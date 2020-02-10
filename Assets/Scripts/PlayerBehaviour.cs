@@ -33,7 +33,7 @@ public class PlayerBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new Translation
         {
-            Value = new float3(0, 0, 0)
+            Value = new Vector3(0, 0, 0)
         });
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
