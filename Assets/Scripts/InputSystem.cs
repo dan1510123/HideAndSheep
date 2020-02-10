@@ -4,13 +4,15 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
+using Components;
+using EntityComponents;
 
 public class InputSystem : ComponentSystem
 {
     
     protected override void OnUpdate()
     {
-        Entities.ForEach((ref Translation translation) =>
+        Entities.ForEach((ref Translation translation, ref PlayerComponent behavior) =>
         {
             if(Input.GetKeyDown(KeyCode.W))
             {

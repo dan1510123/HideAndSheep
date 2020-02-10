@@ -11,11 +11,16 @@ namespace Components {
         Shepherd = 1,
         Enemy = 2
     }
+    public enum Dir
+    {
+        North,
+        East,
+        South,
+        West
+    }
     public struct MovementComponent : IComponentData
     {
-        public Transform currentPosition;
-        public float currMovementDirection;
-        public float3 path;
+        public Dir currMovementDirection;
     }
 
     public struct TeamComponent : IComponentData

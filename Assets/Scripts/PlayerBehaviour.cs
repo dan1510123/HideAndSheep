@@ -6,8 +6,9 @@ using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Rendering;
 using Components;
+using EntityComponents;
 
-public class PlayerBehavior : MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] private Mesh mesh;
     [SerializeField] private Material material;
@@ -17,6 +18,7 @@ public class PlayerBehavior : MonoBehaviour
         EntityManager entityManager = World.Active.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
+            typeof(PlayerComponent),
             typeof(MovementComponent),
             typeof(Translation),
             typeof(RenderMesh),
@@ -27,7 +29,7 @@ public class PlayerBehavior : MonoBehaviour
 
         entityManager.SetComponentData(e, new MovementComponent
         {
-            currMovementDirection = -1
+            currMovementDirection = Dir.East
         });
         entityManager.SetComponentData(e, new Translation
         {
