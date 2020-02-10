@@ -10,8 +10,8 @@ using EntityComponents;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    [SerializeField] private Mesh mesh;
-    [SerializeField] private Material material;
+    [SerializeField] public Mesh mesh;
+    [SerializeField] public Material material;
 
     private void Start()
     {

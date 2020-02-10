@@ -14,7 +14,7 @@ public class InputSystem : ComponentSystem
     {
         Entities.ForEach((ref Translation translation, ref PlayerComponent behavior) =>
         {
-            if(Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 translation.Value.y += 3f;
             }
@@ -30,7 +30,10 @@ public class InputSystem : ComponentSystem
             {
                 translation.Value.x += 3f;
             }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                // Shoot projectile
+            }
         });
-        
     }
 }
