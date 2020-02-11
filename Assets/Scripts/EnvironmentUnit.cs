@@ -1,51 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
-using Unity.Mathematics;
 using Unity.Rendering;
 using Components;
 using EntityComponents;
 
-public class ProjectileBehaviour : MonoBehaviour
+public class EnvironmentUnit : MonoBehaviour
 {
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
-    public Vector3 position = new Vector3(0, 0, 0);
-    public float scale = 1f;
-    public Dir direction = Dir.East;
-
-    [SerializeField] private float damageModifier;
-    [SerializeField] private float speedModifier;
-
-    private void Start()
+    // Use this for initialization
+    void Start()
     {
-        print("Projectile instantiated");
         EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
-            typeof(ProjectileComponent),
+            typeof(PlayerComponent),
             typeof(MovementComponent),
             typeof(Translation),
-            typeof(Scale),
             typeof(RenderMesh),
             typeof(LocalToWorld)
-        ); ;
+        );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
 
         entityManager.SetComponentData(e, new MovementComponent
         {
-            currMovementDirection = this.direction
+            currMovementDirection = Dir.East
         });
         entityManager.SetComponentData(e, new Translation
         {
-            Value = this.position
-        });
-        entityManager.SetComponentData(e, new Scale
-        {
-            Value = this.scale
+            Value = new Vector3(0, 0, 0)
         });
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
@@ -53,5 +38,4 @@ public class ProjectileBehaviour : MonoBehaviour
             material = material
         });
     }
-
 }

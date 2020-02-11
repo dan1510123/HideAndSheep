@@ -12,15 +12,17 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
+    public float scale = 1f;
 
     private void Start()
     {
-        EntityManager entityManager = World.Active.EntityManager;
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
             typeof(PlayerComponent),
             typeof(MovementComponent),
             typeof(Translation),
+            typeof(Scale),
             typeof(RenderMesh),
             typeof(LocalToWorld)
         );
@@ -35,12 +37,15 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Value = new Vector3(0, 0, 0)
         });
+        entityManager.SetComponentData(e, new Scale
+        {
+            Value = this.scale
+        });
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
             mesh = mesh,
             material = material
 
         });
-       
     }
 }
