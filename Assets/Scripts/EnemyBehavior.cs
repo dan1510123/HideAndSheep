@@ -5,6 +5,7 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Rendering;
+using Components;
 
 public class EnemyBehavior : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class EnemyBehavior : MonoBehaviour
 
         Entity e = entityManager.CreateEntity(entityArchetype);
 
-        entityManager.SetComponentData(e, new MovingComponent
+        entityManager.SetComponentData(e, new MovementComponent
         {
             currMovementDirection = 0
         });
