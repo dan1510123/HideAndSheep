@@ -29,7 +29,7 @@ namespace Components {
         public Team team;
     }
 
-    public struct StatsComponent :IComponentData
+    public struct ProjectileStatsComponent :IComponentData
     {
         public float DamageModifier;
         public float SpeedModifier;

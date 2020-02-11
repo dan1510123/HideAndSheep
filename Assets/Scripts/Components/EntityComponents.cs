@@ -5,6 +5,10 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 namespace EntityComponents {
-    public struct PlayerComponent : IComponentData{};
+    public struct PlayerComponent : IComponentData
+    {
+        // Player 0 if being chased and 1 if chasing
+        public int playerNumber;
+    }
     public struct ProjectileComponent : IComponentData{};
 }

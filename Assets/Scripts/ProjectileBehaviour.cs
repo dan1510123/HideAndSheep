@@ -16,8 +16,8 @@ public class ProjectileBehaviour : MonoBehaviour
     public float scale = 1f;
     public Dir direction = Dir.East;
 
-    [SerializeField] private float damageModifier;
-    [SerializeField] private float speedModifier;
+    private float damageModifier;
+    public float speedModifier = 10f;
 
     private void Start()
     {
@@ -25,7 +25,7 @@ public class ProjectileBehaviour : MonoBehaviour
         EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
-            typeof(ProjectileComponent),
+            typeof(ProjectileStatsComponent),
             typeof(MovementComponent),
             typeof(Translation),
             typeof(Scale),
@@ -35,6 +35,10 @@ public class ProjectileBehaviour : MonoBehaviour
 
         Entity e = entityManager.CreateEntity(entityArchetype);
 
+        entityManager.SetComponentData(e, new ProjectileStatsComponent
+        {
+            SpeedModifier = speedModifier
+        });
         entityManager.SetComponentData(e, new MovementComponent
         {
             currMovementDirection = this.direction

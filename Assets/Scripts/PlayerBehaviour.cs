@@ -19,6 +19,8 @@ public class PlayerBehaviour : MonoBehaviour
         EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
+            typeof(WeaponComponent),
+            typeof(PlayerStatsComponent),
             typeof(PlayerComponent),
             typeof(MovementComponent),
             typeof(Translation),
@@ -30,6 +32,12 @@ public class PlayerBehaviour : MonoBehaviour
 
         Entity e = entityManager.CreateEntity(entityArchetype);
 
+        entityManager.SetComponentData(e, new PlayerStatsComponent
+        {
+            healthPoints = 100,
+            damage = 1,
+            speed = 2f
+        });
         entityManager.SetComponentData(e, new MovementComponent
         {
             currMovementDirection = Dir.East
