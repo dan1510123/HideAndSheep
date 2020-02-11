@@ -24,7 +24,8 @@ public class PlayerBehaviour : MonoBehaviour
             typeof(Translation),
             typeof(Scale),
             typeof(RenderMesh),
-            typeof(LocalToWorld)
+            typeof(LocalToWorld),
+            typeof(Rigidbody2D) // TODO : must implement
         );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
@@ -39,7 +40,7 @@ public class PlayerBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new Scale
         {
-            Value = this.scale
+            Value = scale
         });
         entityManager.SetSharedComponentData(e, new RenderMesh
         {

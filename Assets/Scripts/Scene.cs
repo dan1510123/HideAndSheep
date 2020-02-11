@@ -3,17 +3,19 @@ using UnityEngine;
 public class Scene : MonoBehaviour
 {
     PlayerBehaviour player;
-    [SerializeField] Mesh playerMesh;
-    [SerializeField] Material material;
     [SerializeField] public PlayerBehaviour playerPrefab;
     [SerializeField] public ProjectileBehaviour projectilePrefab;
-    [SerializeField] public EnvironmentUnit environmentUnit;
+    [SerializeField] public MapGenerator mapGenerator;
 
     private void Start()
     {
+        // Set up static variables
         StaticStuff.projectile = projectilePrefab;
+
+        // Set up map
+        mapGenerator.GenerateMap();
+
         // Create Player
-        player = Instantiate(playerPrefab, new Vector3(0,0,0), Quaternion.identity);
-        player.scale = 0.75f;
+        player.scale = 0.1f;
     }
 }

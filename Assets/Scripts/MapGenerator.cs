@@ -1,17 +1,30 @@
 ﻿using UnityEngine;
-using System.Collections;
+
 
 public class MapGenerator : MonoBehaviour
 {
-    public EnvironmentUnit environmentUnit;
-    // Use this for initialization
-    void Start()
+    public EnvironmentUnit environmentPrefab;
+
+    // Constructor
+    public MapGenerator(EnvironmentUnit envPrefab)
     {
-        GenerateMap();
+        this.environmentPrefab = envPrefab;
     }
 
-    void GenerateMap()
+    public void GenerateMap()
     {
+        EnvironmentUnit env;
         // Generates a quick map
+        for (int x = -5; x <= 5; x++)
+        {
+            for(int y = -4; y <=4; y++)
+            {
+                if (x == 5 || x == -5 || y == 4 || y == -4)
+                {
+                    env = Instantiate(environmentPrefab);
+                    env.position = new Vector3(x, y, 0);
+                }
+            }
+        }
     }
 }
