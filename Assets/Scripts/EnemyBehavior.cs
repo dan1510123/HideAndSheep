@@ -6,7 +6,7 @@ using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Rendering;
 
-public class EnemyEntity : MonoBehaviour
+public class EnemyBehavior : MonoBehaviour
 {
     [SerializeField] private Mesh mesh;
     [SerializeField] private Material material;
