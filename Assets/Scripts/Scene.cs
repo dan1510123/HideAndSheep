@@ -14,8 +14,5 @@ public class Scene : MonoBehaviour
 
         // Set up map
         mapGenerator.GenerateMap();
-
-        // Create Player
-        player.scale = 0.1f;
     }
 }

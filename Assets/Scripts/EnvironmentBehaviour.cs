@@ -3,9 +3,9 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Rendering;
 using Components;
-using EntityComponents;
+using EnvironmentComponents;
 
-public class EnvironmentUnit : MonoBehaviour
+public class EnvironmentBehaviour : MonoBehaviour
 {
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
@@ -18,16 +18,21 @@ public class EnvironmentUnit : MonoBehaviour
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
             typeof(Translation),
-            typeof(RenderMesh),
             typeof(LocalToWorld),
-            typeof(Rigidbody2D) // TODO : must implement
+            typeof(ColliderComponent),
+            typeof(WallComponent),
+            typeof(RenderMesh)
         );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
 
         entityManager.SetComponentData(e, new Translation
         {
-            Value = this.position
+            Value = position
+        });
+        entityManager.SetComponentData(e, new ColliderComponent
+        {
+            Size = 1f
         });
         entityManager.SetSharedComponentData(e, new RenderMesh
         {

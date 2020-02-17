@@ -27,7 +27,8 @@ public class PlayerBehaviour : MonoBehaviour
             typeof(Scale),
             typeof(RenderMesh),
             typeof(LocalToWorld),
-            typeof(Rigidbody2D) // TODO : must implement
+            typeof(VelocityComponent),
+            typeof(ColliderComponent)
         );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
@@ -36,7 +37,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             healthPoints = 100,
             damage = 1,
-            speed = 2f
+            speed = 1f
         });
         entityManager.SetComponentData(e, new MovementComponent
         {
@@ -49,6 +50,14 @@ public class PlayerBehaviour : MonoBehaviour
         entityManager.SetComponentData(e, new Scale
         {
             Value = scale
+        });
+        entityManager.SetComponentData(e, new VelocityComponent
+        {
+            Velocity = 5f
+        });
+        entityManager.SetComponentData(e, new ColliderComponent
+        {
+            Size = 1f
         });
         entityManager.SetSharedComponentData(e, new RenderMesh
         {

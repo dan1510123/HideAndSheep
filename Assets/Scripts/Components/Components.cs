@@ -35,9 +35,14 @@ namespace Components {
         public float SpeedModifier;
     }
 
-    public struct CollisionComponent : IComponentData
+    public struct VelocityComponent : IComponentData
     {
-        //Include collision component.
+        public float Velocity;
     }
-   
+
+    public struct ColliderComponent : IComponentData
+    {
+        public float Size;
+    }
+
 }

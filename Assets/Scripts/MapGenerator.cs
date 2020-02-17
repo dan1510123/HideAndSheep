@@ -3,17 +3,17 @@
 
 public class MapGenerator : MonoBehaviour
 {
-    public EnvironmentUnit environmentPrefab;
+    public EnvironmentBehaviour environmentPrefab;
 
     // Constructor
-    public MapGenerator(EnvironmentUnit envPrefab)
+    public MapGenerator(EnvironmentBehaviour envPrefab)
     {
         this.environmentPrefab = envPrefab;
     }
 
     public void GenerateMap()
     {
-        EnvironmentUnit env;
+        EnvironmentBehaviour env;
         // Generates a quick map
         for (int x = -5; x <= 5; x++)
         {

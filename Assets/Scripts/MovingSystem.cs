@@ -13,21 +13,27 @@ public class MovingSystem : ComponentSystem
     {
         Entities.ForEach((ref Translation translation,
             ref MovementComponent moveComponent,
-            ref ProjectileStatsComponent projectileStatsComponent) =>
+            ref ProjectileStatsComponent projectileStatsComponent,
+            ref VelocityComponent velocityComponent) =>
         {
-            if (moveComponent.currMovementDirection == Dir.East) {
-                translation.Value.x += projectileStatsComponent.SpeedModifier * Time.DeltaTime;
+            float projectileSpeed = velocityComponent.Velocity * projectileStatsComponent.SpeedModifier;
+            float dt = Time.DeltaTime;
+
+            if (moveComponent.currMovementDirection == Dir.East)
+            {
+                translation.Value.x += projectileSpeed * dt;
             }
-            if (moveComponent.currMovementDirection == Dir.West) {
-                translation.Value.x -= projectileStatsComponent.SpeedModifier * Time.DeltaTime;
+            if (moveComponent.currMovementDirection == Dir.West)
+            {
+                translation.Value.x -= projectileSpeed * dt;
             }
             if (moveComponent.currMovementDirection == Dir.North)
             {
-                translation.Value.y += projectileStatsComponent.SpeedModifier * Time.DeltaTime;
+                translation.Value.y += projectileSpeed * dt;
             }
             if (moveComponent.currMovementDirection == Dir.South)
             {
-                translation.Value.y -= projectileStatsComponent.SpeedModifier * Time.DeltaTime;
+                translation.Value.y -= projectileSpeed * dt;
             }
         });
     }
