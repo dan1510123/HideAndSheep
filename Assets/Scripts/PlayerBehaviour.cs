@@ -53,7 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new VelocityComponent
         {
-            Velocity = 5f
+            Velocity = 2f
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {

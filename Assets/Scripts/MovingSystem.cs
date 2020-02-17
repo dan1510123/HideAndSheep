@@ -5,36 +5,64 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Components;
-using EntityComponents;
+using EnvironmentComponents;
 
 public class MovingSystem : ComponentSystem
 {
     protected override void OnUpdate()
     {
-        Entities.ForEach((ref Translation translation,
+        Entities.ForEach((Entity e,
+            ref Translation translation,
             ref MovementComponent moveComponent,
             ref ProjectileStatsComponent projectileStatsComponent,
-            ref VelocityComponent velocityComponent) =>
+            ref ColliderComponent colliderComponent) =>
         {
-            float projectileSpeed = velocityComponent.Velocity * projectileStatsComponent.SpeedModifier;
+            float s1 = colliderComponent.Size;
             float dt = Time.DeltaTime;
-
-            if (moveComponent.currMovementDirection == Dir.East)
+            float projectileDisplacement = projectileStatsComponent.SpeedModifier * dt;
+            if (CheckCollision(new float2(translation.Value.x, translation.Value.y), s1))
             {
-                translation.Value.x += projectileSpeed * dt;
+                ;
             }
-            if (moveComponent.currMovementDirection == Dir.West)
+            else if (moveComponent.currMovementDirection == Dir.East)
             {
-                translation.Value.x -= projectileSpeed * dt;
+                translation.Value.x += projectileDisplacement;
             }
-            if (moveComponent.currMovementDirection == Dir.North)
+            else if (moveComponent.currMovementDirection == Dir.West)
             {
-                translation.Value.y += projectileSpeed * dt;
+                translation.Value.x -= projectileDisplacement;
             }
-            if (moveComponent.currMovementDirection == Dir.South)
+            else if (moveComponent.currMovementDirection == Dir.North)
             {
-                translation.Value.y -= projectileSpeed * dt;
+                translation.Value.y += projectileDisplacement;
+            }
+            else if (moveComponent.currMovementDirection == Dir.South)
+            {
+                translation.Value.y -= projectileDisplacement;
             }
         });
+    }
+
+    bool CheckCollision(float2 pos1, float s1)
+    {
+        bool collided = false;
+        Entities.ForEach((ref WallComponent wallComponent,
+                ref Translation translation1,
+                ref ColliderComponent colliderComponent1) =>
+        {
+            float2 pos2 = new float2(translation1.Value.x, translation1.Value.y);
+            float s2 = colliderComponent1.Size;
+            collided = collided || AreSquaresOverlapping(pos1, s1, pos2, s2);
+        });
+
+        return collided;
+    }
+
+    // Checks if the square at position posA and size sizeA overlaps 
+    // with the square at position posB and size sizeB
+    bool AreSquaresOverlapping(float2 posA, float sizeA, float2 posB, float sizeB)
+    {
+        float d = (sizeA / 2) + (sizeB / 2);
+        return (math.abs(posA.x - posB.x) < d && math.abs(posA.y - posB.y) < d);
     }
 }

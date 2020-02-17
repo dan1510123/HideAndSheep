@@ -30,6 +30,8 @@ public class ProjectileBehaviour : MonoBehaviour
             typeof(Translation),
             typeof(Scale),
             typeof(RenderMesh),
+            typeof(ColliderComponent),
+            typeof(DestructibleComponent),
             typeof(LocalToWorld)
         ); ;
 
@@ -51,6 +53,14 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             Value = this.scale
         });
+        entityManager.SetComponentData(e, new ColliderComponent
+        {
+            Size = this.scale
+        });
+        //entityManager.SetComponentData(e, new DestructibleComponent
+        //{
+        //    Destroy = false
+        //});
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
             mesh = mesh,

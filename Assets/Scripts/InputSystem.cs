@@ -19,13 +19,13 @@ public class InputSystem : ComponentSystem
             ref VelocityComponent velocityComponent,
             ref ColliderComponent colliderComponent) =>
         {
-            float2 pos1 = new float2(translation.Value.x, translation.Value.y);
             float s1 = colliderComponent.Size;
             float displacement = velocityComponent.Velocity * statsComponent.speed * Time.DeltaTime;
-            float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
 
             if (Input.GetKey(KeyCode.W))
             {
+                float2 pos1 = new float2(translation.Value.x, translation.Value.y + displacement);
+                float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
                 if (displacementWithCollision != 0)
                 {
                     lastPlayerPosition.y = translation.Value.y;
@@ -39,6 +39,8 @@ public class InputSystem : ComponentSystem
             }
             if (Input.GetKey(KeyCode.A))
             {
+                float2 pos1 = new float2(translation.Value.x - displacement, translation.Value.y);
+                float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
                 if (displacementWithCollision != 0)
                 {
                     lastPlayerPosition.x = translation.Value.x;
@@ -52,6 +54,8 @@ public class InputSystem : ComponentSystem
             }
             if (Input.GetKey(KeyCode.S))
             {
+                float2 pos1 = new float2(translation.Value.x, translation.Value.y - displacement);
+                float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
                 if (displacementWithCollision != 0)
                 {
                     lastPlayerPosition.y = translation.Value.y;
@@ -65,6 +69,8 @@ public class InputSystem : ComponentSystem
             }
             if (Input.GetKey(KeyCode.D))
             {
+                float2 pos1 = new float2(translation.Value.x + displacement, translation.Value.y);
+                float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
                 if (displacementWithCollision != 0)
                 {
                     lastPlayerPosition.x = translation.Value.x;

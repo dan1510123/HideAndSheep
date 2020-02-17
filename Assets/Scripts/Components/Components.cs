@@ -45,4 +45,9 @@ namespace Components {
         public float Size;
     }
 
+    public struct DestructibleComponent : IComponentData
+    {
+        public bool Destroy;
+    }
+
 }
