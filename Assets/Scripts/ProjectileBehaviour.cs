@@ -39,8 +39,9 @@ public class ProjectileBehaviour : MonoBehaviour
 
         entityManager.SetComponentData(e, new ProjectileStatsComponent
         {
-            SpeedModifier = speedModifier
-        });
+            SpeedModifier = speedModifier,
+            Alive = true
+        }) ;
         entityManager.SetComponentData(e, new MovementComponent
         {
             currMovementDirection = this.direction
@@ -67,5 +68,6 @@ public class ProjectileBehaviour : MonoBehaviour
             material = material
         });
     }
+
 
 }
