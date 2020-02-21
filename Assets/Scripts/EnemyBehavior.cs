@@ -20,10 +20,10 @@ public class EnemyBehavior : MonoBehaviour
             typeof(Translation),
             typeof(RenderMesh),
             typeof(LocalToWorld),
-            typeof(Collider2D),
+            typeof(ColliderComponent),
+            typeof(MovementComponent),
             typeof(WeaponComponent),
-            typeof(StatsComponent),
-            typeof(EnemyComponent)
+            typeof(EnemyStatsComponent)
         );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
@@ -36,8 +36,20 @@ public class EnemyBehavior : MonoBehaviour
         {
             Value = new float3(3, 3, 0)
         });
+        entityManager.SetComponentData(e, new ColliderComponent
+        {
+            Size = 1f
+        });
+        entityManager.SetComponentData(e, new EnemyStatsComponent
+        {
+            enemyType = 0,
+            attack = 10,
+            attackSpeed = 0,
+            moveSpeed = 0,
+            health = 50
+        });
 
-        entityManager.SetSharedComponentData(e, new RenderMesh
+    entityManager.SetSharedComponentData(e, new RenderMesh
         {
             mesh = mesh,
             material = material

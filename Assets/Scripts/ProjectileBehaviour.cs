@@ -13,7 +13,7 @@ public class ProjectileBehaviour : MonoBehaviour
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
     public Vector3 position = new Vector3(0, 0, 0);
-    public float scale = 1f;
+    public float scale = 0.1f;
     public Dir direction = Dir.East;
 
     private float damageModifier;
@@ -56,7 +56,7 @@ public class ProjectileBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {
-            Size = this.scale
+            Size = this.scale / 2
         });
         //entityManager.SetComponentData(e, new DestructibleComponent
         //{

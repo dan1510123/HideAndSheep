@@ -62,7 +62,7 @@ public class MovingSystem : ComponentSystem
             collided = collided || AreSquaresOverlapping(pos1, s1, pos2, s2);
         });
 
-        return collided;
+        return false;
     }
 
     // Checks if the square at position posA and size sizeA overlaps 
