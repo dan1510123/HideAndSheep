@@ -17,28 +17,35 @@ public class MovingSystem : ComponentSystem
             ref ProjectileStatsComponent projectileStatsComponent,
             ref ColliderComponent colliderComponent) =>
         {
-            float s1 = colliderComponent.Size;
-            float dt = Time.DeltaTime;
-            float projectileDisplacement = projectileStatsComponent.SpeedModifier * dt;
-            if (CheckCollision(new float2(translation.Value.x, translation.Value.y), s1))
+            if (!projectileStatsComponent.Alive)
             {
-                ;
+                PostUpdateCommands.DestroyEntity(e);
             }
-            else if (moveComponent.currMovementDirection == Dir.East)
+            else
             {
-                translation.Value.x += projectileDisplacement;
-            }
-            else if (moveComponent.currMovementDirection == Dir.West)
-            {
-                translation.Value.x -= projectileDisplacement;
-            }
-            else if (moveComponent.currMovementDirection == Dir.North)
-            {
-                translation.Value.y += projectileDisplacement;
-            }
-            else if (moveComponent.currMovementDirection == Dir.South)
-            {
-                translation.Value.y -= projectileDisplacement;
+                float s1 = colliderComponent.Size;
+                float dt = Time.DeltaTime;
+                float projectileDisplacement = projectileStatsComponent.SpeedModifier * dt;
+                if (CheckCollision(new float2(translation.Value.x, translation.Value.y), s1))
+                {
+                    projectileStatsComponent.Alive = false;
+                }
+                else if (moveComponent.currMovementDirection == Dir.East)
+                {
+                    translation.Value.x += projectileDisplacement;
+                }
+                else if (moveComponent.currMovementDirection == Dir.West)
+                {
+                    translation.Value.x -= projectileDisplacement;
+                }
+                else if (moveComponent.currMovementDirection == Dir.North)
+                {
+                    translation.Value.y += projectileDisplacement;
+                }
+                else if (moveComponent.currMovementDirection == Dir.South)
+                {
+                    translation.Value.y -= projectileDisplacement;
+                }
             }
         });
     }

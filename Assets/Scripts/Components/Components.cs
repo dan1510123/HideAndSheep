@@ -33,6 +33,7 @@ namespace Components {
     {
         public float DamageModifier;
         public float SpeedModifier;
+        public bool Alive;
     }
 
     public struct VelocityComponent : IComponentData
