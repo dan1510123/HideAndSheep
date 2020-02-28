@@ -10,9 +10,10 @@ public class HealthSystem : ComponentSystem
 {
     protected override void OnUpdate()
     {
-        Entities.ForEach((Entity e, ref EnemyStatsComponent enemyStatsComponent) =>
+        Entities.ForEach((Entity e,
+            ref StatsComponent statsComponent) =>
         {
-            if (enemyStatsComponent.health <= 0)
+            if (statsComponent.health <= 0)
             {
                 PostUpdateCommands.DestroyEntity(e);
             }

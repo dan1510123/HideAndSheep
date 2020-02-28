@@ -7,11 +7,15 @@ public class Scene : MonoBehaviour
     [SerializeField] public ProjectileBehaviour projectilePrefab;
     [SerializeField] public EnemyBehavior enemyPrefab;
     [SerializeField] public MapGenerator mapGenerator;
+    [SerializeField] public Mesh mesh;
+    [SerializeField] public Material material;
 
     private void Start()
     {
         // Set up static variables
-        StaticStuff.projectile = projectilePrefab;
+        GlobalObjects.projectile = projectilePrefab;
+        GlobalObjects.mesh = mesh;
+        GlobalObjects.material = material;
 
         // Set up map
         mapGenerator.GenerateMap();

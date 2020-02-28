@@ -5,6 +5,7 @@ using Components;
 using EnvironmentComponents;
 using Unity.Mathematics;
 using System;
+using EntityComponents;
 
 public class CollisionSystem : ComponentSystem
 {
@@ -24,22 +25,37 @@ public class CollisionSystem : ComponentSystem
             Debug.Log("PROJECTILE COLLISION");
             return 0;
         });
-        checkCollision<ProjectileStatsComponent, EnemyStatsComponent> (Shape.Square, (Entity entity1, Entity entity2) =>
+        checkCollision<ProjectileStatsComponent, EnemyComponent> (Shape.Square, (Entity entity1, Entity entity2) =>
         {
             PostUpdateCommands.DestroyEntity(entity1);
 
             // Update stats
-            EnemyStatsComponent esc = entityManager.GetComponentData<EnemyStatsComponent>(entity2);
-        entityManager.SetComponentData(entity2, new EnemyStatsComponent
-        {
-            enemyType = esc.enemyType,
-            attack = esc.attack,
-            attackSpeed = esc.attackSpeed,
-            moveSpeed = esc.moveSpeed,
-            health = esc.health - 10
+            StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
+            entityManager.SetComponentData(entity2, new StatsComponent
+            {
+                attack = esc.attack,
+                attackSpeed = esc.attackSpeed,
+                moveSpeed = esc.moveSpeed,
+                health = esc.health - 10
+            });
+
+            Debug.Log("PROJECTILE AND ENEMY COLLISION");
+            return 0;
         });
 
-            Debug.Log("ENEMY COLLISION");
+        checkCollision<PlayerComponent, EnemyComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
+        {
+            // Update stats
+            StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity1);
+            entityManager.SetComponentData(entity1, new StatsComponent
+            {
+                attack = esc.attack,
+                attackSpeed = esc.attackSpeed,
+                moveSpeed = esc.moveSpeed,
+                health = esc.health - 10
+            });
+
+            Debug.Log("PLAYER AND ENEMY COLLISION");
             return 0;
         });
     }

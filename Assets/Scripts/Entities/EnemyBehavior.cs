@@ -6,6 +6,7 @@ using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Rendering;
 using Components;
+using EntityComponents;
 
 public class EnemyBehavior : MonoBehaviour
 {
@@ -23,7 +24,8 @@ public class EnemyBehavior : MonoBehaviour
             typeof(ColliderComponent),
             typeof(MovementComponent),
             typeof(WeaponComponent),
-            typeof(EnemyStatsComponent)
+            typeof(StatsComponent),
+            typeof(EnemyComponent)
         );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
@@ -40,16 +42,19 @@ public class EnemyBehavior : MonoBehaviour
         {
             Size = 1f
         });
-        entityManager.SetComponentData(e, new EnemyStatsComponent
+        entityManager.SetComponentData(e, new StatsComponent
         {
-            enemyType = 0,
             attack = 10,
             attackSpeed = 0,
             moveSpeed = 0,
             health = 50
         });
+        entityManager.SetComponentData(e, new EnemyComponent
+        {
+            enemyType = 0
+        });
 
-    entityManager.SetSharedComponentData(e, new RenderMesh
+        entityManager.SetSharedComponentData(e, new RenderMesh
         {
             mesh = mesh,
             material = material

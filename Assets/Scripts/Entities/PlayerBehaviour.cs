@@ -8,66 +8,63 @@ using Unity.Rendering;
 using Components;
 using EntityComponents;
 
-public class ProjectileBehaviour : MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
-    public Vector3 position = new Vector3(0, 0, 0);
-    public float scale = 0.1f;
-    public Dir direction = Dir.East;
-
-    private float damageModifier;
-    public float speedModifier = 10f;
+    public float scale = 1f;
 
     private void Start()
     {
-        print("Projectile instantiated");
         EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
-            typeof(ProjectileStatsComponent),
+            typeof(WeaponComponent),
+            typeof(StatsComponent),
+            typeof(PlayerComponent),
             typeof(MovementComponent),
             typeof(Translation),
             typeof(Scale),
             typeof(RenderMesh),
-            typeof(ColliderComponent),
-            typeof(DestructibleComponent),
-            typeof(LocalToWorld)
-        ); ;
+            typeof(LocalToWorld),
+            typeof(VelocityComponent),
+            typeof(ColliderComponent)
+        );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
 
-        entityManager.SetComponentData(e, new ProjectileStatsComponent
+        entityManager.SetComponentData(e, new StatsComponent
         {
-            SpeedModifier = speedModifier,
-            Alive = true
-        }) ;
+            attack = 1,
+            attackSpeed = 1,
+            moveSpeed = 1,
+            health = 10
+        });
         entityManager.SetComponentData(e, new MovementComponent
         {
-            currMovementDirection = this.direction
+            currMovementDirection = Dir.East
         });
         entityManager.SetComponentData(e, new Translation
         {
-            Value = this.position
+            Value = new Vector3(0, 0, 0)
         });
         entityManager.SetComponentData(e, new Scale
         {
-            Value = this.scale
+            Value = scale
+        });
+        entityManager.SetComponentData(e, new VelocityComponent
+        {
+            Velocity = 2f
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {
-            Size = this.scale / 2
+            Size = 1f
         });
-        //entityManager.SetComponentData(e, new DestructibleComponent
-        //{
-        //    Destroy = false
-        //});
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
             mesh = mesh,
             material = material
+
         });
     }
-
-
 }

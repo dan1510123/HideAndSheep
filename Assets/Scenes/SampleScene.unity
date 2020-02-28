@@ -148,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 163079424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27ae704d7e15d46599958470b3958970, type: 3}
+  m_Script: {fileID: 11500000, guid: 79ab76f8dbbf44e5099451eb0b86e49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 386010403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c60c5e13eeef4aceb6e57df7121b8cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 1360eb733661e4337af103f6549a779a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 856263137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576dd27e3b91141849e9fb287c6434f9, type: 3}
+  m_Script: {fileID: 11500000, guid: b589ada0f5b24418fb934cb1b6039036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
@@ -505,15 +505,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1060422285}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50564a60e93e14d19b96826bddf48d3e, type: 3}
+  m_Script: {fileID: 11500000, guid: f20791ca508234b00bd218b350607599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  material: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  position: {x: 100, y: 100, z: 0}
-  scale: 1
-  direction: 1
-  speedModifier: 0
 --- !u!4 &1060422287
 Transform:
   m_ObjectHideFlags: 0
@@ -561,6 +555,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1060422286}
   enemyPrefab: {fileID: 386010405}
   mapGenerator: {fileID: 982007815}
+  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!4 &1788146029
 Transform:
   m_ObjectHideFlags: 0

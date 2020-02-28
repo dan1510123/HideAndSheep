@@ -5,6 +5,7 @@ using Components;
 using EnvironmentComponents;
 using EntityComponents;
 using Unity.Mathematics;
+using Unity.Rendering;
 
 public class InputSystem : ComponentSystem
 {
@@ -15,12 +16,12 @@ public class InputSystem : ComponentSystem
         Entities.ForEach((ref Translation translation,
             ref PlayerComponent playerComponent,
             ref MovementComponent movementComponent,
-            ref PlayerStatsComponent statsComponent,
+            ref StatsComponent statsComponent,
             ref VelocityComponent velocityComponent,
             ref ColliderComponent colliderComponent) =>
         {
             float s1 = colliderComponent.Size;
-            float displacement = velocityComponent.Velocity * statsComponent.speed * Time.DeltaTime;
+            float displacement = velocityComponent.Velocity * statsComponent.moveSpeed * Time.DeltaTime;
 
             if (Input.GetKey(KeyCode.W))
             {
@@ -85,14 +86,43 @@ public class InputSystem : ComponentSystem
             if (Input.GetKeyDown(KeyCode.Space) && !projectileFired)
             {
                 // Shoot projectile
-                ProjectileBehaviour projectile = Object.Instantiate(StaticStuff.projectile, translation.Value, Quaternion.identity);
-                projectile.position = translation.Value;
-                projectile.direction = movementComponent.currMovementDirection;
-                projectile.scale = 0.5f;
-                projectile.speedModifier = 10f;
-                projectileFired = true;
+                fireProjectile(movementComponent, translation);
             }
         });
+
+        void fireProjectile(MovementComponent movementComponent, Translation translation)
+        {
+            Entity e = PostUpdateCommands.CreateEntity(ProjectileBehaviour.GetArchetype());
+
+            PostUpdateCommands.SetComponent(e, new ProjectileStatsComponent
+            {
+                SpeedModifier = 10f,
+                Alive = true
+            });
+            PostUpdateCommands.SetComponent(e, new MovementComponent
+            {
+                currMovementDirection = movementComponent.currMovementDirection
+            });
+            PostUpdateCommands.SetComponent(e, new Translation
+            {
+                Value = translation.Value
+            });
+            PostUpdateCommands.SetComponent(e, new Scale
+            {
+                Value = 0.4f
+            });
+            PostUpdateCommands.SetComponent(e, new ColliderComponent
+            {
+                Size = .2f
+            });
+            PostUpdateCommands.SetSharedComponent(e, new RenderMesh
+            {
+                mesh = GlobalObjects.mesh,
+                material = GlobalObjects.material
+            });
+
+            projectileFired = true;
+        }
 
         float DisplacementCheckCollision(float2 pos1, float s1, float displacement)
         {
