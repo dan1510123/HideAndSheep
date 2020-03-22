@@ -88,6 +88,11 @@ public class InputSystem : ComponentSystem
                 // Shoot projectile
                 fireProjectile(movementComponent, translation);
             }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                //BRING UP THE ESCAPE MENU
+
+            }
         });
 
         void fireProjectile(MovementComponent movementComponent, Translation translation)
