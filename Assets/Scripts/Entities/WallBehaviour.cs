@@ -5,11 +5,18 @@ using Unity.Rendering;
 using Components;
 using EnvironmentComponents;
 
-public class EnvironmentBehaviour : MonoBehaviour
+public class WallBehaviour : MonoBehaviour
 {
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
-    public Vector3 position = new Vector3(100, 100, 0);
+    private Vector3 position = new Vector3(100, 100, 0);
+    private float scale = 0.5f;
+
+    public void SetPosition(Vector3 pos)
+    {
+        this.position = pos;
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -21,6 +28,7 @@ public class EnvironmentBehaviour : MonoBehaviour
             typeof(LocalToWorld),
             typeof(ColliderComponent),
             typeof(WallComponent),
+            typeof(Scale),
             typeof(RenderMesh)
         );
 
@@ -32,7 +40,11 @@ public class EnvironmentBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {
-            Size = 1f
+            Size = 0.5f
+        });
+        entityManager.SetComponentData(e, new Scale
+        {
+            Value = scale
         });
         entityManager.SetSharedComponentData(e, new RenderMesh
         {

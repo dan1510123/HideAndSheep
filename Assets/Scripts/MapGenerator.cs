@@ -3,26 +3,34 @@
 
 public class MapGenerator : MonoBehaviour
 {
-    public EnvironmentBehaviour environmentPrefab;
+    public WallBehaviour wallPrefab;
 
     // Constructor
-    public MapGenerator(EnvironmentBehaviour envPrefab)
+    public MapGenerator(WallBehaviour wallPrefab)
     {
-        this.environmentPrefab = envPrefab;
+        this.wallPrefab = wallPrefab;
     }
 
     public void GenerateMap()
     {
-        EnvironmentBehaviour env;
+        WallBehaviour env;
         // Generates a quick map
-        for (int x = -5; x <= 5; x++)
+        for (float x = -5.25f; x <= 5.25f; x += 0.5f)
         {
-            for(int y = -4; y <=4; y++)
+            for(float y = -2.75f; y <= 2.75f; y += 0.5f)
             {
-                if (x == 5 || x == -5 || y == 4 || y == -4)
+                if ((x == 5.25f || x == -5.25f || y == -2.75f || y == 2.75f))
                 {
-                    env = Instantiate(environmentPrefab);
-                    env.position = new Vector3(x, y, 0);
+                    if ((y >= -0.25f && y <= 0.25f) || (x >= -0.25 && x <= 0.25))
+                    {
+                        // It's possibly a door
+                    }
+                    else
+                    {
+                        // It's a wall
+                        env = Instantiate(wallPrefab);
+                        env.SetPosition(new Vector3(x, y, 0));
+                    }
                 }
             }
         }

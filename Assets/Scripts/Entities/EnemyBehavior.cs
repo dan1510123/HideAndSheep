@@ -12,6 +12,7 @@ public class EnemyBehavior : MonoBehaviour
 {
     [SerializeField] private Mesh mesh;
     [SerializeField] private Material material;
+    private Vector3 spawn = new Vector3(110, 110, 0);
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class EnemyBehavior : MonoBehaviour
         });
         entityManager.SetComponentData(e, new Translation
         {
-            Value = new float3(3, 3, 0)
+            Value = spawn
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {
