@@ -25,6 +25,7 @@ public class CollisionSystem : ComponentSystem
             Debug.Log("PROJECTILE COLLISION");
             return 0;
         });
+
         checkCollision<ProjectileStatsComponent, EnemyComponent> (Shape.Square, (Entity entity1, Entity entity2) =>
         {
             PostUpdateCommands.DestroyEntity(entity1);
@@ -56,6 +57,13 @@ public class CollisionSystem : ComponentSystem
             });
 
             Debug.Log("PLAYER AND ENEMY COLLISION");
+            return 0;
+        });
+
+        checkCollision<PlayerComponent, DoorComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
+        {
+            PostUpdateCommands.DestroyEntity(entity2);
+            Debug.Log("OPENED DOOR");
             return 0;
         });
     }

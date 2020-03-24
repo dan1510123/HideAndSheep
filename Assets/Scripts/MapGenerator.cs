@@ -4,16 +4,19 @@
 public class MapGenerator : MonoBehaviour
 {
     public WallBehaviour wallPrefab;
+    public DoorBehaviour doorPrefab;
 
     // Constructor
-    public MapGenerator(WallBehaviour wallPrefab)
+    public MapGenerator(WallBehaviour wallPrefab, DoorBehaviour doorPrefab)
     {
         this.wallPrefab = wallPrefab;
+        this.doorPrefab = doorPrefab;
     }
 
     public void GenerateMap()
     {
-        WallBehaviour env;
+        WallBehaviour wall;
+        DoorBehaviour door;
         // Generates a quick map
         for (float x = -5.25f; x <= 5.25f; x += 0.5f)
         {
@@ -24,12 +27,14 @@ public class MapGenerator : MonoBehaviour
                     if ((y >= -0.25f && y <= 0.25f) || (x >= -0.25 && x <= 0.25))
                     {
                         // It's possibly a door
+                        door = Instantiate(doorPrefab);
+                        door.SetPosition(new Vector3(x, y, 0));
                     }
                     else
                     {
                         // It's a wall
-                        env = Instantiate(wallPrefab);
-                        env.SetPosition(new Vector3(x, y, 0));
+                        wall = Instantiate(wallPrefab);
+                        wall.SetPosition(new Vector3(x, y, 0));
                     }
                 }
             }
