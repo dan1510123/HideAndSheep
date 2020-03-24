@@ -6,6 +6,7 @@ using EnvironmentComponents;
 using Unity.Mathematics;
 using System;
 using EntityComponents;
+using ItemComponent;
 
 public class CollisionSystem : ComponentSystem
 {
@@ -56,6 +57,31 @@ public class CollisionSystem : ComponentSystem
             });
 
             Debug.Log("PLAYER AND ENEMY COLLISION");
+            return 0;
+        });
+
+        checkCollision<PlayerComponent, ItemStats>(Shape.Square, (Entity entity1, Entity entity2) =>
+        {
+            // Update stats
+            StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity1);
+            StatsComponent update = entityManager.GetComponentData<StatsComponent>(entity2);
+            entityManager.SetComponentData(entity1, new StatsComponent
+            {
+                attack = esc.attack + update.attack,
+                attackSpeed = esc.attackSpeed + update.attackSpeed,
+                moveSpeed = esc.moveSpeed + update.moveSpeed,
+                health = esc.health
+            });
+
+            entityManager.SetComponentData(entity2, new StatsComponent
+            {
+                attack = update.attack,
+                attackSpeed = update.attackSpeed,
+                moveSpeed = update.moveSpeed,
+                health = 0
+            });
+
+            Debug.Log("PLAYER AND ITEM COLLISION");
             return 0;
         });
     }

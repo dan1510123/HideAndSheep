@@ -18,6 +18,11 @@ namespace Components {
         South,
         West
     }
+    public enum ItemType
+    {
+        StatsItem = 0,
+        WeaponItem = 1
+    }
 
     public struct MovementComponent : IComponentData
     {
