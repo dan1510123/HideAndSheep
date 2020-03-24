@@ -7,9 +7,10 @@ using EnvironmentComponents;
 
 public class EnvironmentBehaviour : MonoBehaviour
 {
-    [SerializeField] public Mesh mesh;
-    [SerializeField] public Material material;
+    //[SerializeField] public Mesh mesh;
+    //[SerializeField] public Material material;
     public Vector3 position = new Vector3(100, 100, 0);
+    [SerializeField] private float scale = 0.5f;
     // Use this for initialization
     void Start()
     {
@@ -21,7 +22,8 @@ public class EnvironmentBehaviour : MonoBehaviour
             typeof(LocalToWorld),
             typeof(ColliderComponent),
             typeof(WallComponent),
-            typeof(RenderMesh)
+            typeof(RenderMesh),
+            typeof(Scale)
         );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
@@ -34,11 +36,15 @@ public class EnvironmentBehaviour : MonoBehaviour
         {
             Size = 1f
         });
-        entityManager.SetSharedComponentData(e, new RenderMesh
+        entityManager.SetComponentData(e, new Scale
         {
-            mesh = mesh,
-            material = material
-
+            Value = scale
         });
+        //entityManager.SetSharedComponentData(e, new RenderMesh
+        //{
+        //    mesh = mesh,
+        //    material = material
+
+        //});
     }
 }
