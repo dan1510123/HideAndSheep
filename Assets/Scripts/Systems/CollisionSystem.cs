@@ -27,19 +27,24 @@ public class CollisionSystem : ComponentSystem
         });
         checkCollision<ProjectileStatsComponent, EnemyComponent> (Shape.Square, (Entity entity1, Entity entity2) =>
         {
-            PostUpdateCommands.DestroyEntity(entity1);
-
-            // Update stats
-            StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
-            entityManager.SetComponentData(entity2, new StatsComponent
+            ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
+            if (psc.IsFromPlayer)
             {
-                attack = esc.attack,
-                attackSpeed = esc.attackSpeed,
-                moveSpeed = esc.moveSpeed,
-                health = esc.health - 10
-            });
+                PostUpdateCommands.DestroyEntity(entity1);
 
-            Debug.Log("PROJECTILE AND ENEMY COLLISION");
+
+                // Update stats
+                StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
+                entityManager.SetComponentData(entity2, new StatsComponent
+                {
+                    attack = esc.attack,
+                    attackSpeed = esc.attackSpeed,
+                    moveSpeed = esc.moveSpeed,
+                    health = esc.health - 10
+                });
+
+                Debug.Log("PROJECTILE AND ENEMY COLLISION");
+            }
             return 0;
         });
 
