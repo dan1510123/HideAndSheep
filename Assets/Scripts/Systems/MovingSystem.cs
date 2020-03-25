@@ -48,9 +48,8 @@ public class MovingSystem : ComponentSystem
                 else
                 {
                     // move projectile in direction
-                    translation.Value.x += projectileStatsComponent.Direction.x * 0.05f;
-                    translation.Value.y += projectileStatsComponent.Direction.y * 0.05f;
-                    Debug.Log("in moving system" + translation.Value);
+                    translation.Value.x += projectileStatsComponent.Direction.x * 0.02f;
+                    translation.Value.y += projectileStatsComponent.Direction.y * 0.02f;
                 }
 
             }

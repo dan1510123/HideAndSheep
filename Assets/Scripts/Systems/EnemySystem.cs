@@ -13,15 +13,18 @@ public class EnemySystem : ComponentSystem
     Entity playerEntity;
     float3 playerPos;
     float timer = 0;
+    bool playerAlive;
+
     protected override void OnUpdate()
     {
-
+        playerAlive = false;
         // get the player's information
         Entities.ForEach((Entity player,
             ref PlayerComponent playerComponent,
             ref Translation translation) =>
         {
             playerEntity = player;
+            playerAlive = true;
             playerPos = translation.Value;
         });
         
@@ -31,14 +34,12 @@ public class EnemySystem : ComponentSystem
             ) =>
         {
             timer += Time.DeltaTime;
-            if (timer > 3)
+            if (timer > 3 && playerAlive)
             {
                 Shoot(translation.Value, playerPos);
                 timer = 0;
             }
         });
-        // figure out how to get the enemy to chase player
-        // also have enemy shoot in the direction of the player
 
     }
 
