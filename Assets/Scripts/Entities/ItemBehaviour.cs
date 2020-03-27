@@ -25,7 +25,7 @@ public class ItemBehaviour : MonoBehaviour
             typeof(LocalToWorld),
             typeof(ColliderComponent),
             typeof(ItemStats),
-            typeof(StatsComponent)
+            typeof(ItemID)
         );
 
         Entity e = entityManager.CreateEntity(entityArchetype);
@@ -38,19 +38,18 @@ public class ItemBehaviour : MonoBehaviour
         {
             Size = 1f
         });
-        entityManager.SetComponentData(e, new ItemStats
+        entityManager.SetComponentData(e, new ItemID
         {
             id = 0,
             type = ItemType.StatsItem
         });
-        entityManager.SetComponentData(e, new StatsComponent
+        entityManager.SetComponentData(e, new ItemStats
         {
             attack = 0,
             attackSpeed = 0,
-            moveSpeed = 5,
-            health = 5
+            moveSpeed = 1,
+            health = 0
         });
-
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
             mesh = mesh,
