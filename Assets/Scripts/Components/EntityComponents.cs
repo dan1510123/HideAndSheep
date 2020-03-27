@@ -12,10 +12,11 @@ namespace EntityComponents {
     }
     public struct EnemyComponent : IComponentData
     {
-        // Player 0 if being chased and 1 if chasing
         public int enemyType;
     }
-    public struct ProjectileComponent : IComponentData{};
+    public struct ProjectileComponent : IComponentData
+    {
+    };
 
 
 }

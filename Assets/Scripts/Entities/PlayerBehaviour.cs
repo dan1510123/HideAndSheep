@@ -44,7 +44,7 @@ public class PlayerBehaviour : MonoBehaviour
             attack = 1,
             attackSpeed = 1,
             moveSpeed = 1,
-            health = 10
+            health = 100
         });
         entityManager.SetComponentData(e, new MovementComponent
         {
@@ -72,5 +72,6 @@ public class PlayerBehaviour : MonoBehaviour
             material = material
 
         });
+
     }
 }
