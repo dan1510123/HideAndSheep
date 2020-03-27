@@ -19,7 +19,7 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        print("Created EnvironmentUnit, Start");
+        //print("Created EnvironmentUnit, Start");
         EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
