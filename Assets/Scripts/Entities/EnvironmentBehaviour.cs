@@ -8,8 +8,6 @@ using EnvironmentComponents;
 public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
     where ComponentType : struct, IComponentData
 {
-    [SerializeField] public Mesh mesh;
-    [SerializeField] public Material material;
     private Vector3 position = new Vector3(100, 100, 0);
     private float scale = 0.5f;
 
@@ -47,11 +45,9 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
         {
             Value = scale
         });
-        entityManager.SetSharedComponentData(e, new RenderMesh
+        entityManager.SetComponentData(e, new Scale
         {
-            mesh = mesh,
-            material = material
-
+            Value = scale
         });
     }
 }

@@ -10,8 +10,6 @@ using EntityComponents;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    [SerializeField] private Mesh mesh;
-    [SerializeField] private Material material;
     private Vector3 spawn = new Vector3(110, 110, 0);
 
     private void Start()
@@ -54,13 +52,5 @@ public class EnemyBehavior : MonoBehaviour
         {
             enemyType = 0
         });
-
-        entityManager.SetSharedComponentData(e, new RenderMesh
-        {
-            mesh = mesh,
-            material = material
-
-        });
-
     }
 }
