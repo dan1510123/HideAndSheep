@@ -47,7 +47,7 @@ public class ItemBehaviour : MonoBehaviour
         {
             attack = 0,
             attackSpeed = 0,
-            moveSpeed = 1,
+            moveSpeed = 3,
             health = 0
         });
         entityManager.SetSharedComponentData(e, new RenderMesh

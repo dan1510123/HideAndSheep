@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using System;
 using EntityComponents;
 using ItemComponent;
+using BackpackComponents;
 
 public class CollisionSystem : ComponentSystem
 {
@@ -73,6 +74,11 @@ public class CollisionSystem : ComponentSystem
                 moveSpeed = esc.moveSpeed + itemStats.moveSpeed,
                 health = esc.health + itemStats.health
             });
+
+            // Add itemID to backpack
+            DynamicBuffer<IntBufferElement> backpack = entityManager.GetBuffer<IntBufferElement>(entity1);
+            int itemID = entityManager.GetComponentData<ItemID>(entity2).id;
+            backpack.Add(new IntBufferElement { value = itemID });
 
             Debug.Log("PLAYER AND ITEM COLLISION");
             return 0;

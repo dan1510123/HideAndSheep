@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using Unity.Rendering;
 using Components;
 using EntityComponents;
+using BackpackComponents;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -60,6 +61,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Size = 1f
         });
+        entityManager.AddBuffer<IntBufferElement>(e);
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
             mesh = mesh,
