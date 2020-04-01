@@ -109,6 +109,8 @@ public class CollisionSystem : ComponentSystem
             backpack.Add(new IntBufferElement { value = itemID });
 
             Debug.Log("PLAYER AND ITEM COLLISION");
+            return 0;
+        });
 
         checkCollision<PlayerComponent, DoorComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
