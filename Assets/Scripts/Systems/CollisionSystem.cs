@@ -27,21 +27,48 @@ public class CollisionSystem : ComponentSystem
             Debug.Log("PROJECTILE COLLISION");
             return 0;
         });
+
         checkCollision<ProjectileStatsComponent, EnemyComponent> (Shape.Square, (Entity entity1, Entity entity2) =>
         {
-            PostUpdateCommands.DestroyEntity(entity1);
-
-            // Update stats
-            StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
-            entityManager.SetComponentData(entity2, new StatsComponent
+            ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
+            if (psc.IsFromPlayer)
             {
-                attack = esc.attack,
-                attackSpeed = esc.attackSpeed,
-                moveSpeed = esc.moveSpeed,
-                health = esc.health - 10
-            });
+                PostUpdateCommands.DestroyEntity(entity1);
 
-            Debug.Log("PROJECTILE AND ENEMY COLLISION");
+                // Update stats
+                StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
+                entityManager.SetComponentData(entity2, new StatsComponent
+                {
+                    attack = esc.attack,
+                    attackSpeed = esc.attackSpeed,
+                    moveSpeed = esc.moveSpeed,
+                    health = esc.health - 10
+                });
+
+                Debug.Log("PROJECTILE AND ENEMY COLLISION");
+            }
+            return 0;
+        });
+
+        checkCollision<ProjectileStatsComponent, PlayerComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
+        {
+            ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
+            if (!psc.IsFromPlayer)
+            {
+                PostUpdateCommands.DestroyEntity(entity1);
+
+                // Update stats
+                StatsComponent playerStats = entityManager.GetComponentData<StatsComponent>(entity2);
+                entityManager.SetComponentData(entity2, new StatsComponent
+                {
+                    attack = playerStats.attack,
+                    attackSpeed = playerStats.attackSpeed,
+                    moveSpeed = playerStats.moveSpeed,
+                    health = playerStats.health - 10
+                });
+
+                Debug.Log("PROJECTILE AND PLAYER COLLISION");
+            }
             return 0;
         });
 
@@ -60,6 +87,7 @@ public class CollisionSystem : ComponentSystem
             Debug.Log("PLAYER AND ENEMY COLLISION");
             return 0;
         });
+
 
         checkCollision<PlayerComponent, ItemID>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
@@ -81,6 +109,11 @@ public class CollisionSystem : ComponentSystem
             backpack.Add(new IntBufferElement { value = itemID });
 
             Debug.Log("PLAYER AND ITEM COLLISION");
+
+        checkCollision<PlayerComponent, DoorComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
+        {
+            PostUpdateCommands.DestroyEntity(entity2);
+            Debug.Log("OPENED DOOR");
             return 0;
         });
     }

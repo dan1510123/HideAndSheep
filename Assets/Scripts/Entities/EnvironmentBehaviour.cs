@@ -5,22 +5,29 @@ using Unity.Rendering;
 using Components;
 using EnvironmentComponents;
 
-public class EnvironmentBehaviour : MonoBehaviour
+public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
+    where ComponentType : struct, IComponentData
 {
-    [SerializeField] public Mesh mesh;
-    [SerializeField] public Material material;
-    public Vector3 position = new Vector3(100, 100, 0);
+    private Vector3 position = new Vector3(100, 100, 0);
+    private float scale = 0.5f;
+
+    public void SetPosition(Vector3 pos)
+    {
+        this.position = pos;
+    }
+
     // Use this for initialization
     void Start()
     {
-        print("Created EnvironmentUnit, Start");
+        //print("Created EnvironmentUnit, Start");
         EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
             typeof(Translation),
             typeof(LocalToWorld),
             typeof(ColliderComponent),
-            typeof(WallComponent),
+            typeof(ComponentType),
+            typeof(Scale),
             typeof(RenderMesh)
         );
 
@@ -32,13 +39,15 @@ public class EnvironmentBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {
-            Size = 1f
+            Size = 0.5f
         });
-        entityManager.SetSharedComponentData(e, new RenderMesh
+        entityManager.SetComponentData(e, new Scale
         {
-            mesh = mesh,
-            material = material
-
+            Value = scale
+        });
+        entityManager.SetComponentData(e, new Scale
+        {
+            Value = scale
         });
     }
 }

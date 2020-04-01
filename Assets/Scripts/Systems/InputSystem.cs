@@ -88,6 +88,11 @@ public class InputSystem : ComponentSystem
                 // Shoot projectile
                 fireProjectile(movementComponent, translation);
             }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                //BRING UP THE ESCAPE MENU
+
+            }
         });
 
         void fireProjectile(MovementComponent movementComponent, Translation translation)
@@ -97,7 +102,8 @@ public class InputSystem : ComponentSystem
             PostUpdateCommands.SetComponent(e, new ProjectileStatsComponent
             {
                 SpeedModifier = 10f,
-                Alive = true
+                Alive = true,
+                IsFromPlayer = true
             });
             PostUpdateCommands.SetComponent(e, new MovementComponent
             {

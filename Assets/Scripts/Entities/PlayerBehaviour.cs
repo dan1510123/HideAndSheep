@@ -13,7 +13,13 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
-    public float scale = 1f;
+    private float scale = 0.5f;
+    private Vector3 spawn = new Vector3(110, 110, 0);
+
+    public void SetSpawn(Vector3 pos)
+    {
+        spawn = pos;
+    }
 
     private void Start()
     {
@@ -39,7 +45,7 @@ public class PlayerBehaviour : MonoBehaviour
             attack = 1,
             attackSpeed = 1,
             moveSpeed = 1,
-            health = 10
+            health = 100
         });
         entityManager.SetComponentData(e, new MovementComponent
         {
@@ -47,7 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new Translation
         {
-            Value = new Vector3(0, 0, 0)
+            Value = spawn
         });
         entityManager.SetComponentData(e, new Scale
         {
@@ -59,7 +65,7 @@ public class PlayerBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {
-            Size = 1f
+            Size = 0.5f
         });
         entityManager.AddBuffer<IntBufferElement>(e);
         entityManager.SetSharedComponentData(e, new RenderMesh
@@ -68,5 +74,6 @@ public class PlayerBehaviour : MonoBehaviour
             material = material
 
         });
+
     }
 }

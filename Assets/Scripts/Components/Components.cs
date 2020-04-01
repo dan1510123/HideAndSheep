@@ -39,6 +39,8 @@ namespace Components {
         public float DamageModifier;
         public float SpeedModifier;
         public bool Alive;
+        public bool IsFromPlayer;
+        public float3 Direction;
     }
 
     public struct VelocityComponent : IComponentData

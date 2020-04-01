@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Scene : MonoBehaviour
 {
-    PlayerBehaviour player;
     [SerializeField] public PlayerBehaviour playerPrefab;
     [SerializeField] public ProjectileBehaviour projectilePrefab;
     [SerializeField] public EnemyBehavior enemyPrefab;
@@ -20,5 +19,9 @@ public class Scene : MonoBehaviour
 
         // Set up map
         mapGenerator.GenerateMap();
+
+        // Create Player
+        PlayerBehaviour player = Instantiate(playerPrefab);
+        player.SetSpawn(new Vector3(0, 0, 0));
     }
 }
