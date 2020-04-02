@@ -16,6 +16,7 @@ public class MovingSystem : ComponentSystem
             ref Translation translation,
             ref ProjectileStatsComponent projectileStats) =>
         {
+            
             translation.Value.x += projectileStats.Direction.x * 0.1f;
             translation.Value.y += projectileStats.Direction.y * 0.1f;
         });
