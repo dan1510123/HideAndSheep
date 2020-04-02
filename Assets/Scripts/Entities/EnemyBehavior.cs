@@ -10,7 +10,7 @@ using EntityComponents;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    private Vector3 spawn = new Vector3(110, 110, 0);
+    private Vector3 spawn = new Vector3(3, 3, 0);
 
     private void Start()
     {

@@ -11,6 +11,8 @@ public class InputSystem : ComponentSystem
 {
     private bool projectileFired = false;
     private float2 lastPlayerPosition = new float2(0, 0);
+    private float timer;
+
     protected override void OnUpdate()
     { 
         Entities.ForEach((ref Translation translation,
@@ -83,10 +85,18 @@ public class InputSystem : ComponentSystem
                 }
                 movementComponent.currMovementDirection = Dir.East;
             }
-            if (Input.GetKeyDown(KeyCode.Space) && !projectileFired)
+            timer += Time.DeltaTime;
+            if (Input.GetMouseButtonDown(0) && !projectileFired)
             {
-                // Shoot projectile
-                fireProjectile(movementComponent, translation);
+                if(timer > 1)
+                {
+                    // Shoot projectile
+                    float3 shootDir = Input.mousePosition;
+                    shootDir.z = 0.0f;
+                    shootDir = Camera.main.ScreenToWorldPoint(shootDir);
+                    fireProjectile(movementComponent, translation, shootDir-translation.Value);
+                }
+                
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -95,8 +105,16 @@ public class InputSystem : ComponentSystem
             }
         });
 
-        void fireProjectile(MovementComponent movementComponent, Translation translation)
+        void fireProjectile(MovementComponent movementComponent, Translation translation, float3 directionToPlayer)
         {
+            Vector2 dirNormalize;
+            dirNormalize.x = directionToPlayer.x;
+            dirNormalize.y = directionToPlayer.y;
+            dirNormalize.Normalize();
+
+            directionToPlayer.x = dirNormalize.x;
+            directionToPlayer.y = dirNormalize.y;
+
             Entity e = PostUpdateCommands.CreateEntity(ProjectileBehaviour.GetArchetype());
 
             PostUpdateCommands.SetComponent(e, new ProjectileStatsComponent
