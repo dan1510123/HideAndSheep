@@ -12,6 +12,9 @@ public class EnemyBehavior : MonoBehaviour
 {
     private Vector3 spawn = new Vector3(3, 3, 0);
 
+    [SerializeField] private Mesh mesh;
+    [SerializeField] private Material material;
+
     private void Start()
     {
         EntityManager entityManager = World.Active.EntityManager;
@@ -51,6 +54,12 @@ public class EnemyBehavior : MonoBehaviour
         entityManager.SetComponentData(e, new EnemyComponent
         {
             enemyType = 0
+        });
+        entityManager.SetSharedComponentData(e, new RenderMesh
+        {
+            mesh = mesh,
+            material = material
+
         });
     }
 }
