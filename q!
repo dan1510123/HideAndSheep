@@ -1,0 +1,360 @@
+[33mcommit 499db7ef50b37db69fb0ac3277d13aa67a2a4171[m[33m ([m[1;36mHEAD -> [m[1;32mmerge[m[33m)[m
+Merge: 8c1ac3d a731d82
+Author: Zasilus <asg101@case.edu>
+Date:   Fri Apr 3 12:05:26 2020 -0400
+
+    Merge branch 'merge' of https://github.com/sabsterette/HideAndSheep into merge
+
+[33mcommit 8c1ac3dbb12501a261cc2cffd4996a2c0347da4f[m
+Author: Zasilus <asg101@case.edu>
+Date:   Fri Apr 3 11:56:13 2020 -0400
+
+    Added groudnwork for hud
+    
+    Signed-off-by: Zasilus <asg101@case.edu>
+
+[33mcommit a731d82e2b3306de9bf3f1659fa996baf7138cde[m[33m ([m[1;31morigin/merge[m[33m)[m
+Author: sxt467 <sxt467@case.edu>
+Date:   Tue Mar 31 18:25:03 2020 -0600
+
+    fixed small merge errors
+
+[33mcommit f379dac8b14963c308ff466741d4e19b487b6d44[m
+Merge: 457c726 a2361b3
+Author: Justin Shearson <35663627+Justin-Shearson@users.noreply.github.com>
+Date:   Tue Mar 31 20:08:19 2020 -0400
+
+    Merge pull request #4 from sabsterette/anitaItem
+    
+    merge anitaitem with merge
+
+[33mcommit a2361b301b8255537ac96e29fbde10fad57f599b[m[33m ([m[1;31morigin/anitaItem[m[33m)[m
+Merge: d3107f5 457c726
+Author: Justin Shearson <35663627+Justin-Shearson@users.noreply.github.com>
+Date:   Tue Mar 31 20:07:28 2020 -0400
+
+    Merge branch 'merge' into anitaItem
+
+[33mcommit d3107f5c81757b6158acf127b26ede72fa3ae3ff[m
+Author: avl22 <avl22@case.edu>
+Date:   Tue Mar 31 18:47:58 2020 -0500
+
+    updated new files
+
+[33mcommit eaa01be5e4ff06eb08a8f3bbe6244e9d160471f3[m
+Author: avl22 <avl22@case.edu>
+Date:   Tue Mar 31 12:10:21 2020 -0500
+
+    added backpack style dynamic buffer to player
+
+[33mcommit 457c7268f360937df3f793179f864b32e0fb6d74[m
+Merge: 368d2de abff57a
+Author: Sabrina Tay <44148383+sabsterette@users.noreply.github.com>
+Date:   Fri Mar 27 15:18:39 2020 -0600
+
+    Merge pull request #3 from sabsterette/enemy_movement
+    
+    Enemy auto shooting every 3 seconds
+
+[33mcommit 368d2de63de4d9f35c49532336dce380044d72ec[m
+Author: Zasilus <asg101@case.edu>
+Date:   Fri Mar 27 17:15:25 2020 -0400
+
+    added the hud to the merge as well as the event system
+    
+    Signed-off-by: Zasilus <asg101@case.edu>
+
+[33mcommit c0c2a8db97522904f4dd4e8c20003e5bee2257f0[m
+Merge: 30f444e 128c571
+Author: Daniel <dan1510123@gmail.com>
+Date:   Fri Mar 27 16:46:24 2020 -0400
+
+    Merged HUD scripts and changes (not including scene)
+
+[33mcommit 30f444e387b81a79d2c7be18492b63793a1bc8d8[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Fri Mar 27 16:45:16 2020 -0400
+
+    Updated Scene
+
+[33mcommit 672ce1038ea0776dd4e58040b6c947f89c273f2a[m[33m ([m[1;32manitaItem[m[33m)[m
+Author: avl22 <avl22@case.edu>
+Date:   Fri Mar 27 15:45:14 2020 -0500
+
+    changed item implementation
+
+[33mcommit 81e1e231582e80b299f7c2639d88dfa16c5f021f[m
+Merge: a687038 554fed7
+Author: Daniel <dan1510123@gmail.com>
+Date:   Fri Mar 27 16:33:49 2020 -0400
+
+    Merged Justin's assets
+
+[33mcommit abff57a71a7fd9f2781091eadb1abb29c47970ab[m[33m ([m[1;31morigin/enemy_movement[m[33m)[m
+Author: sxt467 <sxt467@case.edu>
+Date:   Tue Mar 24 19:09:31 2020 -0600
+
+    collision detection added for projectile & player
+
+[33mcommit cbfa4b61488c252e5c5095b630512e614453e66d[m
+Author: sxt467 <sxt467@case.edu>
+Date:   Tue Mar 24 11:06:28 2020 -0600
+
+    enemy shoots at player
+
+[33mcommit ceafc9cf112fdb7e5093ad81453dc8c42dafa56b[m
+Author: avl22 <avl22@case.edu>
+Date:   Tue Mar 24 10:48:49 2020 -0500
+
+    added speed-boosting item
+    
+    * CollisionSystem.cs: added stat modification
+    
+    * Components.cs: added itemType enum
+
+[33mcommit a68703834aadf6023ccba5382a59f672e530cc07[m[33m ([m[1;31morigin/dan[m[33m)[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Mon Mar 23 22:06:57 2020 -0400
+
+    Updated EnvironmentBehaviour and added DoorBehaviour and collision with doors
+
+[33mcommit 554fed7c55026c9560a8c792764d974cba0a69bf[m[33m ([m[1;31morigin/leveldev[m[33m)[m
+Author: Justin Shearson <justinshearson@gmail.com>
+Date:   Mon Mar 23 21:58:13 2020 -0400
+
+    Added sprite to enemy prefab. Currently does not get destroyed when enemy is destroyed
+
+[33mcommit 31aa7bb1e6ce70ee178df5c347599d9966931f11[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Mon Mar 23 21:42:55 2020 -0400
+
+    Updated prefabs
+
+[33mcommit 08e718bfd03346bf1862605d38dbcaa27d20e95a[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Mon Mar 23 21:40:26 2020 -0400
+
+    Changed EnvironmentBehaviour to WallBehaviour and changed MapGeneration and sizing / scaling / collision sizes
+
+[33mcommit ccd8977e863834628b82b6fec9fb575a54646650[m
+Author: Justin Shearson <justinshearson@gmail.com>
+Date:   Mon Mar 23 20:31:44 2020 -0400
+
+    Restructured folders and added second tileset
+
+[33mcommit 36e3209d11abcbf50f52a41bb6f6b3ca34f9ab2f[m
+Author: Justin Shearson <justinshearson@gmail.com>
+Date:   Mon Mar 23 13:58:57 2020 -0400
+
+    Added very simple example of using tilesets for designing the level
+
+[33mcommit 128c571e143d3e066d48dce49623955f0df73a96[m[33m ([m[1;31morigin/huddev[m[33m, [m[1;32mhuddev[m[33m)[m
+Author: Zasilus <asg101@case.edu>
+Date:   Mon Mar 23 13:08:37 2020 -0400
+
+    Forgot to add the files before committing these are the new files. HudSystem interacts with the ECS system whereas UIMenu is a more monobehaviour class that mainly is for interfacing
+    
+    Signed-off-by: Zasilus <asg101@case.edu>
+
+[33mcommit b538d1c82baf56a327bc97c3e4f97056abb1cfc2[m
+Author: Zasilus <asg101@case.edu>
+Date:   Mon Mar 23 13:07:02 2020 -0400
+
+    Added a working health bar as well as the stats menu on the side as well as a button in the top right that pauses
+    
+    Signed-off-by: Zasilus <asg101@case.edu>
+
+[33mcommit 84b2a0c841730ca6c4b65b9d752cf78742eae7a4[m
+Author: Zasilus <asg101@case.edu>
+Date:   Sun Mar 22 15:34:39 2020 -0400
+
+    Cleaned up the code switched from trying to maintain a pure ECS style to a hybrid one for the HUD as the HUD isn't a game object
+    
+    Signed-off-by: Zasilus <asg101@case.edu>
+
+[33mcommit a184fa2b87896b78de22d31245dd717e79a1bb5b[m
+Author: Zasilus <asg101@case.edu>
+Date:   Sun Mar 22 14:59:11 2020 -0400
+
+    Added a health text that updates each frame to match current HP
+    
+    Signed-off-by: Zasilus <asg101@case.edu>
+
+[33mcommit debce2a4af139cc96104aea656e3fc7cc2560206[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Fri Feb 28 14:22:23 2020 -0500
+
+    Added more folders to game and made projectiles instantiate without losing frames
+
+[33mcommit a546829e7ac583376de27b447aa1f25c4e33f6e7[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Fri Feb 21 12:23:48 2020 -0500
+
+    Added CollisionSystem (using generics) and a HealthSystem for enemy
+    Added actions for collisions between projectile and wall / enemy
+
+[33mcommit 9a955685431339a8561691ebbc66790341991697[m
+Merge: a8521cb b64e063
+Author: Sabrina Tay <44148383+sabsterette@users.noreply.github.com>
+Date:   Fri Feb 21 11:56:26 2020 -0500
+
+    Merge pull request #2 from sabsterette/sabdestroys
+    
+    figured out destroying entities
+
+[33mcommit b64e0631462965ee203141c5ea63d0c18190e993[m[33m ([m[1;31morigin/sabdestroys[m[33m)[m
+Author: sxt467 <sxt467@case.edu>
+Date:   Fri Feb 21 10:11:15 2020 -0500
+
+    figured out destroying entities
+
+[33mcommit a8521cbd56ae45d4138e147c4e4bbbe6041579e0[m
+Author: Justin Shearson <justin.shearson@case.edu>
+Date:   Tue Feb 18 12:08:09 2020 -0500
+
+    Renamed StaticStuff to GlobalObjects and added CollisionSystem class with checkCollision method stub.
+
+[33mcommit c0816c73bb2412d4bf9725abf429b4df5cdc6a1b[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Sun Feb 16 22:41:11 2020 -0500
+
+    Stop a projectile once it hits a wall
+
+[33mcommit 4ade1d824146ddc3d43e680391bfe3907105f2ba[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Sun Feb 16 22:19:48 2020 -0500
+
+    Got simple collisions working
+
+[33mcommit 83144ab65cdb41ac26e52ea34141fd86deb01344[m[33m ([m[1;31morigin/sabrina_collision[m[33m)[m
+Author: sxt467 <sxt467@case.edu>
+Date:   Tue Feb 11 12:01:42 2020 -0500
+
+    removed one enemy component duplicate
+
+[33mcommit f84f0718a1e732e78cc4c4fd59d618fa8df4aa03[m
+Author: avl22 <avl22@case.edu>
+Date:   Tue Feb 11 11:53:28 2020 -0500
+
+    attempting to clone dev
+
+[33mcommit d9c3853dfb0eb6f5ac5a87ff080bccf8a15093e0[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Tue Feb 11 11:47:47 2020 -0500
+
+    Minor fixes to last commit
+
+[33mcommit 24d3fb57539512cd189e61f522595df0dd11d53a[m
+Merge: 2d692d6 5f555d6
+Author: avl22 <60661513+avl22@users.noreply.github.com>
+Date:   Tue Feb 11 11:39:54 2020 -0500
+
+    Merge pull request #1 from sabsterette/Anita
+    
+    Anita
+
+[33mcommit 2d692d6e23635a99e75d6464f2a9c65a4dac9644[m
+Merge: 128cf6f a3c9253
+Author: Daniel <dan1510123@gmail.com>
+Date:   Tue Feb 11 11:37:00 2020 -0500
+
+    Resolved merge conflicts
+
+[33mcommit 128cf6f4da9f1f99a15e35cbdeac9ef6d4d52a8c[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Tue Feb 11 11:26:34 2020 -0500
+
+    Resolved rebase conflicts
+
+[33mcommit a29cd100b051a416a24b303146c7f79c21a0759d[m
+Author: sxt467 <sxt467@case.edu>
+Date:   Tue Feb 11 10:16:47 2020 -0500
+
+    Fluid motion with keypress
+
+[33mcommit 5f555d6237425d786aa64cba38e1a0fbc37faf97[m
+Author: avl22 <avl22@case.edu>
+Date:   Tue Feb 11 11:13:29 2020 -0500
+
+    added enemy
+
+[33mcommit d6f73826e557d85e28a71c15e620bfaf54a30286[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Tue Feb 11 02:50:36 2020 -0500
+
+    Implemented a simple box map generator. Did not get collisions working but made some minor fixes and added RigidBody2D to Player and EnvironmentUnit
+
+[33mcommit 44120c5dda49a55ef93a325f6ac7f16bbaa8c5b5[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Tue Feb 11 02:10:41 2020 -0500
+
+    Created MapGenerator and EnvironmentUnit classes (implementation needed) and fixed a bug in InputSystem where multiple projectiles would fire every time spacebar was pressed
+
+[33mcommit 2a2b20ebf7be7eed4e3b1cc789b12ded1d47829b[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Mon Feb 10 21:49:20 2020 -0500
+
+    Pulled Juice's code for EnvironmentComponents
+    Merged Juice's branch and EnvironmentComponents
+
+[33mcommit e960874181cc111eb0e0fc5df2801a2ba5c4e35c[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Sun Feb 9 23:42:10 2020 -0500
+
+    Projectiles work when pressing space and start in player location and fire in same direction
+
+[33mcommit f00386c013ad99d37c39b56cd2c4cf942b35ddf9[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Sun Feb 9 23:01:29 2020 -0500
+
+    Added a Scene script to create player and projectile GameObjects from an Empty GameObject with the script attached
+
+[33mcommit 6ac177465366c410b2be686cb35d400abde3bbad[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Sun Feb 9 22:35:04 2020 -0500
+
+    Added EntityComponents namespace to separate between entities in systems. Also started implementing MovingSystem
+
+[33mcommit 03d8ac5cdfaa6d91e66ebf5b139b6d14713c958f[m
+Author: Justin Shearson <justinshearson@gmail.com>
+Date:   Sun Feb 9 12:57:25 2020 -0500
+
+    Created Components under one namespace and added a ProjectileBehaviour
+
+[33mcommit f54582944debc1bbd15e0926f9600d83a12347d9[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Tue Feb 4 10:48:05 2020 -0500
+
+    Updated PlayerBehavior class name and added mesh
+
+[33mcommit 2562e1e2a43a22a79956014b701c2824cdab042f[m
+Author: avl22 <avl22@case.edu>
+Date:   Tue Feb 11 10:44:35 2020 -0500
+
+    added enemy
+
+[33mcommit 4289360b9604b128f806e3cce35aa50d3e940d7f[m
+Author: avl22 <avl22@case.edu>
+Date:   Tue Feb 11 10:38:15 2020 -0500
+
+    added enemy
+
+[33mcommit a3c92531a48a8715ecbd910c5e8a1b67002af952[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Tue Feb 4 11:15:45 2020 -0500
+
+    Added gitconfig
+    
+    Added a .gitconfig file with setup for the UnityYAMLMerge tool.
+
+[33mcommit 6f70e04fd3a22208749d36273ec0ff6e2607d4d5[m
+Author: Daniel <dan1510123@gmail.com>
+Date:   Tue Feb 4 10:48:05 2020 -0500
+
+    Updated PlayerBehavior class name and added mesh
+
+[33mcommit f124cf25acf49ac86aac6f55b51988a7c282ceab[m
+Author: sxt467 <sxt467@case.edu>
+Date:   Tue Feb 4 10:30:32 2020 -0500
+
+    first commit

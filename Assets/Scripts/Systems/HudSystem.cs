@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Components;
 using EnvironmentComponents;
+using BackpackComponents;
 using EntityComponents;
 using Unity.Entities;
 using UnityEngine;
@@ -13,6 +14,16 @@ public class HudSystem : ComponentSystem
     public Text healthText;
     public Image healthBar;
     public Text statText;
+    public Text backPack;
+
+    EntityManager entityManager;
+
+    protected override void OnCreateManager()
+    {
+        base.OnCreateManager();
+
+        entityManager = World.Active.EntityManager;
+    }
     void Start()
     {
     }
@@ -21,6 +32,7 @@ public class HudSystem : ComponentSystem
         healthText = GameObject.Find("HealthText").GetComponent<Text>();
         healthBar = GameObject.Find("Image").GetComponent<Image>();
         statText = GameObject.Find("StatText").GetComponent<Text>();
+        backPack = GameObject.Find("UIBackPack").GetComponent<Text>();
         //This Grabs everyone with these components
         //AKA the player
         Entities.ForEach((Entity e,
@@ -48,7 +60,12 @@ public class HudSystem : ComponentSystem
             healthText.text = "Current Health: " + statsComponent.health;
             healthBar.rectTransform.sizeDelta = new Vector2(statsComponent.health * 40, 20);
             statText.text = "Attack Damage: " + statsComponent.attack + "\nAttack Speed: " + statsComponent.attackSpeed + "\nMove Speed: " + statsComponent.moveSpeed;
-
+            DynamicBuffer<IntBufferElement> backpack = entityManager.GetBuffer<IntBufferElement>(e);
+            backPack.text = "Backpack: ";
+            foreach (var spriteValue in backpack.Reinterpret<IntBufferElement>())
+            {
+                backPack.text = backPack.text + " " + spriteValue.value;
+            }
         });
 
     }
