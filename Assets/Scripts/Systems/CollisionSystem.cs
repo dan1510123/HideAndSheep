@@ -115,6 +115,8 @@ public class CollisionSystem : ComponentSystem
         checkCollision<PlayerComponent, DoorComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
             PostUpdateCommands.DestroyEntity(entity2);
+            Debug.Log(EntityManager.GetComponentData<DoorComponent>(entity2).levelTransition);
+            
             Debug.Log("OPENED DOOR");
             return 0;
         });

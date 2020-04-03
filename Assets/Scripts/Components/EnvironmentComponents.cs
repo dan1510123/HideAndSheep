@@ -8,5 +8,7 @@ namespace EnvironmentComponents
 {
     public struct WallComponent : IComponentData {}
 
-    public struct DoorComponent : IComponentData {}
+    public struct DoorComponent : IComponentData {
+        public int levelTransition;
+    }
 }

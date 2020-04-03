@@ -4,17 +4,20 @@ using Unity.Transforms;
 using Unity.Rendering;
 using Components;
 using EnvironmentComponents;
+using System;
 
 public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
     where ComponentType : struct, IComponentData
 {
     private Vector3 position = new Vector3(100, 100, 0);
+    private int transitionNumber = -1;
     private float scale = 0.5f;
-
+    
     public void SetPosition(Vector3 pos)
     {
         this.position = pos;
     }
+    
 
     // Use this for initialization
     void Start()
@@ -49,5 +52,17 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
         {
             Value = scale
         });
+
+        
     }
+
+    //private void SetTransitionComponent(int transitionValue, ref EntityManager manager, Entity e)
+    //{
+    //    manager.SetComponentData(e, new DoorComponent
+    //    {
+    //        levelTransition = transitionValue
+    //    });
+    //}
+
+
 }

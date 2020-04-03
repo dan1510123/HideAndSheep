@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-
-
+using Unity;
+using Unity.Entities;
 public class MapGenerator : MonoBehaviour
 {
     public WallBehaviour wallPrefab;
@@ -13,8 +13,10 @@ public class MapGenerator : MonoBehaviour
         this.doorPrefab = doorPrefab;
     }
 
+
     public void GenerateMap()
     {
+        int doorCount = 0;
         WallBehaviour wall;
         DoorBehaviour door;
         // Generates a quick map
@@ -28,7 +30,11 @@ public class MapGenerator : MonoBehaviour
                     {
                         // It's possibly a door
                         door = Instantiate(doorPrefab);
+                        
                         door.SetPosition(new Vector3(x, y, 0));
+                        door.LevelTransition = doorCount;
+                        doorCount++;
+
                     }
                     else
                     {
