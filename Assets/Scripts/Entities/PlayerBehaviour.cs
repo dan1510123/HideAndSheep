@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using Unity.Rendering;
 using Components;
 using EntityComponents;
+using BackpackComponents;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class PlayerBehaviour : MonoBehaviour
             attack = 1,
             attackSpeed = 1,
             moveSpeed = 1,
-            health = 10
+            health = 100
         });
         entityManager.SetComponentData(e, new MovementComponent
         {
@@ -66,11 +67,13 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Size = 0.5f
         });
+        entityManager.AddBuffer<IntBufferElement>(e);
         entityManager.SetSharedComponentData(e, new RenderMesh
         {
             mesh = mesh,
             material = material
 
         });
+
     }
 }

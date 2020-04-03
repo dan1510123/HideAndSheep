@@ -102,7 +102,8 @@ public class InputSystem : ComponentSystem
             PostUpdateCommands.SetComponent(e, new ProjectileStatsComponent
             {
                 SpeedModifier = 10f,
-                Alive = true
+                Alive = true,
+                IsFromPlayer = true
             });
             PostUpdateCommands.SetComponent(e, new MovementComponent
             {

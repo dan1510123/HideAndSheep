@@ -18,6 +18,11 @@ namespace Components {
         South,
         West
     }
+    public enum ItemType
+    {
+        StatsItem = 0,
+        WeaponItem = 1
+    }
 
     public struct MovementComponent : IComponentData
     {
@@ -34,6 +39,8 @@ namespace Components {
         public float DamageModifier;
         public float SpeedModifier;
         public bool Alive;
+        public bool IsFromPlayer;
+        public float3 Direction;
     }
 
     public struct VelocityComponent : IComponentData
