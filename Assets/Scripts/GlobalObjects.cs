@@ -13,4 +13,5 @@ public struct GlobalObjects
     [SerializeField] public static ProjectileBehaviour projectile;
     [SerializeField] public static Mesh mesh;
     [SerializeField] public static Material material;
+    [SerializeField] public static ItemTable iTable;
 }

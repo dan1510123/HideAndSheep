@@ -65,6 +65,7 @@ public class HudSystem : ComponentSystem
             foreach (var spriteValue in backpack.Reinterpret<IntBufferElement>())
             {
                 backPack.text = backPack.text + " " + spriteValue.value;
+                Item currentItem = GlobalObjects.iTable.lookupItem(spriteValue.value);
             }
         });
 

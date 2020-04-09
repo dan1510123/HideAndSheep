@@ -17,6 +17,8 @@ public class Scene : MonoBehaviour
         GlobalObjects.mesh = mesh;
         GlobalObjects.material = material;
 
+        //Setting up the itemTable
+        
         // Set up map
         mapGenerator.GenerateMap();
 
