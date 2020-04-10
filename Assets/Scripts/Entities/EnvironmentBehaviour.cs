@@ -12,10 +12,12 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
     private Vector3 position = new Vector3(100, 100, 0);
     private int transitionNumber = -1;
     private float scale = 0.5f;
-    
+    Entity entity;
+    EntityManager entityManager;
     public void SetPosition(Vector3 pos)
     {
         this.position = pos;
+        transform.position = pos;
     }
     
 
@@ -23,7 +25,7 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
     void Start()
     {
         //print("Created EnvironmentUnit, Start");
-        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         EntityArchetype entityArchetype = entityManager.CreateArchetype(
             typeof(Translation),
@@ -34,21 +36,21 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
             typeof(RenderMesh)
         );
 
-        Entity e = entityManager.CreateEntity(entityArchetype);
+        entity = entityManager.CreateEntity(entityArchetype);
 
-        entityManager.SetComponentData(e, new Translation
+        entityManager.SetComponentData(entity, new Translation
         {
             Value = position
         });
-        entityManager.SetComponentData(e, new ColliderComponent
+        entityManager.SetComponentData(entity, new ColliderComponent
         {
             Size = 0.5f
         });
-        entityManager.SetComponentData(e, new Scale
+        entityManager.SetComponentData(entity, new Scale
         {
             Value = scale
         });
-        entityManager.SetComponentData(e, new Scale
+        entityManager.SetComponentData(entity, new Scale
         {
             Value = scale
         });
@@ -56,6 +58,13 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        entityManager.SetComponentData(entity, new Translation
+        {
+            Value = position
+        });
+    }
     //private void SetTransitionComponent(int transitionValue, ref EntityManager manager, Entity e)
     //{
     //    manager.SetComponentData(e, new DoorComponent

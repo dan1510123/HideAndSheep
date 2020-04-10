@@ -50,7 +50,7 @@ public class MapGenerator : MonoBehaviour
                     if ((minDoorYBound <= y && y <= maxDoorYBound) || (minDoorXBound <= x && x <= maxDoorXBound))
                     {
                         // It's possibly a door
-                        door = Instantiate(doorPrefab);
+                        door = Instantiate(doorPrefab, new Vector3(100, 100, 0), doorPrefab.transform.rotation);
                         
                         door.SetPosition(new Vector3(x, y, 0));
                         if(isNewDoor(doorCount))

@@ -117,6 +117,8 @@ protected override void OnUpdate()
         //Check for player collision between the player character and the door.
         checkCollision<PlayerComponent, DoorComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
+            Debug.Log("Door position is " + EntityManager.GetComponentData<Translation>(entity2).Value);
+            Debug.Log("Player position is " + EntityManager.GetComponentData<Translation>(entity1).Value);
             int doorTransition = getDoorTransition(entity2);
             switch(doorTransition)
             {

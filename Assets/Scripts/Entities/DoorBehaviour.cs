@@ -25,7 +25,11 @@ public class DoorBehaviour : EnvironmentBehaviour<DoorComponent>
             );
 
             Entity e = entityManager.CreateEntity(entityArchetype);
-
+            
+            entityManager.SetComponentData(e, new Translation
+            {
+                Value = new Vector3(-9999, -9999)
+            });
             SetTransition(LevelTransition, ref entityManager, ref e);
 
         }
