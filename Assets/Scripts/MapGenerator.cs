@@ -53,7 +53,12 @@ public class MapGenerator : MonoBehaviour
                         door = Instantiate(doorPrefab);
                         
                         door.SetPosition(new Vector3(x, y, 0));
-                        door.LevelTransition = doorCount;
+                        if(isNewDoor(doorCount))
+                        {
+                            Debug.Log("Level transition is " + transition);
+                            transition++;
+                        }
+                        door.LevelTransition = transition;
                         doorCount++;
 
                     }
@@ -68,12 +73,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private bool withinBounds(float val, float minBound, float maxBound)
+    bool isNewDoor(int doorCount)
     {
-        if(minBound < val && val < maxBound)
-        {
-            return true;
-        }
-        return false;
+        Debug.Log("Door count is " + doorCount);
+        return doorCount % 2 == 0;
     }
 }

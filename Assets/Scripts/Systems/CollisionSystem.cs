@@ -12,14 +12,16 @@ using BackpackComponents;
 public class CollisionSystem : ComponentSystem
 {
     EntityManager entityManager;
-
+    Camera camera;
+    
     protected override void OnCreateManager()
     {
         base.OnCreateManager();
 
         entityManager = World.Active.EntityManager;
+        camera = GameObject.FindObjectOfType<Camera>();
     }
-    protected override void OnUpdate()
+protected override void OnUpdate()
     {
         checkCollision<ProjectileStatsComponent, WallComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
@@ -115,7 +117,24 @@ public class CollisionSystem : ComponentSystem
         //Check for player collision between the player character and the door.
         checkCollision<PlayerComponent, DoorComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
-            Debug.Log(EntityManager.GetComponentData<DoorComponent>(entity2).levelTransition);
+            int doorTransition = getDoorTransition(entity2);
+            switch(doorTransition)
+            {
+                case 0:
+                    shiftCamera(0, 100);
+                    break;
+                case 1:
+                    shiftCamera(-100, 0);
+                    break;
+                case 2:
+                    shiftCamera(0, -100);
+                    break;
+                case 3:
+                    shiftCamera(100, 0);
+                    break;
+                default:
+                    break;
+            }
             PostUpdateCommands.DestroyEntity(entity2);
             
             Debug.Log("OPENED DOOR");
@@ -173,5 +192,15 @@ public class CollisionSystem : ComponentSystem
         }
 
         return overlapping;
+    }
+
+    int getDoorTransition(Entity door)
+    {
+        return EntityManager.GetComponentData<DoorComponent>(door).levelTransition;
+    }
+
+    void shiftCamera(float x, float y)
+    {
+        this.camera.transform.position = camera.transform.position + new Vector3(x, y);
     }
 }
