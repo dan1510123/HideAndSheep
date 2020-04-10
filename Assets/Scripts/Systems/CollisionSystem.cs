@@ -112,10 +112,11 @@ public class CollisionSystem : ComponentSystem
             return 0;
         });
 
+        //Check for player collision between the player character and the door.
         checkCollision<PlayerComponent, DoorComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
-            PostUpdateCommands.DestroyEntity(entity2);
             Debug.Log(EntityManager.GetComponentData<DoorComponent>(entity2).levelTransition);
+            PostUpdateCommands.DestroyEntity(entity2);
             
             Debug.Log("OPENED DOOR");
             return 0;

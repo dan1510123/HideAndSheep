@@ -18,7 +18,7 @@ public class Scene : MonoBehaviour
         GlobalObjects.material = material;
 
         // Set up map
-        mapGenerator.GenerateMap();
+        mapGenerator.GenerateRoom(0, 0);
 
         // Create Player
         PlayerBehaviour player = Instantiate(playerPrefab);
