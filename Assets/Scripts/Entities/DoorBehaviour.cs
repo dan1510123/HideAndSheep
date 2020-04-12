@@ -9,29 +9,20 @@ public class DoorBehaviour : EnvironmentBehaviour<DoorComponent>
 {
     //[assembly: RegisterGenericComponentType(typeof(ComponentType<DoorComponent>))]
     public int LevelTransition { private get; set; } = -1;
+
     private void Update()
     {
         if (LevelTransition != -1)
         {
-            EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            EntityManager entityManager = GetEntityManager();
+            Entity e = GetEntity();
+            entityManager.AddComponent<WallComponent>(e);
 
-            EntityArchetype entityArchetype = entityManager.CreateArchetype(
-                typeof(Translation),
-                typeof(LocalToWorld),
-                typeof(ColliderComponent),
-                typeof(DoorComponent),
-                typeof(Scale),
-                typeof(RenderMesh)
-            );
-
-            Entity e = entityManager.CreateEntity(entityArchetype);
-            
-            entityManager.SetComponentData(e, new Translation
+            entityManager.SetComponentData(e, new DoorComponent
             {
-                Value = new Vector3(-9999, -9999)
+                levelTransition = LevelTransition,
+                locked = true
             });
-            SetTransition(LevelTransition, ref entityManager, ref e);
-
         }
     }
 
@@ -39,7 +30,8 @@ public class DoorBehaviour : EnvironmentBehaviour<DoorComponent>
     {
         manager.SetComponentData(e, new DoorComponent
         {
-            levelTransition = transitionValue
+            levelTransition = transitionValue,
+            locked = true
         });
     }
 }

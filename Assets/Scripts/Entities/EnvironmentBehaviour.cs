@@ -9,17 +9,30 @@ using System;
 public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
     where ComponentType : struct, IComponentData
 {
+    [SerializeField] Mesh mesh;
+    [SerializeField] Material material;
+
     private Vector3 position = new Vector3(100, 100, 0);
     private int transitionNumber = -1;
     private float scale = 0.5f;
-    Entity entity;
+    private Entity entity;
     EntityManager entityManager;
+
     public void SetPosition(Vector3 pos)
     {
         this.position = pos;
         transform.position = pos;
     }
-    
+
+    public EntityManager GetEntityManager()
+    {
+        return entityManager;
+    }
+
+    public Entity GetEntity()
+    {
+        return entity;
+    }
 
     // Use this for initialization
     void Start()
@@ -50,9 +63,11 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
         {
             Value = scale
         });
-        entityManager.SetComponentData(entity, new Scale
+        entityManager.SetSharedComponentData(entity, new RenderMesh
         {
-            Value = scale
+            mesh = mesh,
+            material = material
+
         });
 
         
@@ -72,6 +87,4 @@ public class EnvironmentBehaviour<ComponentType> : MonoBehaviour
     //        levelTransition = transitionValue
     //    });
     //}
-
-
 }

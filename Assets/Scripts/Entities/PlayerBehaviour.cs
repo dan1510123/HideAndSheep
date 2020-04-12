@@ -61,7 +61,7 @@ public class PlayerBehaviour : MonoBehaviour
         });
         entityManager.SetComponentData(e, new VelocityComponent
         {
-            Velocity = 2f
+            Velocity = 1f
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {
@@ -72,8 +72,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
             mesh = mesh,
             material = material
-
         });
-
     }
 }

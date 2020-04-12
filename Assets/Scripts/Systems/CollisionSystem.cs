@@ -21,7 +21,7 @@ public class CollisionSystem : ComponentSystem
         entityManager = World.Active.EntityManager;
         camera = GameObject.FindObjectOfType<Camera>();
     }
-protected override void OnUpdate()
+    protected override void OnUpdate()
     {
         checkCollision<ProjectileStatsComponent, WallComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
@@ -30,27 +30,27 @@ protected override void OnUpdate()
             return 0;
         });
 
-        checkCollision<ProjectileStatsComponent, EnemyComponent> (Shape.Square, (Entity entity1, Entity entity2) =>
-        {
-            ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
-            if (psc.IsFromPlayer)
-            {
-                PostUpdateCommands.DestroyEntity(entity1);
+        checkCollision<ProjectileStatsComponent, EnemyComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
+       {
+           ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
+           if (psc.IsFromPlayer)
+           {
+               PostUpdateCommands.DestroyEntity(entity1);
 
                 // Update stats
                 StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
-                entityManager.SetComponentData(entity2, new StatsComponent
-                {
-                    attack = esc.attack,
-                    attackSpeed = esc.attackSpeed,
-                    moveSpeed = esc.moveSpeed,
-                    health = esc.health - 10
-                });
+               entityManager.SetComponentData(entity2, new StatsComponent
+               {
+                   attack = esc.attack,
+                   attackSpeed = esc.attackSpeed,
+                   moveSpeed = esc.moveSpeed,
+                   health = esc.health - 10
+               });
 
-                Debug.Log("PROJECTILE AND ENEMY COLLISION");
-            }
-            return 0;
-        });
+               Debug.Log("PROJECTILE AND ENEMY COLLISION");
+           }
+           return 0;
+       });
 
         checkCollision<ProjectileStatsComponent, PlayerComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
@@ -119,27 +119,30 @@ protected override void OnUpdate()
         {
             Debug.Log("Door position is " + EntityManager.GetComponentData<Translation>(entity2).Value);
             Debug.Log("Player position is " + EntityManager.GetComponentData<Translation>(entity1).Value);
-            int doorTransition = getDoorTransition(entity2);
-            switch(doorTransition)
+            if (EntityManager.GetComponentData<DoorComponent>(entity2).locked == false)
             {
-                case 0:
-                    shiftCamera(0, 100);
-                    break;
-                case 1:
-                    shiftCamera(-100, 0);
-                    break;
-                case 2:
-                    shiftCamera(0, -100);
-                    break;
-                case 3:
-                    shiftCamera(100, 0);
-                    break;
-                default:
-                    break;
+                int doorTransition = getDoorTransition(entity2);
+                switch (doorTransition)
+                {
+                    case 0:
+                        shiftCamera(0, 100);
+                        break;
+                    case 1:
+                        shiftCamera(-100, 0);
+                        break;
+                    case 2:
+                        shiftCamera(0, -100);
+                        break;
+                    case 3:
+                        shiftCamera(100, 0);
+                        break;
+                    default:
+                        break;
+                }
+                PostUpdateCommands.DestroyEntity(entity2);
+
+                Debug.Log("OPENED DOOR");
             }
-            PostUpdateCommands.DestroyEntity(entity2);
-            
-            Debug.Log("OPENED DOOR");
             return 0;
         });
     }

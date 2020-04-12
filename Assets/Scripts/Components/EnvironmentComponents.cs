@@ -10,5 +10,6 @@ namespace EnvironmentComponents
 
     public struct DoorComponent : IComponentData {
         public int levelTransition;
+        public bool locked;
     }
 }
