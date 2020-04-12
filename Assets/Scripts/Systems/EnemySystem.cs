@@ -36,7 +36,6 @@ public class EnemySystem : ComponentSystem
             timer += Time.DeltaTime;
             if (timer > 3 && playerAlive)
             {
-                Debug.Log("Enemy " + translation.Value);
                 Shoot(translation.Value, playerPos);
                 timer = 0;
             }
