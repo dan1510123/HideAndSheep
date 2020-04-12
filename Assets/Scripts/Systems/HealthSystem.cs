@@ -1,10 +1,5 @@
 ﻿using UnityEngine;
 using Unity.Entities;
-using Unity.Transforms;
-using Components;
-using EnvironmentComponents;
-using EntityComponents;
-using Unity.Mathematics;
 
 public class HealthSystem : ComponentSystem
 {
@@ -15,6 +10,7 @@ public class HealthSystem : ComponentSystem
         {
             if (statsComponent.health <= 0)
             {
+                Debug.Log("Enemy killed");
                 PostUpdateCommands.DestroyEntity(e);
             }
         });

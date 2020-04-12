@@ -23,6 +23,23 @@ public class RoomSystem : ComponentSystem
     }
     protected override void OnUpdate()
     {
+        int enemiesLeft = 0;
+        Entities.ForEach((Entity e,
+            ref EnemyComponent enemyComponent) =>
+        {
+            enemiesLeft++;
+        });
+
+        if (enemiesLeft == 0)
+        {
+            Entities.ForEach((Entity e,
+            ref DoorComponent doorComponent,
+            ref WallComponent wallComponent) =>
+            {
+                doorComponent.locked = false;
+            });
+        }
+
         Entities.ForEach((Entity e,
             ref DoorComponent doorComponent,
             ref WallComponent wallComponent) =>
@@ -32,5 +49,6 @@ public class RoomSystem : ComponentSystem
                 entityManager.RemoveComponent<WallComponent>(e);
             }
         });
+
     }
 }

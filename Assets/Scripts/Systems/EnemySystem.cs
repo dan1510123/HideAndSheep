@@ -27,7 +27,7 @@ public class EnemySystem : ComponentSystem
             playerAlive = true;
             playerPos = translation.Value;
         });
-        
+
         Entities.ForEach((
             ref EnemyComponent enemyComponent,
             ref Translation translation
