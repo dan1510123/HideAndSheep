@@ -11,6 +11,8 @@ public class InputSystem : ComponentSystem
 {
     private bool projectileFired = false;
     private float2 lastPlayerPosition = new float2(0, 0);
+    private float timer;
+
     protected override void OnUpdate()
     { 
         Entities.ForEach((ref Translation translation,
@@ -83,11 +85,23 @@ public class InputSystem : ComponentSystem
                 }
                 movementComponent.currMovementDirection = Dir.East;
             }
-            if (Input.GetKeyDown(KeyCode.Space) && !projectileFired)
+            timer += Time.DeltaTime;
+            if (Input.GetMouseButtonDown(0))
             {
-                // Shoot projectile
-                fireProjectile(movementComponent, translation);
+                if (timer > 1)
+                {
+                    //Shoot projectile
+                    float3 shootDir = Input.mousePosition;
+                    shootDir.z = 0.0f;
+                    shootDir = Camera.main.ScreenToWorldPoint(shootDir);
+                    fireProjectile(movementComponent, translation, shootDir - translation.Value);
+                }
+
             }
+            //if (Input.GetKey(KeyCode.Space) && !projectileFired)
+            //{
+            //    fireProjectile(movementComponent, translation);
+            //}
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 //BRING UP THE ESCAPE MENU
@@ -95,68 +109,78 @@ public class InputSystem : ComponentSystem
             }
         });
 
-        void fireProjectile(MovementComponent movementComponent, Translation translation)
-        {
-            Entity e = PostUpdateCommands.CreateEntity(ProjectileBehaviour.GetArchetype());
-
-            PostUpdateCommands.SetComponent(e, new ProjectileStatsComponent
-            {
-                SpeedModifier = 10f,
-                Alive = true,
-                IsFromPlayer = true
-            });
-            PostUpdateCommands.SetComponent(e, new MovementComponent
-            {
-                currMovementDirection = movementComponent.currMovementDirection
-            });
-            PostUpdateCommands.SetComponent(e, new Translation
-            {
-                Value = translation.Value
-            });
-            PostUpdateCommands.SetComponent(e, new Scale
-            {
-                Value = 0.4f
-            });
-            PostUpdateCommands.SetComponent(e, new ColliderComponent
-            {
-                Size = .2f
-            });
-            PostUpdateCommands.SetSharedComponent(e, new RenderMesh
-            {
-                mesh = GlobalObjects.mesh,
-                material = GlobalObjects.material
-            });
-
-            projectileFired = true;
-        }
-
-        float DisplacementCheckCollision(float2 pos1, float s1, float displacement)
-        {
-            Entities.ForEach((ref WallComponent wallComponent,
-                    ref Translation translation1,
-                    ref ColliderComponent colliderComponent1) =>
-            {
-                float2 pos2 = new float2(translation1.Value.x, translation1.Value.y);
-                float s2 = colliderComponent1.Size;
-                bool collided = AreSquaresOverlapping(pos1, s1, pos2, s2);
-
-                if (collided)
-                {
-                    displacement = 0;
-                }
-            });
-            return displacement;
-        }
-
-        // Checks if the square at position posA and size sizeA overlaps 
-        // with the square at position posB and size sizeB
-        bool AreSquaresOverlapping(float2 posA, float sizeA, float2 posB, float sizeB)
-        {
-            float d = (sizeA / 2) + (sizeB / 2);
-            return (math.abs(posA.x - posB.x) < d && math.abs(posA.y - posB.y) < d);
-        }
-
         projectileFired = false;
+    }
+
+    void fireProjectile(MovementComponent movementComponent, Translation translation, float3 directionToPlayer)
+    {
+        Vector2 dirNormalize;
+        dirNormalize.x = directionToPlayer.x;
+        dirNormalize.y = directionToPlayer.y;
+        dirNormalize.Normalize();
+
+        directionToPlayer.x = dirNormalize.x;
+        directionToPlayer.y = dirNormalize.y;
+
+        Entity e = PostUpdateCommands.CreateEntity(ProjectileBehaviour.GetArchetype());
+
+        PostUpdateCommands.SetComponent(e, new ProjectileStatsComponent
+        {
+            SpeedModifier = 10f,
+            Alive = true,
+            IsFromPlayer = true,
+            Direction = directionToPlayer
+
+        });
+        PostUpdateCommands.SetComponent(e, new MovementComponent
+        {
+            currMovementDirection = movementComponent.currMovementDirection
+        });
+        PostUpdateCommands.SetComponent(e, new Translation
+        {
+            Value = translation.Value
+        });
+        PostUpdateCommands.SetComponent(e, new Scale
+        {
+            Value = 0.4f
+        });
+        PostUpdateCommands.SetComponent(e, new ColliderComponent
+        {
+            Size = .2f
+        });
+        PostUpdateCommands.SetSharedComponent(e, new RenderMesh
+        {
+            mesh = GlobalObjects.mesh,
+            material = GlobalObjects.material
+        });
+
+        projectileFired = true;
+    }
+
+    float DisplacementCheckCollision(float2 pos1, float s1, float displacement)
+    {
+        Entities.ForEach((ref WallComponent wallComponent,
+                ref Translation translation1,
+                ref ColliderComponent colliderComponent1) =>
+        {
+            float2 pos2 = new float2(translation1.Value.x, translation1.Value.y);
+            float s2 = colliderComponent1.Size;
+            bool collided = AreSquaresOverlapping(pos1, s1, pos2, s2);
+
+            if (collided)
+            {
+                displacement = 0;
+            }
+        });
+        return displacement;
+    }
+
+    // Checks if the square at position posA and size sizeA overlaps 
+    // with the square at position posB and size sizeB
+    bool AreSquaresOverlapping(float2 posA, float sizeA, float2 posB, float sizeB)
+    {
+        float d = (sizeA / 2) + (sizeB / 2);
+        return (math.abs(posA.x - posB.x) < d && math.abs(posA.y - posB.y) < d);
     }
 
 }

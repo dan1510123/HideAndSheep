@@ -32,7 +32,7 @@ public class ItemBehaviour : MonoBehaviour
 
         entityManager.SetComponentData(e, new Translation
         {
-            Value = new float3(-3, 3, 0)
+            Value = new float3(-3, 1, 0)
         });
         entityManager.SetComponentData(e, new ColliderComponent
         {
