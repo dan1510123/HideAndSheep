@@ -17,7 +17,7 @@ public class HudSystem : ComponentSystem
     public Text backPack;
     public static int backPackLeftTransform = 500;
     public int numberOfItems = 0;
-    public static int itemWidth = 50;
+    public static int itemWidth = 25;
 
     EntityManager entityManager;
 
@@ -77,7 +77,7 @@ public class HudSystem : ComponentSystem
                 GameObject itemIcon = new GameObject();
                 Image newImage = itemIcon.AddComponent<Image>();
                 itemIcon.GetComponent<RectTransform>().SetParent(backPack.transform);
-                itemIcon.transform.position = itemIcon.transform.position + new Vector3(backPackLeftTransform + numberOfItems * itemWidth, 50, 0);
+                itemIcon.transform.position = itemIcon.transform.position + new Vector3(backPackLeftTransform + numberOfItems * itemWidth, 20, 0);
                 Debug.Log(itemIcon.transform.localPosition);
                 Item currentItem = GlobalObjects.iTable.lookupItem(spriteValue.value);
                 Sprite currentItemSprite = currentItem.itemSprite;
