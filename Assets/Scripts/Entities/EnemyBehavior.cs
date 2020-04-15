@@ -10,24 +10,33 @@ using EntityComponents;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    private Vector3 spawn = new Vector3(1, 1, 0);
+    private Vector3 spawn = new Vector3(2, 1, 0);
 
     //[SerializeField] private Mesh mesh;
     //[SerializeField] private Material material;
 
     private GameObject player;
+    private GameObject enemyGameObject;
     private Vector2 target;
     private Entity entity;
     private EntityManager entityManager;
     private BoxCollider2D collider;
     private Vector2 lastDir;
+    private SpriteRenderer spriteRenderer;
+
+    public void setSpawn(Vector3 newSpawn)
+    {
+        spawn = newSpawn;
+    }
 
     private void Start()
     {
 
         collider = GetComponent<BoxCollider2D>();
-        player = GameObject.FindWithTag("Player");
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        enemyGameObject = transform.gameObject;
 
+        player = GameObject.FindWithTag("Player");
 
         entityManager = World.Active.EntityManager;
 
@@ -89,6 +98,12 @@ public class EnemyBehavior : MonoBehaviour
         {
             Value = transform.position
         });
+
+        int health = entityManager.GetComponentData<StatsComponent>(entity).health;
+        if(health <= 0)
+        {
+            Destroy(enemyGameObject);
+        }
     }
 
     protected bool Move(Vector2 startPos, Vector2 endPos, out RaycastHit2D hit)

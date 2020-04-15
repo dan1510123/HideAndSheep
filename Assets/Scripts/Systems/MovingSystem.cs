@@ -20,49 +20,5 @@ public class MovingSystem : ComponentSystem
             translation.Value.x += projectileStats.Direction.x * 0.1f;
             translation.Value.y += projectileStats.Direction.y * 0.1f;
         });
-        //    Entities.ForEach((Entity e,
-        //        ref Translation translation,
-        //        ref MovementComponent moveComponent,
-        //        ref ProjectileStatsComponent projectileStatsComponent,
-        //        ref ColliderComponent colliderComponent) =>
-        //    {
-        //        if (!projectileStatsComponent.Alive)
-        //        {
-        //            PostUpdateCommands.DestroyEntity(e);
-        //        }
-        //        else
-        //        {
-        //            float s1 = colliderComponent.Size;
-        //            float dt = Time.DeltaTime;
-        //            float projectileDisplacement = projectileStatsComponent.SpeedModifier * dt;
-        //            if (projectileStatsComponent.IsFromPlayer)
-        //            {
-        //                if (moveComponent.currMovementDirection == Dir.East)
-        //                {
-        //                    translation.Value.x += projectileDisplacement;
-        //                }
-        //                else if (moveComponent.currMovementDirection == Dir.West)
-        //                {
-        //                    translation.Value.x -= projectileDisplacement;
-        //                }
-        //                else if (moveComponent.currMovementDirection == Dir.North)
-        //                {
-        //                    translation.Value.y += projectileDisplacement;
-        //                }
-        //                else if (moveComponent.currMovementDirection == Dir.South)
-        //                {
-        //                    translation.Value.y -= projectileDisplacement;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                // move projectile in direction
-        //                translation.Value.x += projectileStatsComponent.Direction.x * 0.02f;
-        //                translation.Value.y += projectileStatsComponent.Direction.y * 0.02f;
-        //            }
-
-        //        }
-        //    });
     }
-
 }

@@ -4,7 +4,7 @@ public class Scene : MonoBehaviour
 {
     [SerializeField] public PlayerBehaviour playerPrefab;
     [SerializeField] public ProjectileBehaviour projectilePrefab;
-    [SerializeField] public EnemyBehavior enemyPrefab;
+    [SerializeField] public GameObject enemyPrefab;
     [SerializeField] public ItemBehaviour itemPrefab;
     [SerializeField] public MapGenerator mapGenerator;
     [SerializeField] public Mesh mesh;
@@ -23,5 +23,7 @@ public class Scene : MonoBehaviour
         // Create Player
         PlayerBehaviour player = Instantiate(playerPrefab);
         player.SetSpawn(new Vector3(0, 0, 0));
+
+
     }
 }

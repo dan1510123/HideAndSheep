@@ -12,6 +12,12 @@ public class HealthSystem : ComponentSystem
             {
                 Debug.Log("Enemy killed");
                 PostUpdateCommands.DestroyEntity(e);
+                //GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+                //foreach(GameObject enemy in enemies)
+                //{
+                //    GameObject.Destroy(enemy);
+                //}
             }
         });
     }

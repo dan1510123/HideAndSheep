@@ -465,6 +465,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 1906217702530219125, guid: 56a85702575e044adbdd2c550b18ed7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1906217702530219127, guid: 56a85702575e044adbdd2c550b18ed7c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3890,6 +3895,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 5861980135219637553, guid: 4bd54284e28ba458dbdd3200077529e0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5861980135219637566, guid: 4bd54284e28ba458dbdd3200077529e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4294,6 +4304,11 @@ PrefabInstance:
     - target: {fileID: 7196363623979836543, guid: 98618ed1f63cb47a38b1c719b8dc26da,
         type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196363623979836543, guid: 98618ed1f63cb47a38b1c719b8dc26da,
+        type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
