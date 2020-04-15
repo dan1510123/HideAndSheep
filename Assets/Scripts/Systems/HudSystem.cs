@@ -15,6 +15,9 @@ public class HudSystem : ComponentSystem
     public Image healthBar;
     public Text statText;
     public Text backPack;
+    public static int backPackLeftTransform = 500;
+    public int numberOfItems = 0;
+    public static int itemWidth = 50;
 
     EntityManager entityManager;
 
@@ -42,30 +45,48 @@ public class HudSystem : ComponentSystem
             ref VelocityComponent velocityComponent,
             ref ColliderComponent colliderComponent) =>
         {
-            //StatsComponent updateComponent = statsComponent;
-            //Entities.ForEach((Entity f,
-            //    ref HealthBarComponent healthBarComponent) =>
-            //{
-            //    healthBarComponent.health = updateComponent.health;
-            //    healthBarComponent.attack = updateComponent.attack;
-            //    healthBarComponent.attackSpeed = updateComponent.attackSpeed;
-            //    healthBarComponent.moveSpeed = updateComponent.moveSpeed;
-            //});
+        //StatsComponent updateComponent = statsComponent;
+        //Entities.ForEach((Entity f,
+        //    ref HealthBarComponent healthBarComponent) =>
+        //{
+        //    healthBarComponent.health = updateComponent.health;
+        //    healthBarComponent.attack = updateComponent.attack;
+        //    healthBarComponent.attackSpeed = updateComponent.attackSpeed;
+        //    healthBarComponent.moveSpeed = updateComponent.moveSpeed;
+        //});
             if (Input.GetKeyDown(KeyCode.M))
             {
                 statsComponent.health--;
                 Debug.Log("The Current Health is decremented to " + statsComponent.health);
 
             }
-            healthText.text = "Current Health: " + statsComponent.health;
-            healthBar.rectTransform.sizeDelta = new Vector2(statsComponent.health * 40, 20);
-            statText.text = "Attack Damage: " + statsComponent.attack + "\nAttack Speed: " + statsComponent.attackSpeed + "\nMove Speed: " + statsComponent.moveSpeed;
-            DynamicBuffer<IntBufferElement> backpack = entityManager.GetBuffer<IntBufferElement>(e);
-            backPack.text = "Backpack: ";
-            foreach (var spriteValue in backpack.Reinterpret<IntBufferElement>())
+        healthText.text = "Current Health: " + statsComponent.health;
+        healthBar.rectTransform.sizeDelta = new Vector2(statsComponent.health * 40, 20);
+        statText.text = "Attack Damage: " + statsComponent.attack + "\nAttack Speed: " + statsComponent.attackSpeed + "\nMove Speed: " + statsComponent.moveSpeed;
+        DynamicBuffer<IntBufferElement> backpack = entityManager.GetBuffer<IntBufferElement>(e);
+        backPack.text = "Backpack: ";
+        foreach (var spriteValue in backpack.Reinterpret<IntBufferElement>())
+        {
+            string gameObjectString = "Item" + spriteValue.value;
+            if (GameObject.Find(gameObjectString))
             {
-                backPack.text = backPack.text + " " + spriteValue.value;
+                Debug.Log("Already Generated");
+            }
+            else
+            {
+                GameObject itemIcon = new GameObject();
+                Image newImage = itemIcon.AddComponent<Image>();
+                itemIcon.GetComponent<RectTransform>().SetParent(backPack.transform);
+                itemIcon.transform.position = itemIcon.transform.position + new Vector3(backPackLeftTransform + numberOfItems * itemWidth, 50, 0);
+                Debug.Log(itemIcon.transform.localPosition);
                 Item currentItem = GlobalObjects.iTable.lookupItem(spriteValue.value);
+                Sprite currentItemSprite = currentItem.itemSprite;
+                newImage.sprite = currentItemSprite;
+                itemIcon.name = "Item" + spriteValue.value;
+                numberOfItems++;
+            }
+                backPack.text = backPack.text + " " + spriteValue.value;
+                
             }
         });
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using ItemComponent;
 
 public class Scene : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Scene : MonoBehaviour
     [SerializeField] public MapGenerator mapGenerator;
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
+    [SerializeField] public Sprite itemSpriteOne;
 
     private void Start()
     {
@@ -18,7 +20,24 @@ public class Scene : MonoBehaviour
         GlobalObjects.material = material;
 
         //Setting up the itemTable
-        
+        ItemID itemOneID;
+        itemOneID.id = 0;
+        itemOneID.type = 0;
+        ItemStats itemOneStats;
+        itemOneStats.moveSpeed = 2;
+        itemOneStats.attack = 0;
+        itemOneStats.attackSpeed = 0;
+        itemOneStats.health = 0;
+        Item itemOne = new Item();
+        itemOne.itemSprite = itemSpriteOne;
+        itemOne.itemID = itemOneID;
+        itemOne.stats = itemOneStats;
+        ItemTable table = new ItemTable();
+        GlobalObjects.iTable = table;
+        Debug.Log(table);
+        Debug.Log(itemOne);
+        table.addItem(itemOne);
+
         // Set up map
         mapGenerator.GenerateMap();
 

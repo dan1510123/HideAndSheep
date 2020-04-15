@@ -20,6 +20,7 @@ public class ItemTable
         missingNoItem.itemID = missingNoId;
         missingNoItem.stats = missingNoStats;
         missingNoItem.itemSprite = null;
+        itemTable = new Dictionary<int, Item>();
     }
 
     public void addItem(Item insertedItem)
