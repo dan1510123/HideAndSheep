@@ -12,7 +12,9 @@ public class InputSystem : ComponentSystem
     private bool projectileFired = false;
     private float2 lastPlayerPosition = new float2(0, 0);
     private float timer;
+    private GameObject player;
 
+    
     protected override void OnUpdate()
     { 
         Entities.ForEach((ref Translation translation,
@@ -22,6 +24,8 @@ public class InputSystem : ComponentSystem
             ref VelocityComponent velocityComponent,
             ref ColliderComponent colliderComponent) =>
         {
+            player = GameObject.FindWithTag("Player");
+
             float s1 = colliderComponent.Size;
             float displacement = velocityComponent.Velocity * statsComponent.moveSpeed * Time.DeltaTime;
 
@@ -85,6 +89,9 @@ public class InputSystem : ComponentSystem
                 }
                 movementComponent.currMovementDirection = Dir.East;
             }
+
+            player.transform.position = translation.Value;
+
             timer += Time.DeltaTime;
             if (Input.GetMouseButtonDown(0))
             {
