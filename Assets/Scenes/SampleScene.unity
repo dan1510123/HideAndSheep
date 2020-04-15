@@ -262,18 +262,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2764884153223536618}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &386010405 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2764884153441505999, guid: c4f79b4ba3299dd4a948395d3a113a8c,
-    type: 3}
-  m_PrefabInstance: {fileID: 2764884153223536618}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150283131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1360eb733661e4337af103f6549a779a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &408769244
 GameObject:
   m_ObjectHideFlags: 0
@@ -4528,7 +4516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1581227861}
   projectilePrefab: {fileID: 1769207261}
-  enemyPrefab: {fileID: 386010405}
+  enemyPrefab: {fileID: 150283131}
   itemPrefab: {fileID: 408769247}
   mapGenerator: {fileID: 982007815}
   mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
@@ -4736,6 +4724,11 @@ PrefabInstance:
     - target: {fileID: 2764884153441505993, guid: c4f79b4ba3299dd4a948395d3a113a8c,
         type: 3}
       propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2764884153441505993, guid: c4f79b4ba3299dd4a948395d3a113a8c,
+        type: 3}
+      propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2764884153441505996, guid: c4f79b4ba3299dd4a948395d3a113a8c,
