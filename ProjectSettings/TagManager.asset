@@ -8,6 +8,7 @@ TagManager:
   - MasterSlider
   - SFXSlider
   - MusicSlider
+  - BackgroundPanel
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - 
   - 
   - Wall
-  - 
+  - ButtonText
   - 
   - 
   - 
