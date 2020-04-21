@@ -256,6 +256,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &242247162 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3128360441672619943, guid: 234b116546a4f477090b95facc3ad0bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1769207259}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20791ca508234b00bd218b350607599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &386010404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2764884153441505998, guid: c4f79b4ba3299dd4a948395d3a113a8c,
@@ -603,7 +615,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 982007814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa55dd74225940088216f08dc2a169a, type: 3}
+  m_Script: {fileID: 11500000, guid: cc9d55c140b784a4dbe286f25ba87bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wallPrefab: {fileID: 520882295}
@@ -4307,7 +4319,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1581227859}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1581227861 stripped
+--- !u!114 &1644514336 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7196363623979836540, guid: 98618ed1f63cb47a38b1c719b8dc26da,
     type: 3}
@@ -4473,18 +4485,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1769207259}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1769207261 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3128360441672619943, guid: 234b116546a4f477090b95facc3ad0bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1769207259}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f20791ca508234b00bd218b350607599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1788146027
 GameObject:
   m_ObjectHideFlags: 0
@@ -4511,16 +4511,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1788146027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f41ec526538040baa759540fb1b359b, type: 3}
+  m_Script: {fileID: 11500000, guid: c500b749675394cbc83316bf5e237a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 1581227861}
-  projectilePrefab: {fileID: 1769207261}
+  playerPrefab: {fileID: 1644514336}
+  projectilePrefab: {fileID: 242247162}
   enemyPrefab: {fileID: 150283131}
   itemPrefab: {fileID: 408769247}
   mapGenerator: {fileID: 982007815}
-  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  material: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!4 &1788146029
 Transform:
   m_ObjectHideFlags: 0
