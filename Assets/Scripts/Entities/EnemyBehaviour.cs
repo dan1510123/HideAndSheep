@@ -8,7 +8,7 @@ using Unity.Rendering;
 using Components;
 using EntityComponents;
 
-public class EnemyBehavior : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour
 {
     private Vector3 spawn = new Vector3(2, 1, 0);
 

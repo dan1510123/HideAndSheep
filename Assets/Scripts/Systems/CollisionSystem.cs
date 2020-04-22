@@ -126,38 +126,82 @@ public class CollisionSystem : ComponentSystem
                 teleportingPlayerLock = true;
                 int doorTransition = getDoorTransition(entity2);
                 Debug.Log("Door transition: " + doorTransition);
+                int CAMERA_OFFSET = 15;
+
                 switch (doorTransition)
                 {
                     case 0:
-                        GlobalObjects.cameraPosition.y += 30;
-                        shiftCamera(0, 30);
+                        GlobalObjects.cameraPosition.y += CAMERA_OFFSET;
+                        shiftCamera(0, CAMERA_OFFSET);
                         break;
                     case 1:
-                        GlobalObjects.cameraPosition.x += 30;
-                        shiftCamera(30, 0);
+                        GlobalObjects.cameraPosition.x += CAMERA_OFFSET;
+                        shiftCamera(CAMERA_OFFSET, 0);
                         break;
                     case 2:
-                        GlobalObjects.cameraPosition.y -= 30;
-                        shiftCamera(0, -30);
+                        GlobalObjects.cameraPosition.y -= CAMERA_OFFSET;
+                        shiftCamera(0, -CAMERA_OFFSET);
                         break;
                     case 3:
-                        GlobalObjects.cameraPosition.x -= 30;
-                        shiftCamera(-30, 0);
+                        GlobalObjects.cameraPosition.x -= CAMERA_OFFSET;
+                        shiftCamera(-30, -CAMERA_OFFSET);
                         break;
                     default:
                         break;
                 }
 
-                Debug.Log(GlobalObjects.mapLogic.currentRoom);
+                //Debug.Log(GlobalObjects.mapLogic.currentRoom);
                 GlobalObjects.mapLogic.currentRoom = GlobalObjects.mapLogic.currentRoom.rooms[doorTransition];
-                Debug.Log(GlobalObjects.mapLogic.currentRoom);
+                //Debug.Log(GlobalObjects.mapLogic.currentRoom);
 
-                GlobalObjects.mapBehaviour.GenerateRoomWalls(
-                    GlobalObjects.mapLogic.currentRoom,
-                    GlobalObjects.cameraPosition.x,
-                    GlobalObjects.cameraPosition.y);
+                if (!GlobalObjects.mapLogic.currentRoom.roomFound)
+                {
+                    GlobalObjects.mapBehaviour.GenerateRoomWalls(
+                        GlobalObjects.mapLogic.currentRoom,
+                        GlobalObjects.cameraPosition.x,
+                        GlobalObjects.cameraPosition.y);
 
-                Debug.Log("OPENED DOOR");
+                    GlobalObjects.mapLogic.currentRoom.roomFound = true;
+                }
+
+                // Teleport the player to next room
+                Entities.ForEach((ref Translation translation,
+                    ref PlayerComponent playerComponent) =>
+                {
+                    int spawnDoor = (doorTransition + 2) % 4;
+                    switch(spawnDoor)
+                    {
+                        case 0:
+                            translation.Value = new Vector3(
+                                GlobalObjects.cameraPosition.x,
+                                GlobalObjects.cameraPosition.y + 2.4f,
+                                0);
+                            break;
+                        case 1:
+                            translation.Value = new Vector3(
+                                GlobalObjects.cameraPosition.x,
+                                GlobalObjects.cameraPosition.y + 4.9f,
+                                0);
+                            break;
+                        case 2:
+                            translation.Value = new Vector3(
+                                GlobalObjects.cameraPosition.x,
+                                GlobalObjects.cameraPosition.y - 2.4f,
+                                0);
+                            break;
+                        case 3:
+                            translation.Value = new Vector3(
+                                GlobalObjects.cameraPosition.x,
+                                GlobalObjects.cameraPosition.y - 4.9f,
+                                0);
+                            break;
+                        default:
+                            break;
+                    }
+
+                });
+               
+                Debug.Log("USED DOOR");
             }
             return 0;
         });

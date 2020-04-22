@@ -3,8 +3,8 @@ using UnityEngine;
 public class Scene : MonoBehaviour
 {
     [SerializeField] public PlayerBehaviour playerPrefab;
-    [SerializeField] public ProjectileBehaviour projectilePrefab;
     [SerializeField] public GameObject enemyPrefab;
+    [SerializeField] public ProjectileBehaviour projectilePrefab;
     [SerializeField] public ItemBehaviour itemPrefab;
     [SerializeField] public MapBehaviour mapBehaviour;
     [SerializeField] public Mesh mesh;
@@ -16,12 +16,15 @@ public class Scene : MonoBehaviour
         GlobalObjects.projectile = projectilePrefab;
         GlobalObjects.mesh = mesh;
         GlobalObjects.material = material;
+        GlobalObjects.enemyPrefab = enemyPrefab;
         GlobalObjects.mapBehaviour = mapBehaviour;
+
 
         // Set up map
         GlobalObjects.mapLogic = new MapLogic();
         GlobalObjects.mapLogic.Setup(3);
-        GlobalObjects.mapBehaviour.Setup(GlobalObjects.mapLogic.currentFloorInfo.getStartRoom());
+        Room startRoom = GlobalObjects.mapLogic.currentFloorInfo.getStartRoom();
+        GlobalObjects.mapBehaviour.Setup(ref startRoom);
 
         // Create Player
         PlayerBehaviour player = Instantiate(playerPrefab);

@@ -4515,8 +4515,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1644514336}
-  projectilePrefab: {fileID: 242247162}
   enemyPrefab: {fileID: 150283131}
+  projectilePrefab: {fileID: 242247162}
   itemPrefab: {fileID: 408769247}
   mapBehaviour: {fileID: 982007815}
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
