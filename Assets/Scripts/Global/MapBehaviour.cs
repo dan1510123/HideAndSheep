@@ -11,14 +11,14 @@ public class MapBehaviour : MonoBehaviour
     {
         // Generate first room
         GenerateRoomWalls(initialRoom, 0, 0);
-        //SpawnEnemies();
+        SpawnEnemies(0, 0);
         initialRoom.roomFound = true;
     }
 
-    public void SpawnEnemies()
+    public void SpawnEnemies(float horizontalShift, float verticalShift)
     {
         GameObject e = Instantiate(GlobalObjects.enemyPrefab, new Vector3(100, 100, 0), GlobalObjects.enemyPrefab.transform.rotation);
-        e.GetComponent<EnemyBehaviour>().setSpawn(new Vector3(3.83f, 1.48f, 0));
+        e.GetComponent<EnemyBehaviour>().setSpawn(new Vector3(horizontalShift + 3.83f, verticalShift + 1.48f, 0));
     }
 
     //Generates walls and doors for a room

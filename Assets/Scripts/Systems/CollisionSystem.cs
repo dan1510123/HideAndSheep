@@ -14,6 +14,7 @@ public class CollisionSystem : ComponentSystem
     EntityManager entityManager;
     Camera camera;
     bool teleportingPlayerLock = false;
+    float freezeTime = 0;
     
     protected override void OnCreateManager()
     {
@@ -24,6 +25,15 @@ public class CollisionSystem : ComponentSystem
     }
     protected override void OnUpdate()
     {
+        if(teleportingPlayerLock)
+        {
+            freezeTime += Time.DeltaTime;
+        }
+        if(freezeTime > 0.1f)
+        {
+            teleportingPlayerLock = false;
+        }
+
         checkCollision<ProjectileStatsComponent, WallComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
             PostUpdateCommands.DestroyEntity(entity1);
@@ -33,7 +43,6 @@ public class CollisionSystem : ComponentSystem
 
         checkCollision<ProjectileStatsComponent, EnemyComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
-            teleportingPlayerLock = false;
             ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
             if (psc.IsFromPlayer)
             {
@@ -124,6 +133,8 @@ public class CollisionSystem : ComponentSystem
             if (EntityManager.GetComponentData<DoorComponent>(entity2).locked == false && !teleportingPlayerLock)
             {
                 teleportingPlayerLock = true;
+                freezeTime = Time.DeltaTime;
+
                 int doorTransition = getDoorTransition(entity2);
                 Debug.Log("Door transition: " + doorTransition);
                 int CAMERA_OFFSET = 15;
@@ -144,11 +155,13 @@ public class CollisionSystem : ComponentSystem
                         break;
                     case 3:
                         GlobalObjects.cameraPosition.x -= CAMERA_OFFSET;
-                        shiftCamera(-30, -CAMERA_OFFSET);
+                        shiftCamera(-CAMERA_OFFSET, 0);
                         break;
                     default:
                         break;
                 }
+
+                Debug.Log(GlobalObjects.cameraPosition);
 
                 //Debug.Log(GlobalObjects.mapLogic.currentRoom);
                 GlobalObjects.mapLogic.currentRoom = GlobalObjects.mapLogic.currentRoom.rooms[doorTransition];
@@ -160,7 +173,7 @@ public class CollisionSystem : ComponentSystem
                         GlobalObjects.mapLogic.currentRoom,
                         GlobalObjects.cameraPosition.x,
                         GlobalObjects.cameraPosition.y);
-
+                    GlobalObjects.mapBehaviour.SpawnEnemies(GlobalObjects.cameraPosition.x, GlobalObjects.cameraPosition.y);
                     GlobalObjects.mapLogic.currentRoom.roomFound = true;
                 }
 
@@ -169,30 +182,32 @@ public class CollisionSystem : ComponentSystem
                     ref PlayerComponent playerComponent) =>
                 {
                     int spawnDoor = (doorTransition + 2) % 4;
-                    switch(spawnDoor)
+                    Debug.Log("SPAWN DOOR: " + spawnDoor);
+                    Debug.Log(GlobalObjects.cameraPosition);
+                    switch (spawnDoor)
                     {
                         case 0:
                             translation.Value = new Vector3(
                                 GlobalObjects.cameraPosition.x,
-                                GlobalObjects.cameraPosition.y + 2.4f,
+                                GlobalObjects.cameraPosition.y + 2.2f,
                                 0);
                             break;
                         case 1:
                             translation.Value = new Vector3(
-                                GlobalObjects.cameraPosition.x,
-                                GlobalObjects.cameraPosition.y + 4.9f,
+                                GlobalObjects.cameraPosition.x + 4.7f,
+                                GlobalObjects.cameraPosition.y,
                                 0);
                             break;
                         case 2:
                             translation.Value = new Vector3(
                                 GlobalObjects.cameraPosition.x,
-                                GlobalObjects.cameraPosition.y - 2.4f,
+                                GlobalObjects.cameraPosition.y - 2.2f,
                                 0);
                             break;
                         case 3:
                             translation.Value = new Vector3(
-                                GlobalObjects.cameraPosition.x,
-                                GlobalObjects.cameraPosition.y - 4.9f,
+                                GlobalObjects.cameraPosition.x - 4.7f,
+                                GlobalObjects.cameraPosition.y,
                                 0);
                             break;
                         default:
@@ -200,7 +215,7 @@ public class CollisionSystem : ComponentSystem
                     }
 
                 });
-               
+
                 Debug.Log("USED DOOR");
             }
             return 0;

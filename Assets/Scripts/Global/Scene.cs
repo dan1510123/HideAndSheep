@@ -22,14 +22,12 @@ public class Scene : MonoBehaviour
 
         // Set up map
         GlobalObjects.mapLogic = new MapLogic();
-        GlobalObjects.mapLogic.Setup(3);
+        GlobalObjects.mapLogic.Setup(5);
         Room startRoom = GlobalObjects.mapLogic.currentFloorInfo.getStartRoom();
         GlobalObjects.mapBehaviour.Setup(ref startRoom);
 
         // Create Player
         PlayerBehaviour player = Instantiate(playerPrefab);
         player.SetSpawn(new Vector3(0, 0, 0));
-
-
     }
 }
