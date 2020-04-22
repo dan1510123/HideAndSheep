@@ -5,15 +5,34 @@ using UnityEngine.UI;
 using Components;
 using Unity.Entities;
 using Unity;
+using UnityEngine.Networking;
+using Assets.Scripts.HUD;
+using System.Windows;
 public class MainMenuController : MonoBehaviour
 {
 
     [SerializeField] private GameObject buttons;
     [SerializeField] private GameObject volumeSliders;
     [SerializeField] private Image background;
-
+    [SerializeField] private GameObject playOptions;
+    [SerializeField] private GameObject HostOptions;
+    [SerializeField] private GameObject JoinOptions;
+    private readonly string getURL = "https://api.ipify.org";
+    private string publicIp;
     private Vector2 backgroundDelta = new Vector2(300, 400);
     private Vector3 backgroundOffset = new Vector2(0, 75);
+    private IpRequestManager requestManager;
+    private Text hostIpText;
+    private float loopTime = 0;
+   
+    public void Start()
+    {
+        requestManager = transform.gameObject.AddComponent<IpRequestManager>();
+        hostIpText = HostOptions.GetComponentInChildren<Text>();
+
+    }
+
+    #region GoTos
     //Enables the buttons in the options menu
     public void GoToOptions()
     {
@@ -23,8 +42,31 @@ public class MainMenuController : MonoBehaviour
         background.rectTransform.localPosition -= backgroundOffset;
     }
 
+    //Go to the singleplayer & multiplayer menu
+    public void GoToPlayOptions()
+    {
+        playOptions.SetActive(true);
+        buttons.SetActive(false);
+    }
+
+    public void GoToHostOptions()
+    {
+        background.rectTransform.sizeDelta += backgroundDelta * .83f;
+        playOptions.SetActive(false);
+        HostOptions.SetActive(true);
+        StartCoroutine(GetHostIp());
+    }
+
+    public void GotToJoinOptions()
+    {
+        playOptions.SetActive(false);
+        JoinOptions.SetActive(true);
+    }
+    #endregion
+
+    #region BackTos
     //Goes back to the main menu screen
-    public void backToMenu()
+    public void BackToMenuFromVolumeSliders()
     {
         buttons.SetActive(true);
         volumeSliders.SetActive(false);
@@ -33,7 +75,29 @@ public class MainMenuController : MonoBehaviour
 
     }
 
+    //Goes back to main menu from play options menu
+    public void BackToMenuFromPlayOptions()
+    {
+        buttons.SetActive(true);
+        playOptions.SetActive(false);
+    }
 
+    //Goes back to the play options menu
+    public void BackToPlayOptionsFromHost()
+    {
+        background.rectTransform.sizeDelta -= backgroundDelta * .83f;
+        playOptions.SetActive(true);
+        HostOptions.SetActive(false);
+    }
+
+    public void BackToPlayOptionsFromJoin()
+    {
+        playOptions.SetActive(true);
+        JoinOptions.SetActive(false);
+    }
+    #endregion
+
+    #region SoundOptions
     //Changes the game volume
     public void SetMasterVolume(float val)
     {
@@ -41,24 +105,63 @@ public class MainMenuController : MonoBehaviour
     }
 
     //Sets the sound effect volume 
-    public void setSFXVolume(float val)
+    public void SetSFXVolume(float val)
     {
         Debug.Log("SFX volume: " + val);
     }
 
     //Sets the music volume
-    public void setMusicVolume(float val)
+    public void SetMusicVolume(float val)
     {
         Debug.Log("Music volume: " + val);
     }
-    public void playGame()
+
+    #endregion
+
+    #region PlayOptions
+    /// <summary>
+    /// Plays the game
+    /// </summary>
+    public void PlayGame()
     {
         Application.LoadLevel(1);
     }
+
+    /// <summary>
+    /// Plays the game
+    /// </summary>
+    /// <param name="modifier">Value is 0 if host, 1 if client</param>
+    public void PlayGame(int modifier)
+    {
+        Application.LoadLevel(1);
+    }
+
 
     public void quitGame()
     {
         Application.Quit();
     }
+    #endregion
 
+    #region Helpers
+    private IEnumerator GetHostIp()
+    {
+        StartCoroutine(requestManager.GetHostIP(getURL));
+
+        while(!requestManager.requestFinished && loopTime < 3)
+        {
+            loopTime += Time.deltaTime;
+        }
+        loopTime = 0;
+        publicIp = requestManager.HostIp;
+      
+        yield return new WaitForSeconds(.5f);
+        hostIpText.text = "Your public IP is " + publicIp + "\n Send this to your friend so they can join.";
+    }
+
+    private void finishAction()
+    {
+        //manager.requestFinished = true;
+    }
+    #endregion
 }
