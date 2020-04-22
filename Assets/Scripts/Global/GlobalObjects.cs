@@ -13,4 +13,7 @@ public struct GlobalObjects
     [SerializeField] public static ProjectileBehaviour projectile;
     [SerializeField] public static Mesh mesh;
     [SerializeField] public static Material material;
+    public static MapBehaviour mapBehaviour;
+    public static MapLogic mapLogic;
+    public static Vector2 cameraPosition = new Vector2(0, 0);
 }

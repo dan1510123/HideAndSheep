@@ -13,6 +13,7 @@ public class CollisionSystem : ComponentSystem
 {
     EntityManager entityManager;
     Camera camera;
+    bool teleportingPlayerLock = false;
     
     protected override void OnCreateManager()
     {
@@ -31,26 +32,27 @@ public class CollisionSystem : ComponentSystem
         });
 
         checkCollision<ProjectileStatsComponent, EnemyComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
-       {
-           ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
-           if (psc.IsFromPlayer)
-           {
-               PostUpdateCommands.DestroyEntity(entity1);
+        {
+            teleportingPlayerLock = false;
+            ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
+            if (psc.IsFromPlayer)
+            {
+                PostUpdateCommands.DestroyEntity(entity1);
 
-                // Update stats
-                StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
-               entityManager.SetComponentData(entity2, new StatsComponent
-               {
-                   attack = esc.attack,
-                   attackSpeed = esc.attackSpeed,
-                   moveSpeed = esc.moveSpeed,
-                   health = esc.health - 10
-               });
+                    // Update stats
+                    StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
+                entityManager.SetComponentData(entity2, new StatsComponent
+                {
+                    attack = esc.attack,
+                    attackSpeed = esc.attackSpeed,
+                    moveSpeed = esc.moveSpeed,
+                    health = esc.health - 10
+                });
 
-               Debug.Log("PROJECTILE AND ENEMY COLLISION");
-           }
-           return 0;
-       });
+                Debug.Log("PROJECTILE AND ENEMY COLLISION");
+            }
+            return 0;
+        });
 
         checkCollision<ProjectileStatsComponent, PlayerComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
@@ -119,27 +121,41 @@ public class CollisionSystem : ComponentSystem
         {
             Debug.Log("Door position is " + EntityManager.GetComponentData<Translation>(entity2).Value);
             Debug.Log("Player position is " + EntityManager.GetComponentData<Translation>(entity1).Value);
-            if (EntityManager.GetComponentData<DoorComponent>(entity2).locked == false)
+            if (EntityManager.GetComponentData<DoorComponent>(entity2).locked == false && !teleportingPlayerLock)
             {
+                teleportingPlayerLock = true;
                 int doorTransition = getDoorTransition(entity2);
+                Debug.Log("Door transition: " + doorTransition);
                 switch (doorTransition)
                 {
                     case 0:
-                        shiftCamera(0, 100);
+                        GlobalObjects.cameraPosition.y += 30;
+                        shiftCamera(0, 30);
                         break;
                     case 1:
-                        shiftCamera(-100, 0);
+                        GlobalObjects.cameraPosition.x += 30;
+                        shiftCamera(30, 0);
                         break;
                     case 2:
-                        shiftCamera(0, -100);
+                        GlobalObjects.cameraPosition.y -= 30;
+                        shiftCamera(0, -30);
                         break;
                     case 3:
-                        shiftCamera(100, 0);
+                        GlobalObjects.cameraPosition.x -= 30;
+                        shiftCamera(-30, 0);
                         break;
                     default:
                         break;
                 }
-                PostUpdateCommands.DestroyEntity(entity2);
+
+                Debug.Log(GlobalObjects.mapLogic.currentRoom);
+                GlobalObjects.mapLogic.currentRoom = GlobalObjects.mapLogic.currentRoom.rooms[doorTransition];
+                Debug.Log(GlobalObjects.mapLogic.currentRoom);
+
+                GlobalObjects.mapBehaviour.GenerateRoomWalls(
+                    GlobalObjects.mapLogic.currentRoom,
+                    GlobalObjects.cameraPosition.x,
+                    GlobalObjects.cameraPosition.y);
 
                 Debug.Log("OPENED DOOR");
             }

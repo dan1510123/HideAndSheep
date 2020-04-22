@@ -6,104 +6,25 @@ public class MapBehaviour : MonoBehaviour
 {
     [SerializeField] private WallBehaviour wallPrefab;
     [SerializeField] private DoorBehaviour doorPrefab;
-    private FloorInfo currentFloorInfo;
-    private Room currentRoom;
-    private int numberOfRooms;
-    private int MAX_ROOMS_PER_FLOOR = 3;
-
-    //Map generator shift amount.
-    private float horizontalShift;
-    private float verticalShift;
 
     // Constructor
-    public void Setup()
+    public void Setup(Room initialRoom)
     {
-        currentFloorInfo = new FloorInfo(new Room(0));
-        currentRoom = currentFloorInfo.getStartRoom();
-        numberOfRooms = 1;
-        GenerateRoom(ref currentRoom, 0, 0);
-        CreateFloorLogic();
-        PrintFloor();
-    }
-
-    private void PrintFloor()
-    {
-        Room start = currentFloorInfo.getStartRoom();
-        PrintRoomRecurse(ref start, ref start);
-    }
-
-    private void PrintRoomRecurse(ref Room oldRoom, ref Room newRoom)
-    {
-        Debug.Log(newRoom);
-        for(int i = 0; i < 4; i++)
-        {
-            Room r = newRoom.rooms[i];
-            if (r != null && !r.Equals(oldRoom))
-            {
-                PrintRoomRecurse(ref newRoom, ref r);
-            }
-        }
-    }
-
-    public void CreateFloorLogic()
-    {
-        Room currentRoom = currentFloorInfo.getStartRoom();
-        int nextMainDirection = 0;
-
-        while (numberOfRooms < MAX_ROOMS_PER_FLOOR)
-        {
-            int addedRooms = Random.Range(1, 2);
-
-            for(int i = 0; i < addedRooms && numberOfRooms < MAX_ROOMS_PER_FLOOR; i++)
-            {
-                int direction = Random.Range(0, 3);
-                if(i == 0)
-                {
-                    nextMainDirection = direction;
-                }
-
-                while (direction != -1)
-                {
-                    CreateRoomOrShiftDirection(ref currentRoom, ref direction);
-                }
-
-                numberOfRooms++;
-            }
-
-            currentRoom = currentRoom.rooms[nextMainDirection];
-        }
-    }
-
-    private void CreateRoomOrShiftDirection(ref Room currentRoom, ref int direction)
-    {
-        if(currentRoom.rooms[direction] == null)
-        {
-            currentRoom.rooms[direction] = new Room(currentRoom.depth + 1);
-            currentRoom.rooms[direction].rooms[(direction + 2) % 4] = currentRoom;
-
-            direction = -1;
-        }
-        else
-        {
-            direction = (direction + 1) % 4;
-        }
+        // Generate first room
+        GenerateRoomWalls(initialRoom, 0, 0);
     }
 
     //Generates walls and doors for a room
-    public void GenerateRoom(ref Room currentRoom, float horizontalShift, float verticalShift)
+    public void GenerateRoomWalls(Room room, float horizontalShift, float verticalShift)
     {
-        int doorCount = 0;
-        int transition = 0;
-        WallBehaviour wall;
-
-        int doorUnitCount = 0;
+        int doorIndex = 0;
 
         //Wall bounds
         float minWallXBound = -5.25f + horizontalShift;
         float maxWallXBound = 5.25f + horizontalShift;
 
         float minWallYBound = -2.75f + verticalShift;
-        float maxWallYBOund = 2.75f + verticalShift;
+        float maxWallYBound = 2.75f + verticalShift;
 
         //Door bounds
         float minDoorXBound = -.25f + horizontalShift;
@@ -112,55 +33,80 @@ public class MapBehaviour : MonoBehaviour
         float minDoorYBound = -.25f + verticalShift;
         float maxDoorYBound = .25f + verticalShift;
 
-        // Generates a quick map
-        for (float x = minWallXBound; x <= maxWallXBound; x += 0.5f)
+        /* Generates walls of the map */
+        // North wall
+        CreateWall(ref doorIndex, room, minWallXBound, maxWallXBound, minDoorXBound, maxDoorXBound, maxWallYBound, "x");
+        // East wall
+        CreateWall(ref doorIndex, room, minWallYBound, maxWallYBound, minDoorYBound, maxDoorYBound, maxWallXBound, "y");
+        // South wall
+        CreateWall(ref doorIndex, room, minWallXBound, maxWallXBound, minDoorXBound, maxDoorXBound, minWallYBound, "x");
+        // West wall
+        CreateWall(ref doorIndex, room, minWallYBound, maxWallYBound, minDoorYBound, maxDoorYBound, minWallXBound, "y");
+    }
+
+    private void CreateWall(
+        ref int doorIndex,
+        Room room,
+        float mainLowerBound,
+        float mainUpperBound,
+        float doorLowerBound,
+        float doorUpperBound,
+        float altBound,
+        string axis)
+    {
+        for (float x = mainLowerBound; x <= mainUpperBound; x += 0.5f)
         {
-            for(float y = minWallYBound; y <= maxWallYBOund; y += 0.5f)
+            bool isWall = true;
+            if ((doorLowerBound <= x && x <= doorUpperBound))
             {
-                if ((x == minWallXBound || x == maxWallXBound || y == minWallYBound || y == maxWallYBOund))
+                if (DoorNeeded(doorIndex, room))
                 {
-                    bool isWall = true;
-                    if ((minDoorYBound <= y && y <= maxDoorYBound) || (minDoorXBound <= x && x <= maxDoorXBound))
-                    {
-                        isWall = false;
-                        doorUnitCount++;
-                    }
-                    if(isWall)
-                    {
-                        // It's a wall
-                        wall = Instantiate(wallPrefab);
-                        wall.SetPosition(new Vector3(x, y, 0));
-                    }
+                    AddDoorUnit(doorIndex, x, altBound, axis);
+                    isWall = false;
                 }
             }
+
+            if (isWall)
+            {
+                // It's a wall
+                AddWallUnit(x, altBound, axis);
+            }
+        }
+        doorIndex++;
+    }
+
+    private void AddWallUnit(float x, float y, string axis)
+    {
+        WallBehaviour wall = Instantiate(wallPrefab);
+        if (axis.Equals("x"))
+        {
+            wall.SetPosition(new Vector3(x, y, 0));
+        }
+        else
+        {
+            wall.SetPosition(new Vector3(y, x, 0));
         }
     }
 
-    //private bool DoorNeeded(float x, float y)
-    //{
+    private bool DoorNeeded(int doorIndex, Room room)
+    {
+        return room.rooms[doorIndex] != null;
+    }
 
-    //}
+    private void AddDoorUnit(int doorIndex, float x, float y, string axis)
+    {
+        DoorBehaviour door;
 
-    //private void AddDoor(float x, float y)
-    //{
-    //    DoorBehaviour door;
-
-    //    // It's possibly a door
-    //    door = Instantiate(doorPrefab, new Vector3(100, 100, 0), doorPrefab.transform.rotation);
-
-    //    door.SetPosition(new Vector3(x, y, 0));
-    //    if (isNewDoor(doorCount))
-    //    {
-    //        Debug.Log("Level transition is " + transition);
-    //        transition++;
-    //    }
-    //    door.LevelTransition = transition;
-    //    doorCount++;
-    //}
-
-    //bool isNewDoor(int doorCount)
-    //{
-    //    Debug.Log("Door count is " + doorCount);
-    //    return doorCount % 2 == 0;
-    //}
+        // It's possibly a door
+        door = Instantiate(doorPrefab, new Vector3(100, 100, 0), doorPrefab.transform.rotation);
+        if (axis.Equals("x"))
+        {
+            door.SetPosition(new Vector3(x, y, 0));
+        }
+        else
+        {
+            door.SetPosition(new Vector3(y, x, 0));
+        }
+        door.LevelTransition = doorIndex;
+    }
 }

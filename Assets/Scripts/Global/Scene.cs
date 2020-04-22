@@ -6,7 +6,7 @@ public class Scene : MonoBehaviour
     [SerializeField] public ProjectileBehaviour projectilePrefab;
     [SerializeField] public GameObject enemyPrefab;
     [SerializeField] public ItemBehaviour itemPrefab;
-    [SerializeField] public MapBehaviour mapGenerator;
+    [SerializeField] public MapBehaviour mapBehaviour;
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
 
@@ -16,9 +16,12 @@ public class Scene : MonoBehaviour
         GlobalObjects.projectile = projectilePrefab;
         GlobalObjects.mesh = mesh;
         GlobalObjects.material = material;
+        GlobalObjects.mapBehaviour = mapBehaviour;
 
         // Set up map
-        mapGenerator.Setup();
+        GlobalObjects.mapLogic = new MapLogic();
+        GlobalObjects.mapLogic.Setup(3);
+        GlobalObjects.mapBehaviour.Setup(GlobalObjects.mapLogic.currentFloorInfo.getStartRoom());
 
         // Create Player
         PlayerBehaviour player = Instantiate(playerPrefab);
