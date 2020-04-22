@@ -14,8 +14,8 @@ public class MapLogic
         currentFloorInfo = new FloorInfo(new Room(0));
         numberOfRooms = 1;
         CreateFloorLogic();
-        PrintFloor();
         currentRoom = currentFloorInfo.getStartRoom();
+        PrintFloor();
     }
 
     private void PrintFloor()

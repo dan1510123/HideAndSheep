@@ -5,6 +5,7 @@ public class Room
 {
     public Room[] rooms = new Room[4];
     public int depth;
+    public bool roomFound = false;
 
     public Room(int depth)
     {

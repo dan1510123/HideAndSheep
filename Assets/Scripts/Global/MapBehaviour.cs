@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Unity;
-using Unity.Entities;
+
+
 public class MapBehaviour : MonoBehaviour
 {
     [SerializeField] private WallBehaviour wallPrefab;
     [SerializeField] private DoorBehaviour doorPrefab;
 
     // Constructor
-    public void Setup(Room initialRoom)
+    public void Setup(ref Room initialRoom)
     {
         // Generate first room
         GenerateRoomWalls(initialRoom, 0, 0);
+        //SpawnEnemies();
+        initialRoom.roomFound = true;
+    }
+
+    public void SpawnEnemies()
+    {
+        GameObject e = Instantiate(GlobalObjects.enemyPrefab, new Vector3(100, 100, 0), GlobalObjects.enemyPrefab.transform.rotation);
+        e.GetComponent<EnemyBehaviour>().setSpawn(new Vector3(3.83f, 1.48f, 0));
     }
 
     //Generates walls and doors for a room
