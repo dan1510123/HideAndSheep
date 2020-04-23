@@ -23,12 +23,12 @@ public class MainMenuController : MonoBehaviour
     private Vector3 backgroundOffset = new Vector2(0, 75);
     private IpRequestManager requestManager;
     private Text hostIpText;
-    private float loopTime = 0;
-   
+
     public void Start()
     {
         requestManager = transform.gameObject.AddComponent<IpRequestManager>();
         hostIpText = HostOptions.GetComponentInChildren<Text>();
+        StartCoroutine(GetHostIp());
 
     }
 
@@ -54,7 +54,6 @@ public class MainMenuController : MonoBehaviour
         background.rectTransform.sizeDelta += backgroundDelta * .83f;
         playOptions.SetActive(false);
         HostOptions.SetActive(true);
-        StartCoroutine(GetHostIp());
     }
 
     public void GotToJoinOptions()
@@ -146,17 +145,18 @@ public class MainMenuController : MonoBehaviour
     #region Helpers
     private IEnumerator GetHostIp()
     {
-        StartCoroutine(requestManager.GetHostIP(getURL));
+        float loopTime = 0;
+        yield return StartCoroutine(requestManager.GetHostIp(getURL));
 
-        while(!requestManager.requestFinished && loopTime < 3)
-        {
-            loopTime += Time.deltaTime;
-        }
-        loopTime = 0;
+        //while (!requestManager.requestFinished && loopTime < 2)
+        //{
+        //    loopTime += Time.deltaTime;
+        //}
+        //yield return new WaitForSeconds(.5f);
         publicIp = requestManager.HostIp;
-      
-        yield return new WaitForSeconds(.5f);
+
         hostIpText.text = "Your public IP is " + publicIp + "\n Send this to your friend so they can join.";
+        yield return null;
     }
 
     private void finishAction()
