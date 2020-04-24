@@ -36,32 +36,34 @@ public class CollisionSystem : ComponentSystem
 
         checkCollision<ProjectileStatsComponent, WallComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
+            Audio.PlayProjectileSound();
             PostUpdateCommands.DestroyEntity(entity1);
+            
             Debug.Log("PROJECTILE COLLISION");
             return 0;
         });
 
         checkCollision<ProjectileStatsComponent, EnemyComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
-        {
-            ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
-            if (psc.IsFromPlayer)
-            {
-                PostUpdateCommands.DestroyEntity(entity1);
+       {
+           ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
+           if (psc.IsFromPlayer)
+           {
+               Audio.PlayEnemySound();
+               PostUpdateCommands.DestroyEntity(entity1);
+               // Update stats
+               StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
+               entityManager.SetComponentData(entity2, new StatsComponent
+               {
+                   attack = esc.attack,
+                   attackSpeed = esc.attackSpeed,
+                   moveSpeed = esc.moveSpeed,
+                   health = esc.health - 10
+               });
 
-                    // Update stats
-                    StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
-                entityManager.SetComponentData(entity2, new StatsComponent
-                {
-                    attack = esc.attack,
-                    attackSpeed = esc.attackSpeed,
-                    moveSpeed = esc.moveSpeed,
-                    health = esc.health - 10
-                });
-
-                Debug.Log("PROJECTILE AND ENEMY COLLISION");
-            }
-            return 0;
-        });
+               Debug.Log("PROJECTILE AND ENEMY COLLISION");
+           }
+           return 0;
+       });
 
         checkCollision<ProjectileStatsComponent, PlayerComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
@@ -104,6 +106,7 @@ public class CollisionSystem : ComponentSystem
 
         checkCollision<PlayerComponent, ItemID>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
+            Audio.PlayItemSound();
             PostUpdateCommands.DestroyEntity(entity2);
             // Update stats
             StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity1);
