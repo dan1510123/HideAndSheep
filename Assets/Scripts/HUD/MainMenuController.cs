@@ -58,6 +58,7 @@ public class MainMenuController : MonoBehaviour
 
     public void GotToJoinOptions()
     {
+        background.rectTransform.sizeDelta += backgroundDelta * .83f;
         playOptions.SetActive(false);
         JoinOptions.SetActive(true);
     }
@@ -91,6 +92,7 @@ public class MainMenuController : MonoBehaviour
 
     public void BackToPlayOptionsFromJoin()
     {
+        background.rectTransform.sizeDelta -= backgroundDelta * .83f;
         playOptions.SetActive(true);
         JoinOptions.SetActive(false);
     }
@@ -157,11 +159,6 @@ public class MainMenuController : MonoBehaviour
 
         hostIpText.text = "Your public IP is " + publicIp + "\n Send this to your friend so they can join.";
         yield return null;
-    }
-
-    private void finishAction()
-    {
-        //manager.requestFinished = true;
     }
     #endregion
 }
