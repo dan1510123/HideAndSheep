@@ -3,10 +3,10 @@ using UnityEngine;
 public class Scene : MonoBehaviour
 {
     [SerializeField] public PlayerBehaviour playerPrefab;
-    [SerializeField] public ProjectileBehaviour projectilePrefab;
     [SerializeField] public GameObject enemyPrefab;
+    [SerializeField] public ProjectileBehaviour projectilePrefab;
     [SerializeField] public ItemBehaviour itemPrefab;
-    [SerializeField] public MapGenerator mapGenerator;
+    [SerializeField] public MapBehaviour mapBehaviour;
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
 
@@ -16,14 +16,18 @@ public class Scene : MonoBehaviour
         GlobalObjects.projectile = projectilePrefab;
         GlobalObjects.mesh = mesh;
         GlobalObjects.material = material;
+        GlobalObjects.enemyPrefab = enemyPrefab;
+        GlobalObjects.mapBehaviour = mapBehaviour;
+
 
         // Set up map
-        mapGenerator.GenerateRoom(0, 0);
+        GlobalObjects.mapLogic = new MapLogic();
+        GlobalObjects.mapLogic.Setup(5);
+        Room startRoom = GlobalObjects.mapLogic.currentFloorInfo.getStartRoom();
+        GlobalObjects.mapBehaviour.Setup(ref startRoom);
 
         // Create Player
         PlayerBehaviour player = Instantiate(playerPrefab);
         player.SetSpawn(new Vector3(0, 0, 0));
-
-
     }
 }

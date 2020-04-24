@@ -14,33 +14,26 @@ namespace Assets.Scripts.HUD
         public string HostIp;
         public bool requestFinished;
 
-        private IEnumerator SendRequest(string url)
-        {
-            UnityWebRequest request = UnityWebRequest.Get(url);
-            yield return request.SendWebRequest();
-            if (request.isNetworkError || request.isHttpError)
-            {
-                Debug.Log(request.error);
-                HostIp = "0.0.0.0";
-                requestFinished = true;
-            }
-            else
-            {
-                HostIp = request.downloadHandler.text;
-                requestFinished = true;
-            }
-            yield return null;
-        }
-
-        public IEnumerator GetHostIP(string url)
+        public IEnumerator GetHostIp(string url)
         {
             if (!requestFinished)
             {
-                StartCoroutine(SendRequest(url));
-
+                UnityWebRequest request = UnityWebRequest.Get(url);
+                Debug.Log(request);
+                yield return request.SendWebRequest();
+                yield return new WaitForSeconds(.5f);
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    Debug.Log(request.error);
+                    HostIp = "0.0.0.0";
+                }
+                else
+                {
+                    HostIp = request.downloadHandler.text;
+                }
+                requestFinished = true;
+                yield return null;
             }
-            yield return null;
-
         }
     }
 
