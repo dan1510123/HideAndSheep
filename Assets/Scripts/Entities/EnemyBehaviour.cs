@@ -31,7 +31,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Start()
     {
-
         collider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyGameObject = transform.gameObject;

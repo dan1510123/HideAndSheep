@@ -101,7 +101,9 @@ public class InputSystem : ComponentSystem
                     float3 shootDir = Input.mousePosition;
                     shootDir.z = 0.0f;
                     shootDir = Camera.main.ScreenToWorldPoint(shootDir);
+                    
                     fireProjectile(movementComponent, translation, shootDir - translation.Value);
+                    Audio.PlayShootingSound();
                 }
 
             }
