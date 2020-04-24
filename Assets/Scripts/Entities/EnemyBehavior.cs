@@ -31,7 +31,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private void Start()
     {
-
+        //source = GetComponent<AudioSource>();
         collider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyGameObject = transform.gameObject;
@@ -48,6 +48,7 @@ public class EnemyBehavior : MonoBehaviour
             typeof(MovementComponent),
             typeof(WeaponComponent),
             typeof(StatsComponent),
+            typeof(AudioSource),
             typeof(EnemyComponent)
         );
 
@@ -100,6 +101,7 @@ public class EnemyBehavior : MonoBehaviour
         });
 
         int health = entityManager.GetComponentData<StatsComponent>(entity).health;
+        
         if(health <= 0)
         {
             Destroy(enemyGameObject);

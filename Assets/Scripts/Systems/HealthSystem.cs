@@ -11,6 +11,7 @@ public class HealthSystem : ComponentSystem
             if (statsComponent.health <= 0)
             {
                 Debug.Log("Enemy killed");
+                Audio.PlayDeathSound();
                 PostUpdateCommands.DestroyEntity(e);
                 //GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 

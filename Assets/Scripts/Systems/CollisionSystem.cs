@@ -25,7 +25,9 @@ public class CollisionSystem : ComponentSystem
     {
         checkCollision<ProjectileStatsComponent, WallComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
+            Audio.PlayProjectileSound();
             PostUpdateCommands.DestroyEntity(entity1);
+            
             Debug.Log("PROJECTILE COLLISION");
             return 0;
         });
@@ -35,10 +37,10 @@ public class CollisionSystem : ComponentSystem
            ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
            if (psc.IsFromPlayer)
            {
+               Audio.PlayEnemySound();
                PostUpdateCommands.DestroyEntity(entity1);
-
-                // Update stats
-                StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
+               // Update stats
+               StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
                entityManager.SetComponentData(entity2, new StatsComponent
                {
                    attack = esc.attack,
@@ -93,6 +95,7 @@ public class CollisionSystem : ComponentSystem
 
         checkCollision<PlayerComponent, ItemID>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
+            Audio.PlayItemSound();
             PostUpdateCommands.DestroyEntity(entity2);
             // Update stats
             StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity1);
