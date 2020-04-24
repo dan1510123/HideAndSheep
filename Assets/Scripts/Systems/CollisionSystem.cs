@@ -281,6 +281,10 @@ public class CollisionSystem : ComponentSystem
 
     void shiftCamera(float x, float y)
     {
+        if(this.camera == null)
+        {
+            this.camera = GameObject.FindObjectOfType<Camera>();
+        }
         this.camera.transform.position = camera.transform.position + new Vector3(x, y);
     }
 }
