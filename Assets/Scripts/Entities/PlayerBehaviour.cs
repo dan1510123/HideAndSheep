@@ -68,10 +68,11 @@ public class PlayerBehaviour : MonoBehaviour
             Size = 0.5f
         });
         entityManager.AddBuffer<IntBufferElement>(e);
-        entityManager.SetSharedComponentData(e, new RenderMesh
-        {
-            mesh = mesh,
-            material = material
-        });
+        //entityManager.SetSharedComponentData(e, new RenderMesh
+        //{
+        //    mesh = mesh,
+        //    material = material
+
+        //});
     }
 }
