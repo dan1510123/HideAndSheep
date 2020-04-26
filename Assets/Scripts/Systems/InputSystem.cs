@@ -13,10 +13,19 @@ public class InputSystem : ComponentSystem
     private float2 lastPlayerPosition = new float2(0, 0);
     private float timer;
     private GameObject player;
+    private Animator playerAnimator;
+    private Animation playerAnimation;
+    private SpriteRenderer renderer;
+    private bool isMovingForward;
+    private bool isMovingBackward;
+    private bool isIdling;
+    private bool isSideIdling;
+    private bool isMovingSideways;
+    private bool rendererFlipped;
 
-    
+
     protected override void OnUpdate()
-    { 
+    {
         Entities.ForEach((ref Translation translation,
             ref PlayerComponent playerComponent,
             ref MovementComponent movementComponent,
@@ -25,12 +34,40 @@ public class InputSystem : ComponentSystem
             ref ColliderComponent colliderComponent) =>
         {
             player = GameObject.FindWithTag("Player");
+            playerAnimator = player.GetComponent<Animator>();
+            renderer = player.GetComponent<SpriteRenderer>();
 
             float s1 = colliderComponent.Size;
             float displacement = velocityComponent.Velocity * statsComponent.moveSpeed * Time.DeltaTime;
 
+            #region keyups
+            if (Input.GetKeyUp(KeyCode.W))
+            {
+                playerAnimator.SetBool("isMovingUp", false);
+                playerAnimator.SetBool("isBackIdling", true);
+            }
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                playerAnimator.SetBool("isMovingSideways", false);
+                playerAnimator.SetBool("isSideIdling", true);
+            }
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                playerAnimator.SetBool("isMovingSideways", false);
+                playerAnimator.SetBool("isSideIdling", true);
+            }
+            if (Input.GetKeyUp(KeyCode.S))
+            {
+                playerAnimator.SetBool("isMovingDown", false);
+                playerAnimator.SetBool("isIdling", true);
+            }
+            #endregion
+
+            #region keydowns
             if (Input.GetKey(KeyCode.W))
             {
+                playerAnimator.SetBool("isMovingUp", true);
+                undoIdle(playerAnimator);
                 float2 pos1 = new float2(translation.Value.x, translation.Value.y + displacement);
                 float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
                 if (displacementWithCollision != 0)
@@ -46,6 +83,12 @@ public class InputSystem : ComponentSystem
             }
             if (Input.GetKey(KeyCode.A))
             {
+                if (renderer.flipX == true)
+                {
+                    renderer.flipX = false;
+                }
+                undoIdle(playerAnimator);
+                playerAnimator.SetBool("isMovingSideways", true);
                 float2 pos1 = new float2(translation.Value.x - displacement, translation.Value.y);
                 float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
                 if (displacementWithCollision != 0)
@@ -61,6 +104,8 @@ public class InputSystem : ComponentSystem
             }
             if (Input.GetKey(KeyCode.S))
             {
+                undoIdle(playerAnimator);
+                playerAnimator.SetBool("isMovingDown", true);
                 float2 pos1 = new float2(translation.Value.x, translation.Value.y - displacement);
                 float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
                 if (displacementWithCollision != 0)
@@ -76,6 +121,12 @@ public class InputSystem : ComponentSystem
             }
             if (Input.GetKey(KeyCode.D))
             {
+                undoIdle(playerAnimator);
+                playerAnimator.SetBool("isMovingSideways", true);
+                if (!renderer.flipX)
+                {
+                    renderer.flipX = true;
+                }
                 float2 pos1 = new float2(translation.Value.x + displacement, translation.Value.y);
                 float displacementWithCollision = DisplacementCheckCollision(pos1, s1, displacement);
                 if (displacementWithCollision != 0)
@@ -117,6 +168,7 @@ public class InputSystem : ComponentSystem
         });
 
         projectileFired = false;
+        #endregion
     }
 
     void fireProjectile(MovementComponent movementComponent, Translation translation, float3 directionToPlayer)
@@ -190,4 +242,10 @@ public class InputSystem : ComponentSystem
         return (math.abs(posA.x - posB.x) < d && math.abs(posA.y - posB.y) < d);
     }
 
+    private void undoIdle(Animator animator)
+    {
+        animator.SetBool("isSideIdling", false);
+        animator.SetBool("isIdling", false);
+        animator.SetBool("isBackIdling", false);
+    }
 }
