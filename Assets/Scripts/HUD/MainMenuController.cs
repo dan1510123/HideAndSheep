@@ -40,22 +40,31 @@ public class MainMenuController : MonoBehaviour
 
     }
 
+    public void PlayMenuSound()
+    {
+        Audio.PlayMenuSound();
+    }
+
     #region SoundOptions
     //Changes the game volume
     public void SetMasterVolume(float val)
     {
+        Audio.SetSFXVolume(val);
+        Audio.SetMusicVolume(val);
         Debug.Log("Master volume: " + val);
     }
 
     //Sets the sound effect volume 
     public void SetSFXVolume(float val)
     {
+        Audio.SetSFXVolume(val);
         Debug.Log("SFX volume: " + val);
     }
 
     //Sets the music volume
     public void SetMusicVolume(float val)
     {
+        Audio.SetMusicVolume(val);
         Debug.Log("Music volume: " + val);
     }
 

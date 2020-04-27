@@ -10,10 +10,12 @@ public class Audio : MonoBehaviour
     private static AudioSource enemySound;
     private static AudioSource shootingSound;
     private static AudioSource itemSound;
+    private static AudioSource menuSound;
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("STARTING");
         AudioSource[] sources = GetComponents<AudioSource>();
         backgroundMusic = sources[0];
         projectileSound = sources[1];
@@ -21,6 +23,9 @@ public class Audio : MonoBehaviour
         enemySound = sources[3];
         shootingSound = sources[4];
         itemSound = sources[5];
+        menuSound = sources[6];
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public static void PlayProjectileSound()
@@ -47,5 +52,26 @@ public class Audio : MonoBehaviour
     {
         itemSound.Play();
     }
+
+    public static void PlayMenuSound()
+    {
+        menuSound.Play();
+    }
+
+    public static void SetSFXVolume(float val)
+    {
+        projectileSound.volume = val;
+        enemySound.volume = val;
+        shootingSound.volume = val;
+        deathSound.volume = val;
+        itemSound.volume = val;
+        menuSound.volume = val;
+    }
+
+    public static void SetMusicVolume(float val)
+    {
+        backgroundMusic.volume = val;
+    }
+
 
 }
