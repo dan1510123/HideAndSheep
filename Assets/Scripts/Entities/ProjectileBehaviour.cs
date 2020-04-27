@@ -10,6 +10,7 @@ using EntityComponents;
 
 public class ProjectileBehaviour : MonoBehaviour
 {
+
     public static EntityArchetype GetArchetype()
     {
         EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;

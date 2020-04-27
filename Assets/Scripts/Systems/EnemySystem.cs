@@ -27,7 +27,7 @@ public class EnemySystem : ComponentSystem
             playerAlive = true;
             playerPos = translation.Value;
         });
-        
+
         Entities.ForEach((
             ref EnemyComponent enemyComponent,
             ref Translation translation
@@ -46,7 +46,14 @@ public class EnemySystem : ComponentSystem
     void Shoot(float3 enemyPos, float3 playerPos)
     {
         float3 directionToPlayer = playerPos - enemyPos;
-        Debug.Log(directionToPlayer);
+        Vector2 dirNormalize;
+        dirNormalize.x = directionToPlayer.x;
+        dirNormalize.y = directionToPlayer.y;
+        dirNormalize.Normalize();
+
+        directionToPlayer.x = dirNormalize.x;
+        directionToPlayer.y = dirNormalize.y;
+
         Entity e = PostUpdateCommands.CreateEntity(ProjectileBehaviour.GetArchetype());
 
         PostUpdateCommands.SetComponent(e, new ProjectileStatsComponent
@@ -74,8 +81,6 @@ public class EnemySystem : ComponentSystem
             mesh = GlobalObjects.mesh,
             material = GlobalObjects.material
         });
-
-        //projectileFired = true;
     }
 
     void DistanceToPlayer()

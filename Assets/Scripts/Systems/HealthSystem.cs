@@ -1,10 +1,5 @@
 ﻿using UnityEngine;
 using Unity.Entities;
-using Unity.Transforms;
-using Components;
-using EnvironmentComponents;
-using EntityComponents;
-using Unity.Mathematics;
 
 public class HealthSystem : ComponentSystem
 {
@@ -15,7 +10,15 @@ public class HealthSystem : ComponentSystem
         {
             if (statsComponent.health <= 0)
             {
+                Debug.Log("Enemy killed");
+                Audio.PlayDeathSound();
                 PostUpdateCommands.DestroyEntity(e);
+                //GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+                //foreach(GameObject enemy in enemies)
+                //{
+                //    GameObject.Destroy(enemy);
+                //}
             }
         });
     }

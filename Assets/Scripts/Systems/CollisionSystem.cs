@@ -12,43 +12,58 @@ using BackpackComponents;
 public class CollisionSystem : ComponentSystem
 {
     EntityManager entityManager;
-
+    Camera camera;
+    bool teleportingPlayerLock = false;
+    float freezeTime = 0;
+    
     protected override void OnCreateManager()
     {
         base.OnCreateManager();
 
         entityManager = World.Active.EntityManager;
+        camera = GameObject.FindObjectOfType<Camera>();
     }
     protected override void OnUpdate()
     {
+        if(teleportingPlayerLock)
+        {
+            freezeTime += Time.DeltaTime;
+        }
+        if(freezeTime > 0.1f)
+        {
+            teleportingPlayerLock = false;
+        }
+
         checkCollision<ProjectileStatsComponent, WallComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
+            Audio.PlayProjectileSound();
             PostUpdateCommands.DestroyEntity(entity1);
+            
             Debug.Log("PROJECTILE COLLISION");
             return 0;
         });
 
-        checkCollision<ProjectileStatsComponent, EnemyComponent> (Shape.Square, (Entity entity1, Entity entity2) =>
-        {
-            ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
-            if (psc.IsFromPlayer)
-            {
-                PostUpdateCommands.DestroyEntity(entity1);
+        checkCollision<ProjectileStatsComponent, EnemyComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
+       {
+           ProjectileStatsComponent psc = entityManager.GetComponentData<ProjectileStatsComponent>(entity1);
+           if (psc.IsFromPlayer)
+           {
+               Audio.PlayEnemySound();
+               PostUpdateCommands.DestroyEntity(entity1);
+               // Update stats
+               StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
+               entityManager.SetComponentData(entity2, new StatsComponent
+               {
+                   attack = esc.attack,
+                   attackSpeed = esc.attackSpeed,
+                   moveSpeed = esc.moveSpeed,
+                   health = esc.health - 10
+               });
 
-                // Update stats
-                StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity2);
-                entityManager.SetComponentData(entity2, new StatsComponent
-                {
-                    attack = esc.attack,
-                    attackSpeed = esc.attackSpeed,
-                    moveSpeed = esc.moveSpeed,
-                    health = esc.health - 10
-                });
-
-                Debug.Log("PROJECTILE AND ENEMY COLLISION");
-            }
-            return 0;
-        });
+               Debug.Log("PROJECTILE AND ENEMY COLLISION");
+           }
+           return 0;
+       });
 
         checkCollision<ProjectileStatsComponent, PlayerComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
@@ -91,6 +106,7 @@ public class CollisionSystem : ComponentSystem
 
         checkCollision<PlayerComponent, ItemID>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
+            Audio.PlayItemSound();
             PostUpdateCommands.DestroyEntity(entity2);
             // Update stats
             StatsComponent esc = entityManager.GetComponentData<StatsComponent>(entity1);
@@ -112,10 +128,98 @@ public class CollisionSystem : ComponentSystem
             return 0;
         });
 
+        //Check for player collision between the player character and the door.
         checkCollision<PlayerComponent, DoorComponent>(Shape.Square, (Entity entity1, Entity entity2) =>
         {
-            PostUpdateCommands.DestroyEntity(entity2);
-            Debug.Log("OPENED DOOR");
+            Debug.Log("Door position is " + EntityManager.GetComponentData<Translation>(entity2).Value);
+            Debug.Log("Player position is " + EntityManager.GetComponentData<Translation>(entity1).Value);
+            if (EntityManager.GetComponentData<DoorComponent>(entity2).locked == false && !teleportingPlayerLock)
+            {
+                teleportingPlayerLock = true;
+                freezeTime = Time.DeltaTime;
+
+                int doorTransition = getDoorTransition(entity2);
+                Debug.Log("Door transition: " + doorTransition);
+                int CAMERA_OFFSET = 15;
+
+                switch (doorTransition)
+                {
+                    case 0:
+                        GlobalObjects.cameraPosition.y += CAMERA_OFFSET;
+                        shiftCamera(0, CAMERA_OFFSET);
+                        break;
+                    case 1:
+                        GlobalObjects.cameraPosition.x += CAMERA_OFFSET;
+                        shiftCamera(CAMERA_OFFSET, 0);
+                        break;
+                    case 2:
+                        GlobalObjects.cameraPosition.y -= CAMERA_OFFSET;
+                        shiftCamera(0, -CAMERA_OFFSET);
+                        break;
+                    case 3:
+                        GlobalObjects.cameraPosition.x -= CAMERA_OFFSET;
+                        shiftCamera(-CAMERA_OFFSET, 0);
+                        break;
+                    default:
+                        break;
+                }
+
+                Debug.Log(GlobalObjects.cameraPosition);
+
+                //Debug.Log(GlobalObjects.mapLogic.currentRoom);
+                GlobalObjects.mapLogic.currentRoom = GlobalObjects.mapLogic.currentRoom.rooms[doorTransition];
+                //Debug.Log(GlobalObjects.mapLogic.currentRoom);
+
+                if (!GlobalObjects.mapLogic.currentRoom.roomFound)
+                {
+                    GlobalObjects.mapBehaviour.GenerateRoom(
+                        GlobalObjects.mapLogic.currentRoom,
+                        GlobalObjects.cameraPosition.x,
+                        GlobalObjects.cameraPosition.y);
+                    GlobalObjects.mapLogic.currentRoom.roomFound = true;
+                }
+
+                // Teleport the player to next room
+                Entities.ForEach((ref Translation translation,
+                    ref PlayerComponent playerComponent) =>
+                {
+                    int spawnDoor = (doorTransition + 2) % 4;
+                    Debug.Log("SPAWN DOOR: " + spawnDoor);
+                    Debug.Log(GlobalObjects.cameraPosition);
+                    switch (spawnDoor)
+                    {
+                        case 0:
+                            translation.Value = new Vector3(
+                                GlobalObjects.cameraPosition.x,
+                                GlobalObjects.cameraPosition.y + 2.2f,
+                                0);
+                            break;
+                        case 1:
+                            translation.Value = new Vector3(
+                                GlobalObjects.cameraPosition.x + 4.7f,
+                                GlobalObjects.cameraPosition.y,
+                                0);
+                            break;
+                        case 2:
+                            translation.Value = new Vector3(
+                                GlobalObjects.cameraPosition.x,
+                                GlobalObjects.cameraPosition.y - 2.2f,
+                                0);
+                            break;
+                        case 3:
+                            translation.Value = new Vector3(
+                                GlobalObjects.cameraPosition.x - 4.7f,
+                                GlobalObjects.cameraPosition.y,
+                                0);
+                            break;
+                        default:
+                            break;
+                    }
+
+                });
+
+                Debug.Log("USED DOOR");
+            }
             return 0;
         });
     }
@@ -170,5 +274,19 @@ public class CollisionSystem : ComponentSystem
         }
 
         return overlapping;
+    }
+
+    int getDoorTransition(Entity door)
+    {
+        return EntityManager.GetComponentData<DoorComponent>(door).levelTransition;
+    }
+
+    void shiftCamera(float x, float y)
+    {
+        if(this.camera == null)
+        {
+            this.camera = GameObject.FindObjectOfType<Camera>();
+        }
+        this.camera.transform.position = camera.transform.position + new Vector3(x, y);
     }
 }

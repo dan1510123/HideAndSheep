@@ -16,7 +16,10 @@ namespace EntityComponents {
     }
     public struct ProjectileComponent : IComponentData
     {
-    };
+    }
+    public struct GameObjectComponent : IComponentData
+    {
 
+    }
 
 }
