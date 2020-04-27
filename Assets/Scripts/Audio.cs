@@ -11,6 +11,9 @@ public class Audio : MonoBehaviour
     private static AudioSource shootingSound;
     private static AudioSource itemSound;
     private static AudioSource menuSound;
+    public static float sfxVol = .5f;
+    public static float musicVol = .5f;
+    public static float masterVol = .5f;
 
     // Start is called before the first frame update
     void Start()
@@ -58,19 +61,39 @@ public class Audio : MonoBehaviour
         menuSound.Play();
     }
 
+    public static void SetMasterVolume(float val)
+    {
+        masterVol = val;
+        UpdateVolumes();
+        //SetSFXVolume(val);
+        //SetMusicVolume(val);
+    }
     public static void SetSFXVolume(float val)
     {
-        projectileSound.volume = val;
-        enemySound.volume = val;
-        shootingSound.volume = val;
-        deathSound.volume = val;
-        itemSound.volume = val;
-        menuSound.volume = val;
+        sfxVol = val;
+        projectileSound.volume = sfxVol * masterVol;
+        enemySound.volume = sfxVol * masterVol;
+        shootingSound.volume = sfxVol * masterVol;
+        deathSound.volume = sfxVol * masterVol;
+        itemSound.volume = sfxVol * masterVol;
+        menuSound.volume = sfxVol * masterVol;
+    }
+
+    private static void UpdateVolumes()
+    {
+        projectileSound.volume = sfxVol * masterVol;
+        enemySound.volume = sfxVol * masterVol;
+        shootingSound.volume = sfxVol * masterVol;
+        deathSound.volume = sfxVol * masterVol;
+        itemSound.volume = sfxVol * masterVol;
+        menuSound.volume = sfxVol * masterVol;
+        backgroundMusic.volume = musicVol * masterVol;
     }
 
     public static void SetMusicVolume(float val)
     {
-        backgroundMusic.volume = val;
+        musicVol = val;
+        backgroundMusic.volume = musicVol * masterVol;
     }
 
 
