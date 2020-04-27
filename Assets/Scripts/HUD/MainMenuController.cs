@@ -14,7 +14,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject buttons;
     [SerializeField] private GameObject volumeSliders;
     [SerializeField] private Image background;
-    private Vector2 backgroundDelta = new Vector2(300, 400);
+    private Vector2 backgroundDelta = new Vector2(200, 300);
     private Vector3 backgroundOffset = new Vector2(0, 75);
     private IpRequestManager requestManager;
 
@@ -26,6 +26,11 @@ public class MainMenuController : MonoBehaviour
         volumeSliders.gameObject.SetActive(true);
         background.rectTransform.sizeDelta += backgroundDelta;
         background.rectTransform.localPosition -= backgroundOffset;
+    }
+
+    public void GoToCredits()
+    {
+        Application.LoadLevel(3);
     }
 
 
@@ -69,6 +74,10 @@ public class MainMenuController : MonoBehaviour
         Debug.Log("Music volume: " + val);
     }
 
+    public void BackToMenuFromCredits()
+    {
+        Application.LoadLevel(0);
+    }
     #endregion
 
     public void PlayGame()
