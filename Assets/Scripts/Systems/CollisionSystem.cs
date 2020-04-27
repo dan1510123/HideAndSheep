@@ -191,24 +191,24 @@ public class CollisionSystem : ComponentSystem
                         case 0:
                             translation.Value = new Vector3(
                                 GlobalObjects.cameraPosition.x,
-                                GlobalObjects.cameraPosition.y + 2.2f,
+                                GlobalObjects.cameraPosition.y + 3f,
                                 0);
                             break;
                         case 1:
                             translation.Value = new Vector3(
-                                GlobalObjects.cameraPosition.x + 4.7f,
+                                GlobalObjects.cameraPosition.x + 4.2f,
                                 GlobalObjects.cameraPosition.y,
                                 0);
                             break;
                         case 2:
                             translation.Value = new Vector3(
                                 GlobalObjects.cameraPosition.x,
-                                GlobalObjects.cameraPosition.y - 2.2f,
+                                GlobalObjects.cameraPosition.y - 3f,
                                 0);
                             break;
                         case 3:
                             translation.Value = new Vector3(
-                                GlobalObjects.cameraPosition.x - 4.7f,
+                                GlobalObjects.cameraPosition.x - 4.2f,
                                 GlobalObjects.cameraPosition.y,
                                 0);
                             break;

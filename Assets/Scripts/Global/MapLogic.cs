@@ -107,8 +107,8 @@ public class MapLogic
 
         for (int i = 0; i < numEntities; i++)
         {
-            float x = Random.Range(2, 10) / 10f;
-            float y = Random.Range(2, 10) / 10f;
+            float x = Random.Range(2, 9) / 10f;
+            float y = Random.Range(2, 9) / 10f;
             int xNeg = Random.Range(0, 2);
             int yNeg = Random.Range(0, 2);
             x *= xNeg == 0 ? 1 : -1;

@@ -44,15 +44,15 @@ public class MapBehaviour : MonoBehaviour
         int doorIndex = 0;
 
         //Wall bounds
-        float minWallXBound = -5.25f + horizontalShift;
-        float maxWallXBound = 5.25f + horizontalShift;
+        float minWallXBound = -4.8f + horizontalShift;
+        float maxWallXBound = 4.8f + horizontalShift;
 
-        float minWallYBound = -2.75f + verticalShift;
-        float maxWallYBound = 2.75f + verticalShift;
+        float minWallYBound = -3.75f + verticalShift;
+        float maxWallYBound = 3.75f + verticalShift;
 
         //Door bounds
-        float minDoorXBound = -.25f + horizontalShift;
-        float maxDoorXBound = .25f + horizontalShift;
+        float minDoorXBound = -.5f + horizontalShift;
+        float maxDoorXBound = .5f + horizontalShift;
 
         float minDoorYBound = -.25f + verticalShift;
         float maxDoorYBound = .25f + verticalShift;

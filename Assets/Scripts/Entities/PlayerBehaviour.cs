@@ -13,7 +13,7 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
-    private float scale = 0.5f;
+    private float scale = 0.9f;
     private Vector3 spawn = new Vector3(0, 0, 0);
 
     public void SetSpawn(Vector3 pos)
