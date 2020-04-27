@@ -4,6 +4,8 @@ using System.Collections;
 public class Room
 {
     public Room[] rooms = new Room[4];
+    public Vector3[] enemies;
+    public Vector3[] obstacles;
     public int depth;
     public bool roomFound = false;
 

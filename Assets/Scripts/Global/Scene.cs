@@ -4,6 +4,7 @@ public class Scene : MonoBehaviour
 {
     [SerializeField] public PlayerBehaviour playerPrefab;
     [SerializeField] public GameObject enemyPrefab;
+    [SerializeField] public GameObject wallPrefab;
     [SerializeField] public ProjectileBehaviour projectilePrefab;
     [SerializeField] public ItemBehaviour itemPrefab;
     [SerializeField] public MapBehaviour mapBehaviour;
@@ -17,6 +18,7 @@ public class Scene : MonoBehaviour
         GlobalObjects.mesh = mesh;
         GlobalObjects.material = material;
         GlobalObjects.enemyPrefab = enemyPrefab;
+        GlobalObjects.wallPrefab = wallPrefab;
         GlobalObjects.mapBehaviour = mapBehaviour;
 
 

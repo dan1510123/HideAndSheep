@@ -172,11 +172,10 @@ public class CollisionSystem : ComponentSystem
 
                 if (!GlobalObjects.mapLogic.currentRoom.roomFound)
                 {
-                    GlobalObjects.mapBehaviour.GenerateRoomWalls(
+                    GlobalObjects.mapBehaviour.GenerateRoom(
                         GlobalObjects.mapLogic.currentRoom,
                         GlobalObjects.cameraPosition.x,
                         GlobalObjects.cameraPosition.y);
-                    GlobalObjects.mapBehaviour.SpawnEnemies(GlobalObjects.cameraPosition.x, GlobalObjects.cameraPosition.y);
                     GlobalObjects.mapLogic.currentRoom.roomFound = true;
                 }
 

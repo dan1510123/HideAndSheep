@@ -11,18 +11,35 @@ public class MapBehaviour : MonoBehaviour
     {
         // Generate first room
         GenerateRoomWalls(initialRoom, 0, 0);
-        SpawnEnemies(0, 0);
         initialRoom.roomFound = true;
     }
 
-    public void SpawnEnemies(float horizontalShift, float verticalShift)
+    public void GenerateRoom(Room room, float horizontalShift, float verticalShift)
     {
-        GameObject e = Instantiate(GlobalObjects.enemyPrefab, new Vector3(100, 100, 0), GlobalObjects.enemyPrefab.transform.rotation);
-        e.GetComponent<EnemyBehaviour>().setSpawn(new Vector3(horizontalShift + 3.83f, verticalShift + 1.48f, 0));
+        GenerateRoomWalls(room, horizontalShift, verticalShift);
+        SpawnEnemies(room, horizontalShift, verticalShift);
+        SpawnObstacles(room, horizontalShift, verticalShift);
+    }
+
+    private void SpawnEnemies(Room room, float horizontalShift, float verticalShift)
+    {
+        foreach(Vector3 loc in room.enemies) {
+            GameObject e = Instantiate(GlobalObjects.enemyPrefab, new Vector3(100, 100, 0), GlobalObjects.enemyPrefab.transform.rotation);
+            e.GetComponent<EnemyBehaviour>().setSpawn(new Vector3(horizontalShift + 5f * loc.x, verticalShift + 2.5f * loc.y, 0));
+        }
+    }
+
+    private void SpawnObstacles(Room room, float horizontalShift, float verticalShift)
+    {
+        foreach (Vector3 loc in room.obstacles)
+        {
+            GameObject e = Instantiate(GlobalObjects.wallPrefab, new Vector3(100, 100, 0), GlobalObjects.wallPrefab.transform.rotation);
+            e.GetComponent<WallBehaviour>().SetPosition(new Vector3(horizontalShift + 5f * loc.x, verticalShift + 2.5f * loc.y, 0));
+        }
     }
 
     //Generates walls and doors for a room
-    public void GenerateRoomWalls(Room room, float horizontalShift, float verticalShift)
+    private void GenerateRoomWalls(Room room, float horizontalShift, float verticalShift)
     {
         int doorIndex = 0;
 
