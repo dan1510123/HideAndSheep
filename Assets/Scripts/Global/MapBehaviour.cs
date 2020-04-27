@@ -33,8 +33,10 @@ public class MapBehaviour : MonoBehaviour
     {
         foreach (Vector3 loc in room.obstacles)
         {
-            GameObject e = Instantiate(GlobalObjects.wallPrefab, new Vector3(100, 100, 0), GlobalObjects.wallPrefab.transform.rotation);
-            e.GetComponent<WallBehaviour>().SetPosition(new Vector3(horizontalShift + 5f * loc.x, verticalShift + 2.5f * loc.y, 0));
+            WallBehaviour wall = Instantiate(wallPrefab);
+            //GameObject e = Instantiate(GlobalObjects.wallPrefab, new Vector3(100, 100, 0), GlobalObjects.wallPrefab.transform.rotation);
+            //e.GetComponent<WallBehaviour>().SetPosition(new Vector3(horizontalShift + 5f * loc.x, verticalShift + 2.5f * loc.y, 0));
+            wall.SetPosition(new Vector3(horizontalShift + 5f * loc.x, verticalShift + 2.5f * loc.y, 0));
         }
     }
 
