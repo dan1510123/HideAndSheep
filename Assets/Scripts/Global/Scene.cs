@@ -12,6 +12,8 @@ public class Scene : MonoBehaviour
     [SerializeField] public Mesh mesh;
     [SerializeField] public Material material;
     [SerializeField] public Sprite itemSpriteOne;
+    [SerializeField] public GameObject grid;
+    [SerializeField] public GameObject[] tilemaps;
 
     private void Start()
     {
@@ -22,7 +24,8 @@ public class Scene : MonoBehaviour
         GlobalObjects.enemyPrefab = enemyPrefab;
         GlobalObjects.wallPrefab = wallPrefab;
         GlobalObjects.mapBehaviour = mapBehaviour;
-
+        GlobalObjects.grid = grid;
+        GlobalObjects.tilemaps = tilemaps;
 
         //Setting up the itemTable
         ItemID itemOneID;

@@ -177,6 +177,7 @@ public class CollisionSystem : ComponentSystem
                         GlobalObjects.cameraPosition.x,
                         GlobalObjects.cameraPosition.y);
                     GlobalObjects.mapLogic.currentRoom.roomFound = true;
+                    CreateTilemap(GlobalObjects.cameraPosition.x, GlobalObjects.cameraPosition.y);
                 }
 
                 // Teleport the player to next room
@@ -288,5 +289,13 @@ public class CollisionSystem : ComponentSystem
             this.camera = GameObject.FindObjectOfType<Camera>();
         }
         this.camera.transform.position = camera.transform.position + new Vector3(x, y);
+    }
+
+    private void CreateTilemap(float x, float y)
+    {
+        System.Random rand = new System.Random();
+        GameObject tilemap = MonoBehaviour.Instantiate(GlobalObjects.tilemaps[rand.Next(0, 3)], GlobalObjects.grid.transform);
+        tilemap.transform.position = new Vector3(x, y);
+        tilemap.gameObject.layer = 0;
     }
 }

@@ -18,5 +18,7 @@ public struct GlobalObjects
     public static MapBehaviour mapBehaviour;
     public static MapLogic mapLogic;
     public static Vector2 cameraPosition = new Vector2(0, 0);
+    public static GameObject grid;
+    public static GameObject[] tilemaps;
     [SerializeField] public static ItemTable iTable;
 }
