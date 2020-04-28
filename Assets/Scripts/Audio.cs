@@ -11,7 +11,7 @@ public class Audio : MonoBehaviour
     private static AudioSource shootingSound;
     private static AudioSource itemSound;
     private static AudioSource menuSound;
-    public static bool isMusicPlaying;
+    public static bool isMusicPlaying = false;
     public static float sfxVol = .5f;
     public static float musicVol = .5f;
     public static float masterVol = .5f;
@@ -20,14 +20,15 @@ public class Audio : MonoBehaviour
 
     //private void Awake()
     //{
-    //    if (isMusicPlaying)
+    //    if (!isMusicPlaying)
     //    {
     //        backgroundMusic.playOnAwake = true;
     //    }
     //}
+
     void Start()
     {
-        Debug.Log("STARTING");
+        Debug.Log(isMusicPlaying);
         AudioSource[] sources = GetComponents<AudioSource>();
         backgroundMusic = sources[0];
         projectileSound = sources[1];
@@ -38,11 +39,8 @@ public class Audio : MonoBehaviour
         menuSound = sources[6];
 
         DontDestroyOnLoad(this.gameObject);
-        if (isMusicPlaying)
-        {
-            backgroundMusic.playOnAwake = true;
-            isMusicPlaying = true;
-        }
+
+        Application.LoadLevel(1);
     }
 
     public static void PlayProjectileSound()

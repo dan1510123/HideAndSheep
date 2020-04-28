@@ -3,7 +3,9 @@ guid: 09815affda20f4307a329f11530cb523
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mesh: {instanceID: 0}
+  - material: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -3,7 +3,17 @@ guid: c500b749675394cbc83316bf5e237a90
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerPrefab: {instanceID: 0}
+  - enemyPrefab: {fileID: 6704958671700998503, guid: 8f7e4e7bbe544404092dce77da7c2c03,
+      type: 3}
+  - wallPrefab: {fileID: 1906217702530219125, guid: 56a85702575e044adbdd2c550b18ed7c,
+      type: 3}
+  - projectilePrefab: {instanceID: 0}
+  - itemPrefab: {instanceID: 0}
+  - mapBehaviour: {instanceID: 0}
+  - mesh: {instanceID: 0}
+  - material: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

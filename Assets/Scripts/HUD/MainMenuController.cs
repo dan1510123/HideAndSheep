@@ -30,17 +30,17 @@ public class MainMenuController : MonoBehaviour
 
     public void GoToCredits()
     {
-        Application.LoadLevel(3);
+        Application.LoadLevel(4);
     }
 
     public void GoToControls()
     {
-        Application.LoadLevel(4);
+        Application.LoadLevel(5);
     }
 
     public void BackToMenuFromControls()
     {
-        Application.LoadLevel(0);
+        Application.LoadLevel(1);
     }
 
     //Goes back to the main menu screen
@@ -84,13 +84,13 @@ public class MainMenuController : MonoBehaviour
 
     public void BackToMenuFromCredits()
     {
-        Application.LoadLevel(0);
+        Application.LoadLevel(1);
     }
     #endregion
 
     public void PlayGame()
     {
-        Application.LoadLevel(1);
+        Application.LoadLevel(2);
     }
 
     public void quitGame()
