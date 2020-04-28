@@ -8,6 +8,7 @@ public class Room
     public Vector3[] obstacles;
     public int depth;
     public bool roomFound = false;
+    public bool finalRoom = false;
 
     public Room(int depth)
     {

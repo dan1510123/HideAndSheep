@@ -38,6 +38,12 @@ public class RoomSystem : ComponentSystem
             {
                 doorComponent.locked = false;
             });
+
+            if(GlobalObjects.mapLogic.currentRoom.finalRoom)
+            {
+                Debug.Log("GAME OVER WIN");
+                Application.LoadLevel(2);
+            }
         }
 
         Entities.ForEach((Entity e,

@@ -5176,7 +5176,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 242247162}
   itemPrefab: {fileID: 408769247}
   mapBehaviour: {fileID: 982007815}
-  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   material: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   itemSpriteOne: {fileID: 21300000, guid: d0042422e08242d498ea247ad0f4cd6d, type: 3}
 --- !u!4 &1788146029

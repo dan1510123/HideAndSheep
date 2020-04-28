@@ -61,7 +61,7 @@ public class MapLogic
 
                 while (direction != -1)
                 {
-                    CreateRoomOrShiftDirection(ref currentRoomForLogic, ref direction);
+                    CreateRoomOrShiftDirection(numberOfRooms, ref currentRoomForLogic, ref direction);
                 }
 
                 numberOfRooms++;
@@ -71,7 +71,7 @@ public class MapLogic
         }
     }
 
-    private void CreateRoomOrShiftDirection(ref Room currentRoom, ref int direction)
+    private void CreateRoomOrShiftDirection(int numberOfRooms, ref Room currentRoom, ref int direction)
     {
         if (currentRoom.rooms[direction] == null)
         {
@@ -79,6 +79,11 @@ public class MapLogic
             currentRoom.rooms[direction].rooms[(direction + 2) % 4] = currentRoom;
             currentRoom.rooms[direction].enemies = getRandomEnemyRatioLocations();
             currentRoom.rooms[direction].obstacles = getRandomObstacleRatioLocations();
+
+            if (numberOfRooms == MAX_ROOMS_PER_FLOOR - 1)
+            {
+                currentRoom.rooms[direction].finalRoom = true;
+            }
 
             direction = -1;
         }
