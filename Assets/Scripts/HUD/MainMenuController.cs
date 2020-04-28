@@ -33,7 +33,15 @@ public class MainMenuController : MonoBehaviour
         Application.LoadLevel(3);
     }
 
+    public void GoToControls()
+    {
+        Application.LoadLevel(4);
+    }
 
+    public void BackToMenuFromControls()
+    {
+        Application.LoadLevel(0);
+    }
 
     //Goes back to the main menu screen
     public void BackToMenuFromVolumeSliders()
