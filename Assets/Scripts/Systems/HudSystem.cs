@@ -12,6 +12,7 @@ public class HudSystem : ComponentSystem
     public Text healthText;
 
     public Image healthBar;
+    public int healthTextSize = 400;
     public Text statText;
     public Text backPack;
     public static int backPackLeftTransform = 1000;
@@ -69,7 +70,7 @@ public class HudSystem : ComponentSystem
                 //    healthBarComponent.moveSpeed = updateComponent.moveSpeed;
                 //});
                 healthText.text = "Current Health: " + statsComponent.health;
-                healthBar.rectTransform.sizeDelta = new Vector2(statsComponent.health * 40, 20);
+                healthBar.rectTransform.sizeDelta = new Vector2(healthTextSize * statsComponent.health / 100, 20);
                 statText.text = "Attack Damage: " + statsComponent.attack + "\nAttack Speed: " + statsComponent.attackSpeed + "\nMove Speed: " + statsComponent.moveSpeed;
                 DynamicBuffer<IntBufferElement> backpack = entityManager.GetBuffer<IntBufferElement>(e);
                 backPack.text = "Backpack: ";

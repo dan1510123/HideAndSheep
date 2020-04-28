@@ -11,11 +11,20 @@ public class Audio : MonoBehaviour
     private static AudioSource shootingSound;
     private static AudioSource itemSound;
     private static AudioSource menuSound;
+    public static bool isMusicPlaying;
     public static float sfxVol = .5f;
     public static float musicVol = .5f;
     public static float masterVol = .5f;
 
     // Start is called before the first frame update
+
+    //private void Awake()
+    //{
+    //    if (isMusicPlaying)
+    //    {
+    //        backgroundMusic.playOnAwake = true;
+    //    }
+    //}
     void Start()
     {
         Debug.Log("STARTING");
@@ -29,6 +38,11 @@ public class Audio : MonoBehaviour
         menuSound = sources[6];
 
         DontDestroyOnLoad(this.gameObject);
+        if (isMusicPlaying)
+        {
+            backgroundMusic.playOnAwake = true;
+            isMusicPlaying = true;
+        }
     }
 
     public static void PlayProjectileSound()
