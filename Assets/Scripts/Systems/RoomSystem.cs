@@ -1,13 +1,7 @@
-﻿using UnityEngine;
-using Unity.Entities;
-using Unity.Transforms;
-using Components;
+﻿using EntityComponents;
 using EnvironmentComponents;
-using Unity.Mathematics;
-using System;
-using EntityComponents;
-using ItemComponent;
-using BackpackComponents;
+using Unity.Entities;
+using UnityEngine;
 
 public class RoomSystem : ComponentSystem
 {
@@ -42,7 +36,11 @@ public class RoomSystem : ComponentSystem
             if(GlobalObjects.mapLogic.currentRoom.finalRoom)
             {
                 Debug.Log("GAME OVER WIN");
-                Application.LoadLevel(2);
+                Entities.ForEach((Entity e) =>
+                {
+                    PostUpdateCommands.DestroyEntity(e);
+                });
+                Application.LoadLevel(3);
             }
         }
 
